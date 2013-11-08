@@ -1,7 +1,7 @@
  
 i.AF  - Couchbase Url Shortener Service
 =================================================
-Adventures with Visual Studio 2013, C#, MVC 5 and WebApi 2
+Adventures with Visual Studio 2013, C#, MVC 5 and Servicestack
 
 The following project is the production quality reference implementation 
 of a great Url Shortener web application built with a fantastic NoSql 
