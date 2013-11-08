@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>IdenticonHandler</id>
+    <version>1.1.0</version>
+    <title>IdenticonHandler</title>
+    <authors>Phil Haack,  Jeff Atwood,  Jon Galloway</authors>
+    <owners>Phil Haack,  Jeff Atwood,  Jon Galloway</owners>
+    <licenseUrl>http://identicon.codeplex.com/license</licenseUrl>
+    <projectUrl>http://identicon.codeplex.com/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>An Identicon is a small, anonymized visual glyph that represents a hash of an IP address. This project is a .NET port of Don Park's original identicon Java project.</description>
+    <summary>An identicon library</summary>
+    <releaseNotes />
+    <copyright />
+    <language />
+  </metadata>
+</package>

@@ -1,0 +1,61 @@
+﻿URLCOUNT VIEW
+======================
+--- Start ----------
+MAP
+-----------------------
+function (doc, meta) {
+  if(doc.t && doc.t == "url")
+  {
+    emit(meta.id, 1);
+  }
+}
+
+REDUCE
+---------------------
+_count
+
+---- End -------
+
+URLLIST VIEW
+=======================
+function (doc, meta) {
+  if(doc.t && doc.t == "url")
+  {
+    emit(doc.s, doc.h);
+  }
+}
+
+
+URLCOUNT by USER
+==============================
+MAP
+------------------------------
+function (doc, meta) {
+  if(doc.t && doc.t == "url" && doc.users)
+  {
+    for (i=0; i < doc.users.length; i++)
+    {
+        emit(doc.users[i],1);
+    }
+  }
+}
+---------------
+REDUCE
+----------------
+_count
+
+
+URLLIST BY USER
+=================================
+MAP
+---------------------------------
+function (doc, meta) {
+  if(doc.t && doc.t == "url" && doc.users)
+  {
+    for (i=0; i < doc.users.length; i++)
+    {
+        emit(doc.users[i] + doc.s, doc.s);
+    }
+  }
+}
+

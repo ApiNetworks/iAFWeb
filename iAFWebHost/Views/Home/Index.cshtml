@@ -1,0 +1,39 @@
+﻿@using iAFWebHost.Entities;
+@model iAFWebHost.Models.UrlModel
+
+@{
+    ViewBag.Title = "i.af - Fast Url shortener service.";
+}
+<div class="row">
+    <div class="col-md-10">
+        @Html.Partial("_LinkBox", Model)
+    </div>
+</div>
+
+<br /><br /><br /><br />
+<div class="pop-unit">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Getting Started</h2>
+            <p>
+                We are on GitHub! <a href="https://github.com/iAF">https://github.com/iAF</a><br />
+                Download the source code that runs this website.<br />
+                Git as a distributed version control system allows you to easily develop your own Url shortener service without need of the write-permission to the main repository.
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h2>Get API Access</h2>
+            <p>
+                Coming soon.
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h2>Custom Solutions</h2>
+            <p>
+                Do you have a special request? Need a feature?<br />
+                We can help! Hire us to develop your next web service,
+                web application or plain website.
+            </p>
+        </div>
+    </div>
+</div>

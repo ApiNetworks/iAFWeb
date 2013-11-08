@@ -1,0 +1,104 @@
+﻿html {
+overflow: -moz-scrollbars-vertical; 
+overflow-y: scroll;
+}
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    background-repeat: repeat-x;
+    background-image: url('/content/img/bg.png');
+	background-color: #f0f0ea;
+	color: #433;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.link-unit {
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border: 2px solid #ecf1f3;
+    background-color: #ecf1f3;
+    padding: 8px;
+    -webkit-box-shadow: 1px 1px 2px 0px rgba(69,68,69,1);
+    -moz-box-shadow: 1px 1px 2px 0px rgba(69,68,69,1);
+    box-shadow: 1px 1px 2px 0px rgba(69,68,69,1);
+}
+
+.link-unit input {
+    font-size: 1.7em;
+    height: 45px;
+    padding: 5px 8px;
+    width: 100%;
+    font-size: 25px;
+    line-height: 1.33;
+    border-radius: 6px 0px 0px 6px;
+}
+
+.pop-unit {
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border: 2px solid #ecf1f3;
+    background-color: #fcfafa;
+    padding: 20px;
+    -webkit-box-shadow: 1px 1px 1px 0px rgb(146,144,144);
+    -moz-box-shadow: 1px 1px 1px 0px rgb(146,144,144);
+    box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.35);
+}
+
+.pop-unit input {
+    font-size: 1.7em;
+    height: 45px;
+    padding: 5px 8px;
+    width: 100%;
+    font-size: 25px;
+    line-height: 1.33;
+    border-radius: 6px 6px 6px 6px;
+}
+
+.logo-nav {
+    float: left;
+    padding: 5px 25px 0px 15px;
+    font-size: 18px;
+    line-height: 20px;
+}
+
+.navbar .brand {
+    max-height: 40px;
+    overflow: visible;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.arrow_box { position: relative; background: #88b7d5; border: 4px solid #c2e1f5; padding:10px; font-size:20px; color:#fff; } .arrow_box:after, .arrow_box:before { left: 100%; border: solid transparent; content: " "; height: 0; width: 0; position: absolute; pointer-events: none; } .arrow_box:after { border-color: rgba(136, 183, 213, 0); border-left-color: #88b7d5; border-width: 10px; top: 50%; margin-top: -10px; } .arrow_box:before { border-color: rgba(194, 225, 245, 0); border-left-color: #c2e1f5; border-width: 16px; top: 50%; margin-top: -16px; }

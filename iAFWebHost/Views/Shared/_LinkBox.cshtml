@@ -1,0 +1,28 @@
+﻿@model iAFWebHost.Models.UrlModel
+
+<div class="row">
+    <div class="col-md-12">
+        <h1 style="color:#fff">Shorten your links! Earn Karma!</h1>
+        <form class="form-inline" role="form" method="post">
+            <div class="link-unit">
+                <div class="input-group">
+                    @if (Model != null && !String.IsNullOrEmpty(Model.ShortHref))
+                    {
+                        <input type="text" name="href" value="@Model.ShortHref" id="url" class="input-lg">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-success btn-lg"> Navigate </button>
+                        </span>
+                        @Html.ValidationMessageFor(model => model.Href)
+                    }
+                    else
+                    {
+                        <input type="text" name="href" id="url" placeholder="http:// ... paste your long url here ... " class="input-lg">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-success btn-lg"> Make It Short </button>
+                        </span>
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

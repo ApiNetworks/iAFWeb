@@ -1,0 +1,376 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GravatarHelper</name>
+    </assembly>
+    <members>
+        <member name="T:GravatarHelper.Extensions.HtmlHelperExtensions">
+            <summary>
+            Gravatar HtmlHelper extension methods.
+            </summary>
+        </member>
+        <member name="M:GravatarHelper.Extensions.HtmlHelperExtensions.Gravatar(System.Web.Mvc.HtmlHelper,System.String,System.Int32)">
+            <summary>
+            Returns a Gravatar img tag for the provided parameters.
+            </summary>
+            <param name="helper">The HtmlHelper to extend.</param>
+            <param name="email">Email address to generate the Gravatar for.</param>
+            <param name="imageSize">Gravatar size in pixels.</param>
+            <returns>A Gravatar img tag for the provided parameters.</returns>
+        </member>
+        <member name="M:GravatarHelper.Extensions.HtmlHelperExtensions.Gravatar(System.Web.Mvc.HtmlHelper,System.String,System.Int32,System.String)">
+            <summary>
+            Returns a Gravatar img tag for the provided parameters.
+            </summary>
+            <param name="helper">The HtmlHelper to extend.</param>
+            <param name="email">Email address to generate the Gravatar for.</param>
+            <param name="imageSize">Gravatar size in pixels.</param>
+            <param name="defaultImage">The default image to use if the user does not have a Gravatar setup,
+            can either be a url to an image or one of the DefaultImage* constants</param>
+            <returns>A Gravatar img tag for the provided parameters.</returns>
+        </member>
+        <member name="M:GravatarHelper.Extensions.HtmlHelperExtensions.Gravatar(System.Web.Mvc.HtmlHelper,System.String,System.Int32,System.Object)">
+            <summary>
+            Returns a Gravatar img tag for the provided parameters.
+            </summary>
+            <param name="helper">The HtmlHelper to extend.</param>
+            <param name="email">Email address to generate the Gravatar for.</param>
+            <param name="imageSize">Gravatar size in pixels.</param>
+            <param name="htmlAttributes">Object containing the HTML attributes to set for the img element.</param>
+            <returns>A Gravatar img tag for the provided parameters.</returns>
+        </member>
+        <member name="M:GravatarHelper.Extensions.HtmlHelperExtensions.Gravatar(System.Web.Mvc.HtmlHelper,System.String,System.Int32,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a Gravatar img tag for the provided parameters.
+            </summary>
+            <param name="helper">The HtmlHelper to extend.</param>
+            <param name="email">Email address to generate the Gravatar for.</param>
+            <param name="imageSize">Gravatar size in pixels.</param>
+            <param name="htmlAttributes">Object containing the HTML attributes to set for the img element.</param>
+            <returns>A Gravatar img tag for the provided parameters.</returns>
+        </member>
+        <member name="M:GravatarHelper.Extensions.HtmlHelperExtensions.Gravatar(System.Web.Mvc.HtmlHelper,System.String,System.Int32,System.String,System.Object)">
+            <summary>
+            Returns a Gravatar img tag for the provided parameters.
+            </summary>
+            <param name="helper">The HtmlHelper to extend.</param>
+            <param name="email">Email address to generate the Gravatar for.</param>
+            <param name="imageSize">Gravatar size in pixels.</param>
+            <param name="defaultImage">The default image to use if the user does not have a Gravatar setup,
+            can either be a url to an image or one of the DefaultImage* constants</param>
+            <param name="htmlAttributes">Object containing the HTML attributes to set for the img element.</param>
+            <returns>A Gravatar img tag for the provided parameters.</returns>
+        </member>
+        <member name="M:GravatarHelper.Extensions.HtmlHelperExtensions.Gravatar(System.Web.Mvc.HtmlHelper,System.String,System.Int32,System.String,System.Nullable{GravatarHelper.GravatarRating},System.Object)">
+            <summary>
+            Returns a Gravatar img tag for the provided parameters.
+            </summary>
+            <param name="helper">The HtmlHelper to extend.</param>
+            <param name="email">Email address to generate the Gravatar for.</param>
+            <param name="imageSize">Gravatar size in pixels.</param>
+            <param name="defaultImage">The default image to use if the user does not have a Gravatar setup,
+            can either be a url to an image or one of the DefaultImage* constants</param>
+            <param name="rating">The content rating of the images to display.</param>
+            <param name="htmlAttributes">Object containing the HTML attributes to set for the img element.</param>
+            <returns>A Gravatar img tag for the provided parameters.</returns>
+        </member>
+        <member name="M:GravatarHelper.Extensions.HtmlHelperExtensions.Gravatar(System.Web.Mvc.HtmlHelper,System.String,System.Int32,System.String,System.Nullable{GravatarHelper.GravatarRating},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a Gravatar img tag for the provided parameters.
+            </summary>
+            <param name="helper">The HtmlHelper to extend.</param>
+            <param name="email">Email address to generate the Gravatar for.</param>
+            <param name="imageSize">Gravatar size in pixels.</param>
+            <param name="defaultImage">The default image to use if the user does not have a Gravatar setup,
+            can either be a url to an image or one of the DefaultImage* constants</param>
+            <param name="rating">The content rating of the images to display.</param>
+            <param name="htmlAttributes">Object containing the HTML attributes to set for the img element.</param>
+            <returns>A Gravatar img tag for the provided parameters.</returns>
+        </member>
+        <member name="M:GravatarHelper.Extensions.HtmlHelperExtensions.Gravatar(System.Web.Mvc.HtmlHelper,System.String,System.Int32,System.String,System.Nullable{GravatarHelper.GravatarRating},System.Boolean,System.Boolean,System.Object)">
+            <summary>
+            Returns a Gravatar img tag for the provided parameters.
+            </summary>
+            <param name="helper">The HtmlHelper to extend.</param>
+            <param name="email">Email address to generate the Gravatar for.</param>
+            <param name="imageSize">Gravatar size in pixels.</param>
+            <param name="defaultImage">The default image to use if the user does not have a Gravatar setup,
+            can either be a url to an image or one of the DefaultImage* constants</param>
+            <param name="rating">The content rating of the images to display.</param>
+            <param name="addExtension">Whether to add the .jpg extension to the provided Gravatar.</param>
+            <param name="forceDefault">Forces Gravatar to always serve the default image.</param>
+            <param name="htmlAttributes">Object containing the HTML attributes to set for the img element.</param>
+            <returns>A Gravatar img tag for the provided parameters.</returns>
+        </member>
+        <member name="M:GravatarHelper.Extensions.HtmlHelperExtensions.Gravatar(System.Web.Mvc.HtmlHelper,System.String,System.Int32,System.String,System.Nullable{GravatarHelper.GravatarRating},System.Boolean,System.Boolean,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a Gravatar img tag for the provided parameters.
+            </summary>
+            <param name="helper">The HtmlHelper to extend.</param>
+            <param name="email">Email address to generate the Gravatar for.</param>
+            <param name="imageSize">Gravatar size in pixels.</param>
+            <param name="defaultImage">The default image to use if the user does not have a Gravatar setup,
+            can either be a url to an image or one of the DefaultImage* constants</param>
+            <param name="rating">The content rating of the images to display.</param>
+            <param name="addExtension">Whether to add the .jpg extension to the provided Gravatar.</param>
+            <param name="forceDefault">Forces Gravatar to always serve the default image.</param>
+            <param name="htmlAttributes">Object containing the HTML attributes to set for the img element.</param>
+            <returns>A Gravatar img tag for the provided parameters.</returns>
+        </member>
+        <member name="T:GravatarHelper.Extensions.UrlHelperExtensions">
+            <summary>
+            Gravatar UrlHelper extension methods.
+            </summary>
+        </member>
+        <member name="M:GravatarHelper.Extensions.UrlHelperExtensions.Gravatar(System.Web.Mvc.UrlHelper,System.String,System.Int32)">
+            <summary>
+            Returns the Gravatar URL for the provided parameters.
+            </summary>
+            <param name="helper">The UrlHelper to extend.</param>
+            <param name="email">Email address to generate the Gravatar for.</param>
+            <param name="imageSize">Gravatar size in pixels.</param>
+            <returns>The Gravatar URL for the provided parameters.</returns>
+        </member>
+        <member name="M:GravatarHelper.Extensions.UrlHelperExtensions.Gravatar(System.Web.Mvc.UrlHelper,System.String,System.Int32,System.String)">
+            <summary>
+            Returns the Gravatar URL for the provided parameters.
+            </summary>
+            <param name="helper">The UrlHelper to extend.</param>
+            <param name="email">Email address to generate the Gravatar for.</param>
+            <param name="imageSize">Gravatar size in pixels.</param>
+            <param name="defaultImage">The default image to use if the user does not have a Gravatar setup,
+            can either be a url to an image or one of the DefaultImage* constants</param>
+            <returns>The Gravatar URL for the provided parameters.</returns>
+        </member>
+        <member name="M:GravatarHelper.Extensions.UrlHelperExtensions.Gravatar(System.Web.Mvc.UrlHelper,System.String,System.Int32,System.String,System.Nullable{GravatarHelper.GravatarRating})">
+            <summary>
+            Returns the Gravatar URL for the provided parameters.
+            </summary>
+            <param name="helper">The UrlHelper to extend.</param>
+            <param name="email">Email address to generate the Gravatar for.</param>
+            <param name="imageSize">Gravatar size in pixels.</param>
+            <param name="defaultImage">The default image to use if the user does not have a Gravatar setup,
+            can either be a url to an image or one of the DefaultImage* constants</param>
+            <param name="rating">The content rating of the images to display.</param>
+            <returns>The Gravatar URL for the provided parameters.</returns>
+        </member>
+        <member name="M:GravatarHelper.Extensions.UrlHelperExtensions.GravatarProfile(System.Web.Mvc.UrlHelper,System.String)">
+            <summary>
+            Returns a URL to the Gravatar profile.
+            </summary>
+            <param name="helper">The UrlHelper to extend.</param>
+            <param name="email">Email address to generate the Gravatar for.</param>
+            <returns>The Gravatar URL for the provided parameters.</returns>
+        </member>
+        <member name="M:GravatarHelper.Extensions.UrlHelperExtensions.GravatarProfileAsJSON(System.Web.Mvc.UrlHelper,System.String)">
+            <summary>
+            Returns a URL to the Gravatar profile data formatted as JSON.
+            </summary>
+            <param name="helper">The UrlHelper to extend.</param>
+            <param name="email">Email address to generate the link for.</param>
+            <returns>A URL to the Gravatar profile data formatted as JSON.</returns>
+        </member>
+        <member name="M:GravatarHelper.Extensions.UrlHelperExtensions.GravatarProfileAsJSON(System.Web.Mvc.UrlHelper,System.String,System.String)">
+            <summary>
+            Returns a URL to the Gravatar profile data formatted as JSON.
+            </summary>
+            <param name="helper">The UrlHelper to extend.</param>
+            <param name="email">Email address to generate the link for.</param>
+            <param name="callback">Name of the Javascript callback function.</param>
+            <returns>A URL to the Gravatar profile data formatted as JSON.</returns>
+        </member>
+        <member name="M:GravatarHelper.Extensions.UrlHelperExtensions.GravatarProfileAsVCard(System.Web.Mvc.UrlHelper,System.String)">
+            <summary>
+            Returns a URL to the Gravatar profile data formatted as vCard.
+            </summary>
+            <param name="helper">The UrlHelper to extend.</param>
+            <param name="email">Email address to generate the link for.</param>
+            <returns>A URL to the Gravatar profile data formatted as vCard.</returns>
+        </member>
+        <member name="M:GravatarHelper.Extensions.UrlHelperExtensions.GravatarProfileAsXml(System.Web.Mvc.UrlHelper,System.String)">
+            <summary>
+            Returns a URL to the Gravatar profile data formatted as XML.
+            </summary>
+            <param name="helper">The UrlHelper to extend.</param>
+            <param name="email">Email address to generate the link for.</param>
+            <returns>A URL to the Gravatar profile data formatted as XML.</returns>
+        </member>
+        <member name="M:GravatarHelper.Extensions.UrlHelperExtensions.GravatarProfileAsQRCode(System.Web.Mvc.UrlHelper,System.String)">
+            <summary>
+            Returns a URL to an image containing a QR Code link back to the Gravatar profile.
+            </summary>
+            <param name="helper">The UrlHelper to extend.</param>
+            <param name="email">Email address to generate the link for.</param>
+            <returns>A URL to an image containing a QR Code link back to the Gravatar profile.</returns>
+        </member>
+        <member name="M:GravatarHelper.Extensions.UrlHelperExtensions.GravatarProfileAsQRCode(System.Web.Mvc.UrlHelper,System.String,System.Int32)">
+            <summary>
+            Returns a URL to an image containing a QR Code link back to the Gravatar profile.
+            </summary>
+            <param name="helper">The UrlHelper to extend.</param>
+            <param name="email">Email address to generate the link for.</param>
+            <param name="imageSize">QR Code size in pixels.</param>
+            <returns>A URL to an image containing a QR Code link back to the Gravatar profile.</returns>
+        </member>
+        <member name="T:GravatarHelper.GravatarHelper">
+            <summary>
+            A simple ASP.NET MVC helper for Gravatar providing extension methods to HtmlHelper and UrlHelper.
+            </summary>
+        </member>
+        <member name="F:GravatarHelper.GravatarHelper.DefaultImage404">
+            <summary>
+            404: do not load any image if none is associated with the email hash, instead return an HTTP 404 (File Not Found) response.
+            </summary>
+        </member>
+        <member name="F:GravatarHelper.GravatarHelper.DefaultImageMysteryMan">
+            <summary>
+            mm: (mystery-man) a simple, cartoon-style silhouetted outline of a person (does not vary by email hash).
+            </summary>
+        </member>
+        <member name="F:GravatarHelper.GravatarHelper.DefaultImageIdenticon">
+            <summary>
+            identicon: a geometric pattern based on an email hash.
+            </summary>
+        </member>
+        <member name="F:GravatarHelper.GravatarHelper.DefaultImageMonsterId">
+            <summary>
+            monsterid: a generated 'monster' with different colors, faces, etc.
+            </summary>
+        </member>
+        <member name="F:GravatarHelper.GravatarHelper.DefaultImageWavatar">
+            <summary>
+            wavatar: generated faces with differing features and backgrounds.
+            </summary>
+        </member>
+        <member name="F:GravatarHelper.GravatarHelper.DefaultImageRetro">
+            <summary>
+            retro: awesome generated, 8-bit arcade-style pixelated faces.
+            </summary>
+        </member>
+        <member name="F:GravatarHelper.GravatarHelper.DefaultImageBlank">
+            <summary>
+            blank: a transparent PNG image
+            </summary>
+        </member>
+        <member name="F:GravatarHelper.GravatarHelper.MinImageSize">
+            <summary>
+            Minimum image size supported by gravatar.
+            </summary>
+        </member>
+        <member name="F:GravatarHelper.GravatarHelper.MaxImageSize">
+            <summary>
+            Maximum image size supported by gravatar.
+            </summary>
+        </member>
+        <member name="F:GravatarHelper.GravatarHelper.GravatarUrl">
+            <summary>
+            Gravatar HTTP url.
+            </summary>
+        </member>
+        <member name="F:GravatarHelper.GravatarHelper.GravatarSecureUrl">
+            <summary>
+            Gravatar HTTPS url.
+            </summary>
+        </member>
+        <member name="F:GravatarHelper.GravatarHelper.GravatarImagePath">
+            <summary>
+            Gravatar image path.
+            </summary>
+        </member>
+        <member name="F:GravatarHelper.GravatarHelper.GravatarProfilePath">
+            <summary>
+            Gravatar profile path.
+            </summary>
+        </member>
+        <member name="F:GravatarHelper.GravatarHelper.getHttpContext">
+            <summary>
+            Func used to retrieve the HttpContext to facilitate unit-testing.
+            </summary>
+        </member>
+        <member name="M:GravatarHelper.GravatarHelper.CreateGravatarImage(System.String,System.Int32,System.String,System.Nullable{GravatarHelper.GravatarRating},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns the Gravatar img tag for the provided parameters.
+            </summary>
+            <param name="email">Email address to generate the Gravatar for.</param>
+            <param name="imageSize">Gravatar size in pixels.</param>
+            <param name="defaultImage">The default image to use if the user does not have a Gravatar setup,
+            can either be a url to an image or one of the DefaultImage* constants</param>
+            <param name="rating">The content rating of the images to display.</param>
+            <param name="addExtension">Whether to add the .jpg extension to the provided Gravatar.</param>
+            <param name="forceDefault">Forces Gravatar to always serve the default image.</param>
+            <param name="htmlAttributes">Object containing the HTML attributes to set for the img element.</param>
+            <returns>The Gravatar img tag for the provided parameters.</returns>
+        </member>
+        <member name="M:GravatarHelper.GravatarHelper.CreateGravatarUrl(System.String,System.Int32,System.String,System.Nullable{GravatarHelper.GravatarRating},System.Nullable{System.Boolean},System.Nullable{System.Boolean})">
+            <summary>
+            Returns the Gravatar URL for the provided parameters.
+            </summary>
+            <param name="email">Email address to generate the Gravatar for.</param>
+            <param name="imageSize">Gravatar size in pixels.</param>
+            <param name="defaultImage">The default image to use if the user does not have a Gravatar setup,
+             can either be a url to an image or one of the DefaultImage* constants</param>
+            <param name="rating">The content rating of the images to display.</param>
+            <param name="addExtension">Whether to add the .jpg extension to the provided Gravatar.</param>
+            <param name="forceDefault">Forces Gravatar to always serve the default image.</param>
+            <returns>The Gravatar URL for the provided parameters.</returns>
+        </member>
+        <member name="M:GravatarHelper.GravatarHelper.CreateGravatarProfileUrl(System.String,System.String,System.Object)">
+            <summary>
+            Returns the Gravatar profile URL for the provided parameters.
+            </summary>
+            <param name="email">Email address to generate the Gravatar for.</param>
+            <param name="extension">Extension to add to the url. Default is none, which creates a link to the profile page.</param>
+            <param name="optionalParameters">Optional parameters to add to the url.</param>
+            <returns>The Gravatar profile URL for the provided parameters.</returns>
+        </member>
+        <member name="M:GravatarHelper.GravatarHelper.CreateGravatarHash(System.String)">
+            <summary>
+            Creates a Gravatar hash for the provided email.
+            </summary>
+            <param name="email">The email to create the hash for</param>
+            <returns>A Gravatar hash for the provided email.</returns>
+        </member>
+        <member name="M:GravatarHelper.GravatarHelper.CreateGravatarBaseUrl(System.String,System.String,System.String)">
+            <summary>
+            Creates the base Gravatar URL shared by both Gravatar avatars and profiles.
+            </summary>
+            <param name="email">Email address to generate the Gravatar for.</param>
+            <param name="path">The root path on the Gravatar domain for this request use Gravatar*Path.</param>
+            <param name="extension">Extension to add to the url.</param>
+            <returns>The Gravatar base URL for the provided parameters.</returns>
+        </member>
+        <member name="P:GravatarHelper.GravatarHelper.GetHttpContext">
+            <summary>
+            Gets or sets the Func used to retrieve the HttpContext.
+            </summary>
+            <value>
+            The get HTTP context.
+            </value>
+        </member>
+        <member name="T:GravatarHelper.GravatarRating">
+            <summary>
+            Enum specifying the possible age-ratings to limit our gravatar images to.
+            </summary>
+        </member>
+        <member name="F:GravatarHelper.GravatarRating.G">
+            <summary>
+            Suitable for display on all websites with any audience type.
+            </summary>
+        </member>
+        <member name="F:GravatarHelper.GravatarRating.PG">
+            <summary>
+            May contain rude gestures, provocatively dressed individuals, the lesser swear words, or mild violence.
+            </summary>
+        </member>
+        <member name="F:GravatarHelper.GravatarRating.R">
+            <summary>
+            May contain such things as harsh profanity, intense violence, nudity, or hard drug use.
+            </summary>
+        </member>
+        <member name="F:GravatarHelper.GravatarRating.X">
+            <summary>
+            May contain hardcore sexual imagery or extremely disturbing violence.
+            </summary>
+        </member>
+    </members>
+</doc>

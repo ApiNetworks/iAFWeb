@@ -1,0 +1,65 @@
+﻿@using iAFWebHost.Models;
+@using iAFWebHost.Utils;
+@model PageModel
+
+<div class="pop-unit">
+    @foreach (UrlModel item in Model.Urls)
+    {
+        <div class="row">
+            <div class="col-md-1">
+                <div class="arrow_box">
+                    @item.Karma
+                </div>
+            </div>
+            <div class="col-md-9">
+                @if (!String.IsNullOrEmpty(@item.Title))
+                {
+                    <h3 style="margin:0px;"><a href="@item.ShortHref">@item.Title</a></h3>
+                }
+                else
+                {
+                    <h3 style="margin:0px;"><a href="@item.ShortHref">@item.Href</a></h3>
+                }
+                <br />
+                @if (!String.IsNullOrEmpty(@item.Summary))
+                {
+                    <p>@item.Summary</p>
+                }
+                <small style="color:#808080">
+                    @if (Model.UserName != null)
+                    {
+                        <span>Link was shared by <a href="/user/@Model.UserName">@Model.UserName</a>. </span>
+                    }
+                    Hosted by <a href="http://@item.Host">@item.Host</a> and it has
+                    @if ((item.Users.Count - 1) == 1)
+                    {
+                        <span><strong>1</strong> follower</span>
+                    }
+                    else
+                    {
+                        <span><strong>@item.Users.Count</strong> follower</span>
+                    }
+                </small>
+                <br />
+                @if (@item.Users != null && @item.Users.Count > 0)
+                {
+                    foreach (var user in item.Users.Take(10))
+                    {
+                        <a href="/user/@user"><span class="label label-default">@user</span></a>
+                    }
+                }
+            </div>
+            <div class="col-md-2">
+                @if (Model.UserName != null && Model.UserName.Equals(User.Identity.Name))
+                {
+                    <a style="margin-top:20px;" class="btn btn-danger" href="/home/deleteuser/@item.ShortId"> Remove Me </a>
+                }
+                else
+                {
+                    <a style="margin-top:20px;" class="btn btn-primary" href="/home/adduser/@item.ShortId"> Bookmark Me </a>
+                }
+            </div>
+        </div>
+        <hr style="margin-top:15px; margin-bottom:10px">
+    }
+</div>

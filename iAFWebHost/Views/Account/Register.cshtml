@@ -1,0 +1,49 @@
+﻿@model iAFWebHost.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+<h1 style="color:#fff">Create a new account.</h1>
+<div class="row">
+    <div class="col-md-4">
+        <div class="pop-unit">
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h4>Enter username and password.</h4>
+                @Html.ValidationSummary()
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Enter username" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Enter password" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirm password" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="submit" class="btn btn-success" value="Register" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="pop-unit">
+            <h4>Need Help Signing Up?</h4>
+            You are about to create your local <strong>i.af</strong> account.
+            We strongly recommend using passwords that are longer than 6 characters.
+            Note: We do not ask for your email address. You will not be able to recover
+            your password. Please write it down.
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

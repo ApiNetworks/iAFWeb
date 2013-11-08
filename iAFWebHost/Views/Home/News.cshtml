@@ -1,0 +1,10 @@
+﻿@using iAFWebHost.Models;
+@model PageModel
+
+@{
+    ViewBag.Title = "Latest Updates";
+}
+
+<h1 style="color:#fff">Latest updates</h1>
+
+@Html.Partial("_UrlList", Model)
