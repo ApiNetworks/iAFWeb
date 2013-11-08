@@ -1,6 +1,6 @@
  
-<a href="http://i.af">i.AF  - Building Couchbase
-Url Shortener Service</a>
+i.AF  - Couchbase in Real Life.
+Url Shortener Service
 =================================================
 Adventures with Visual Studio 2013, C#, MVC 5 and WebApi 2
 
