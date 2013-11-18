@@ -21,6 +21,8 @@ namespace iAFWebHost.Models
         public UrlModel()
         {
             Users = new List<string>();
+            Tags = new List<string>();
+            UtcDate = DateTime.UtcNow;
         }
 
         /// <summary>
@@ -30,7 +32,7 @@ namespace iAFWebHost.Models
         /// Id
         /// </value>
         [DataMember(Name="Id")]
-        public ulong Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// ShortId is a Base58 Encoding of the ulong Id integer.
@@ -43,14 +45,11 @@ namespace iAFWebHost.Models
         {
             get
             {
-                if (Id > 0)
-                    return Id.EncodeBase58();
+                ulong longId;
+                if (!String.IsNullOrEmpty(Id) && ulong.TryParse(Id, out longId))
+                    return longId.EncodeBase58();
                 else
                     return String.Empty;
-            }
-            set
-            {
-
             }
         }
 
@@ -91,6 +90,9 @@ namespace iAFWebHost.Models
 
         [DataMember(Name = "Users")]
         public List<string> Users { get; set; }
+
+        [DataMember(Name = "Tags")]
+        public List<string> Tags { get; set; }
 
         /// <summary>
         /// Represent a dynamic (not stored in the database) absolute Url value 
@@ -133,11 +135,6 @@ namespace iAFWebHost.Models
         [DataMember(Name = "Flag")]
         public int Flag { get; set; }
 
-        public string Karma
-        {
-            get{
-                return Users.Count().ToString(); 
-            }
-        }
+        public DateTime UtcDate { get; set; }
     }
 }

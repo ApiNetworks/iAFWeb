@@ -20,7 +20,7 @@ namespace iAFWebHost.Tests.Services
             UrlService service = new UrlService();
 
             Url input = GenereateEntity();
-            Url output = service.Upsert(input);
+            Url output = service.ShortenUrl(input);
 
             Assert.AreEqual(input.ShortId, String.Empty);
             Assert.IsNotNull(output.ShortId);
@@ -39,7 +39,7 @@ namespace iAFWebHost.Tests.Services
 
             Parallel.For(0, 10000, i =>
             {
-                Url u = service.Upsert(GenereateEntity());
+                Url u = service.ShortenUrl(GenereateEntity());
             });
 
             // Stop timing
@@ -87,7 +87,7 @@ namespace iAFWebHost.Tests.Services
 
             Parallel.For(0, 10000, i =>
             {
-                Url url = service.GetById(i.ToString());
+                Url url = service.ExpandUrl(i.ToString());
             });
 
             // Stop timing
@@ -109,7 +109,7 @@ namespace iAFWebHost.Tests.Services
             // Begin timing
             stopwatch.Start();
 
-            Url url = service.GetById("M");
+            Url url = service.ExpandUrl("M");
 
             // Stop timing
             stopwatch.Stop();
@@ -140,7 +140,7 @@ namespace iAFWebHost.Tests.Services
 
             Parallel.For(1, 10000, i =>
             {
-                Url url = service.GetById(((ulong)i).EncodeBase58());
+                Url url = service.ExpandUrl(((ulong)i).EncodeBase58());
             });
 
             // Stop timing
@@ -162,7 +162,7 @@ namespace iAFWebHost.Tests.Services
             // Begin timing
             stopwatch.Start();
 
-            Url url = service.GetById(((ulong)45).EncodeBase58());
+            Url url = service.ExpandUrl(((ulong)45).EncodeBase58());
 
             // Stop timing
             stopwatch.Stop();
@@ -184,13 +184,11 @@ namespace iAFWebHost.Tests.Services
         public void Test_GetUrlList()
         {
             UrlService service = new UrlService();
-            List<Url> results = service.GetUrlList();
-
+            Dto<Url> results = service.GetUrlList();
             Assert.IsNotNull(results);
+            Assert.IsNotNull(results.Entities);
+            Assert.IsTrue(results.TotalRows > 0);
         }
-
-
-        
 
         private Url GenereateEntity()
         {
@@ -205,6 +203,5 @@ namespace iAFWebHost.Tests.Services
             entity.Href = "http://www.yahoo.com/" + Guid.NewGuid().ToString();
             return entity;
         }
-
     }
 }

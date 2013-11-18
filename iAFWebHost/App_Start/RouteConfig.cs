@@ -12,6 +12,7 @@ namespace iAFWebHost
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.IgnoreRoute("v1/{*pathInfo}");
 
             routes.MapRoute(
                 name: "QR",
@@ -20,7 +21,19 @@ namespace iAFWebHost
             );
 
             routes.MapRoute(
-                name: "UserProfile",
+                name: "Tag",
+                url: "tag/{id}",
+                defaults: new { controller = "Home", action = "Tag" }
+            );
+
+            routes.MapRoute(
+                name: "Host",
+                url: "site/{id}",
+                defaults: new { controller = "Home", action = "Site" }
+            );
+
+            routes.MapRoute(
+                name: "User",
                 url: "user/{username}",
                 defaults: new { controller = "Account", action = "UserProfile" }
             );

@@ -1,0 +1,29 @@
+﻿@using iAFWebHost.Models;
+@using iAFWebHost.Utils;
+@model PageModel
+
+@{
+    ViewBag.Title = "UserProfile";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <h2 style="color:#fff">@Model.Host</h2>
+        <div class="pop-unit">
+            <strong>Urls:</strong> <span class="badge">@Model.UrlCount</span>
+        </div>
+    </div>
+    <div class="col-md-8">
+        @if (Model.UrlModel == null)
+        {
+            @Html.Partial("_LinkBox", new UrlModel())
+        }
+        else
+        {
+            @Html.Partial("_LinkBox", Model.UrlModel)
+        }
+    </div>
+</div>
+<br />
+
+@Html.Partial("_UrlList", Model)

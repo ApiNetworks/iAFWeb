@@ -15,7 +15,7 @@
     <AssemblyName>iAFWebHost</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -39,16 +39,28 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Couchbase">
-      <HintPath>..\packages\CouchbaseNetClient.1.2.9\lib\net40\Couchbase.dll</HintPath>
-    </Reference>
-    <Reference Include="Enyim.Caching">
-      <HintPath>..\packages\CouchbaseNetClient.1.2.9\lib\net40\Enyim.Caching.dll</HintPath>
-    </Reference>
     <Reference Include="MessagingToolkit.QRCode">
       <HintPath>..\resources\QR\MessagingToolkit.QRCode.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack">
+      <HintPath>..\packages\ServiceStack.3.9.70\lib\net35\ServiceStack.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Common">
+      <HintPath>..\packages\ServiceStack.Common.3.9.70\lib\net35\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\packages\ServiceStack.Common.3.9.70\lib\net35\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.ServiceInterface">
+      <HintPath>..\packages\ServiceStack.3.9.70\lib\net35\ServiceStack.ServiceInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\packages\ServiceStack.Text.3.9.70\lib\net35\ServiceStack.Text.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -176,6 +188,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\ApiService.cs" />
+    <Compile Include="AppHost.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -183,13 +197,18 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\CustomAccountController.cs" />
-    <Compile Include="Controllers\WebApiController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Entities\Dto.cs" />
+    <Compile Include="Entities\EntityBase.cs" />
+    <Compile Include="Entities\Error.cs" />
+    <Compile Include="Entities\ServiceError.cs" />
     <Compile Include="Entities\Url.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AssemblyHelper.cs" />
+    <Compile Include="Helpers\Lazy.cs" />
     <Compile Include="Identity\RoleIdentity.cs" />
     <Compile Include="Identity\RoleStore.cs" />
     <Compile Include="Identity\UserIdentity.cs" />
@@ -198,16 +217,37 @@
     <Compile Include="Identity\UserIdentityRole.cs" />
     <Compile Include="Identity\UserStore.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ErrorModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\PageHelper.cs" />
     <Compile Include="Models\PageModel.cs" />
     <Compile Include="Models\UrlModel.cs" />
+    <Compile Include="NLog\CouchbaseTarget.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="NLog\UtcDateRenderer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="NLog\WebVariablesRenderer.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\LogRepository.cs" />
+    <Compile Include="Repositories\RepositoryBase.cs" />
+    <Compile Include="Repositories\UrlRepository.cs" />
     <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Repositories\CouchbaseManager.cs" />
+    <Compile Include="Services\ILogger.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\LogService.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Services\UrlService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\Mapper.cs" />
     <Compile Include="Utils\QRGenerator.cs" />
-    <Compile Include="Utils\StringExtensions.cs" />
+    <Compile Include="Utils\Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -216,11 +256,12 @@
     <Content Include="Content\img\face-icon.jpg" />
     <Content Include="Content\img\face.jpg" />
     <Content Include="Content\img\logo.png" />
+    <Content Include="Content\Site.css" />
     <Content Include="Docs\views.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\site.min.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="handlers\IdenticonHandler.ashx" />
@@ -237,6 +278,8 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\ZeroClipboard.min.js" />
+    <Content Include="Scripts\ZeroClipboard.swf" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -247,7 +290,7 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
@@ -268,6 +311,9 @@
     <Content Include="Views\Home\News.cshtml" />
     <Content Include="Views\Account\UserProfile.cshtml" />
     <Content Include="Views\Shared\_UrlList.cshtml" />
+    <Content Include="Views\Home\Site.cshtml" />
+    <Content Include="Views\Home\Tag.cshtml" />
+    <Content Include="Views\Error\ErrorMonitor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -282,8 +328,16 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\couchbase-net-client\src\Couchbase\Couchbase.csproj">
+      <Project>{708a2350-a26c-444d-b975-8164263951a7}</Project>
+      <Name>Couchbase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\couchbase-net-client\src\Enyim.Caching\Enyim.Caching.csproj">
+      <Project>{eb42e369-1adf-4e08-8db7-6fa792abdcc7}</Project>
+      <Name>Enyim.Caching</Name>
+    </ProjectReference>
     <ProjectReference Include="..\iAF\iAF.csproj">
-      <Project>{ddad951d-55d9-4708-ba0f-3eaa32cb7ea0}</Project>
+      <Project>{c72d6e62-00b5-4043-8359-a6f46db96275}</Project>
       <Name>iAF</Name>
     </ProjectReference>
   </ItemGroup>
@@ -305,7 +359,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50377</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50377/</IISUrl>
+          <IISUrl>http://dev.i.af</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -1,0 +1,28 @@
+﻿@model iAFWebHost.Models.PageModel
+@using iAFWebHost.Utils;
+
+@{
+    ViewBag.Title = "ErrorMonitor";
+}
+
+<h2 style="color:#fff">Error Monitor</h2>
+<div class="pop-unit">
+    @if (!Model.Errors.IsNullOrEmpty())
+    {
+        foreach (var e in Model.Errors)
+        {
+            <form action="/error/delete" method="post">
+                <textarea cols="150" style="width:100%" rows="12" name="@e.Id">
+                @e.Exception
+                @e.FormattedMessage</textarea><br />
+                <input type="hidden" name="errorid" value="@e.Id" />
+                <button class="btn btn-danger"> Remove </button>
+            </form>
+        }
+    }
+    else
+    {
+        <h3>No Errors found</h3>
+        <br /><br />
+    }
+</div>

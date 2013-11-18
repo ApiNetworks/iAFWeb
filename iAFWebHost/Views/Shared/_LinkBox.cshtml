@@ -2,23 +2,24 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h1 style="color:#fff">Shorten your links! Earn Karma!</h1>
-        <form class="form-inline" role="form" method="post">
+        <h2 id="h2info" style="color:#fff">Shorten your links! Earn Karma!</h2>
+        <form class="form-inline" id="linkBox" role="form" method="post">
             <div class="link-unit">
                 <div class="input-group">
                     @if (Model != null && !String.IsNullOrEmpty(Model.ShortHref))
                     {
-                        <input type="text" name="href" value="@Model.ShortHref" id="url" class="input-lg">
+                        <input type="text" name="href" value="@Model.ShortHref" id="href" class="input-lg">
                         <span class="input-group-btn">
-                            <button type="submit" class="btn btn-success btn-lg"> Navigate </button>
+                            <button type="submit" id="btnUrl" class="btn btn-success btn-lg"> Navigate </button>
                         </span>
                         @Html.ValidationMessageFor(model => model.Href)
                     }
                     else
                     {
-                        <input type="text" name="href" id="url" placeholder="http:// ... paste your long url here ... " class="input-lg">
+                        <input type="text" name="href" id="href" placeholder="http:// ... paste your long url here ... " class="input-lg">
                         <span class="input-group-btn">
-                            <button type="submit" class="btn btn-success btn-lg"> Make It Short </button>
+                            <button type="submit" id="btnUrl" class="btn btn-success btn-lg"> Make It Short </button>
+                            <button type="submit" style="display:none;" id="btnCopy" data-clipboard-target='href' class="btn btn-success btn-lg"> Copy To Clipboard </button>
                         </span>
                     }
                 </div>
@@ -26,3 +27,52 @@
         </form>
     </div>
 </div>
+
+<script src="~/Scripts/ZeroClipboard.min.js"></script>
+@*<script type="text/javascript">
+    var clip = new ZeroClipboard($("#btnCopy"), { moviePath: "/Scripts/ZeroClipboard.swf" });
+    $("button").click(function () {
+        var url = $("#href").val();
+        if (url.length > 12 && url.substr(0, 11) == "http://i.af") {
+            $("#btnUrl").hide();
+            $("#btnCopy").show();
+        } else {
+            var request = { Url: url };
+            $.post("/v1/url?format=json", request, function (data) {
+                $("#href").val(data.ShortHref);
+                $("#btnUrl").hide();
+                $("#btnCopy").show();
+                $("#h2info").html("Done! Copy to clipboard?");
+            });
+        }
+        return false;
+    });
+</script>*@
+<script type="text/javascript">
+    var clip = new ZeroClipboard($("#btnCopy"), { moviePath: "/Scripts/ZeroClipboard.swf" });
+    clip.glue($("#btnCopy"));
+    $('#btnCopy').mouseover(function(){
+        clip.setText($("#href").val());
+    });
+    $('#btnCopy').mousedown(function () {
+        $("#btnUrl").show();
+        $("#btnCopy").hide();
+    });
+
+    $("#btnUrl").click(function () {
+        var url = $("#href").val();
+        if (url.length > 12 && url.substr(0, 11) == "http://i.af") {
+            $("#btnUrl").hide();
+            $("#btnCopy").show();
+        } else {
+            var request = { Url: url };
+            $.post("/v1/url?format=json", request, function (data) {
+                $("#href").val(data.ShortHref);
+                $("#btnUrl").hide();
+                $("#btnCopy").show();
+                $("#h2info").html("Done! Copy to clipboard?");
+            });
+        }
+        return false;
+    });
+</script>

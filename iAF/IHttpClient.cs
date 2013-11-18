@@ -8,10 +8,10 @@ namespace iAF
 {
     public interface IHttpClient
     {
-        UrlResponse Shorten(string uri);
-        List<UrlResponse> Shorten(List<string> uris);
+        Url Shorten(string uri);
+        List<Url> Shorten(List<string> uris);
 
-        UrlResponse Expand(string shortId);
-        List<UrlResponse> Expand(List<string> shortIds);
+        Url Expand(string shortId);
+        List<Url> Expand(List<string> shortIds);
     }
 }

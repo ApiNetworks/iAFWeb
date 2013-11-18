@@ -7,7 +7,7 @@ using System.Web;
 namespace iAF.Entities
 {
     [Route("/url")]
-    public class UrlRequest : IReturn<UrlResponse> 
+    public class UrlRequest : IReturn<Url> 
     {
         public string ShortId { get; set; }
         public string Url { get; set; }

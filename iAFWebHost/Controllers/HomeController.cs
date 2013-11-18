@@ -15,13 +15,14 @@ namespace iAFWebHost.Controllers
         [HttpGet]
         public ActionResult Index(string id)
         {
-            if (!String.IsNullOrEmpty(id))
+            if (id.IsShortCode())
             {
                 UrlService urlService = new UrlService();
-                var entity = urlService.GetById(id);
-
-                if (!String.IsNullOrEmpty(entity.Href))
+                var entity = urlService.ExpandUrl(id);
+                if (entity != null && !String.IsNullOrEmpty(entity.Href))
                     return Redirect(entity.Href);
+                else
+                    throw new HttpException();
             }
 
             return View();
@@ -48,7 +49,7 @@ namespace iAFWebHost.Controllers
                             {
                                 var entity = GetEntityById(shortCode);
 
-                                if(!String.IsNullOrEmpty(entity.Href))
+                                if (!String.IsNullOrEmpty(entity.Href))
                                     return Redirect(entity.Href);
                             }
                         }
@@ -74,10 +75,7 @@ namespace iAFWebHost.Controllers
         public ActionResult AddUser(string id)
         {
             if (!id.IsShortCode())
-            {
-                ViewBag.Error = "Reason: Invalid shortCode";
-                return View("Error");
-            }
+                throw new HttpException(404, "Not Found");
 
             AddUser(id, User.Identity.Name);
             return RedirectToAction("UserProfile", "Account", new { username = User.Identity.Name });
@@ -88,11 +86,8 @@ namespace iAFWebHost.Controllers
         public ActionResult DeleteUser(string id)
         {
             if (!id.IsShortCode())
-            {
-                ViewBag.Error = "Reason: Invalid shortCode";
-                return View("Error");
-            }
-            
+                throw new HttpException(404, "Not Found");
+
             DeleteUser(id, User.Identity.Name);
             return RedirectToAction("UserProfile", "Account", new { username = User.Identity.Name });
         }
@@ -101,48 +96,62 @@ namespace iAFWebHost.Controllers
         [OutputCache(Duration = 1000)]
         public FileResult Qr(string id, string scale)
         {
-            if (!String.IsNullOrEmpty(id))
+            if (!id.IsShortCode())
+                throw new HttpException(404, "Not Found");
+
+            int qrScale = 1;
+            if (!string.IsNullOrEmpty(scale))
+                Int32.TryParse(scale, out qrScale);
+
+            if (qrScale > 45) qrScale = 45;
+
+            Url entity = base.GetEntityById(id);
+            if (entity != null)
             {
-                int qrScale = 1;
-                if (!string.IsNullOrEmpty(scale))
+                var img = QRGenerator.GenerateImage(entity.ShortHref, qrScale);
+                if (img != null)
                 {
-                    Int32.TryParse(scale, out qrScale);
-                }
-
-                if (qrScale > 45)
-                    qrScale = 45;
-
-                Url entity = base.GetEntityById(id);
-                if (entity != null)
-                {
-                    var img = QRGenerator.GenerateImage(entity.ShortHref, qrScale);
-                    if (img != null)
-                    {
-                        ImageResult image = new ImageResult(img);
-                        return image;
-                    }
+                    ImageResult image = new ImageResult(img);
+                    return image;
                 }
             }
 
             return null;
         }
 
+        public ActionResult Site(string id)
+        {
+            if (String.IsNullOrEmpty(id))
+                throw new ArgumentNullException();
+
+            PageModel model = GetUrlListByHost(id);
+            model.UrlCount = GetUrlCountByHost(id);
+            model.Host = id;
+
+            return View(model);
+        }
+
+        public ActionResult Tag(string id)
+        {
+            if (String.IsNullOrEmpty(id))
+                throw new ArgumentNullException();
+
+            PageModel model = GetUrlListByTag(id);
+            model.UrlCount = GetUrlCountByTag(id);
+            model.Tag = id;
+            return View(model);
+        }
+
         public ActionResult News()
         {
-            PageModel model = new PageModel();
-            model.UrlCount = GetUrlCount();
-            model.Urls = GetUrlList();
-
+            PageModel model = GetUrlList();
             return View(model);
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
             PageModel model = new PageModel();
-            model.UrlCount = GetUrlCount();
-
             return View(model);
         }
 

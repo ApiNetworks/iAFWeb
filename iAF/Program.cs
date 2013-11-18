@@ -13,16 +13,17 @@ namespace iAF
     {
         static void Main(string[] args)
         {
-            LoadSampleData();
+            //LoadSampleData();
+            Demo();
         }
 
-        void Demo()
+        static void Demo()
         {
             IHttpClient client = new HttpClient();
 
             string url = "http://www.rambler.ru/";
 
-            UrlResponse response = client.Shorten(url);
+            Url response = client.Shorten(url);
             Console.WriteLine("Short Url:" + response.ShortHref);
             Console.WriteLine("Short Code:" + response.ShortId);
 

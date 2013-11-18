@@ -9,7 +9,7 @@ namespace iAF
 {
     public class HttpClient : IHttpClient
     {
-        private static string endPoint = "http://api.i.af/v1";
+        private static string endPoint = "http://i.af/v1";
         //private static string endPoint = "http://dev.i.af/v1";
 
         private static readonly Lazy<JsonServiceClient> _instance = new Lazy<JsonServiceClient>(() => new JsonServiceClient(endPoint));
@@ -22,15 +22,15 @@ namespace iAF
             }
         }
 
-        public List<UrlResponse> Shorten(List<string> uris)
+        public List<Url> Shorten(List<string> uris)
         {
-            List<UrlResponse> responses = new List<UrlResponse>();
+            List<Url> responses = new List<Url>();
             foreach(string uri in uris)
             {
                 Uri validUri = null;
                 if (!String.IsNullOrEmpty(uri) && Uri.TryCreate(uri, UriKind.Absolute, out validUri))
                 {
-                    UrlResponse response = Shorten(uri);
+                    Url response = Shorten(uri);
                     if (response != null)
                         responses.Add(response);
                 }
@@ -38,7 +38,7 @@ namespace iAF
             return responses;
         }
 
-        public UrlResponse Shorten(string uri)
+        public Url Shorten(string uri)
         {
             UrlRequest request = new UrlRequest();
             Uri validUri = null;
@@ -53,14 +53,14 @@ namespace iAF
             }
         }
 
-        public List<UrlResponse> Expand(List<string> shortIds)
+        public List<Url> Expand(List<string> shortIds)
         {
-            List<UrlResponse> responses = new List<UrlResponse>();
+            List<Url> responses = new List<Url>();
             foreach (string shortId in shortIds)
             {
                 if (shortId.IsShortCode())
                 {
-                    UrlResponse response = Expand(shortId);
+                    Url response = Expand(shortId);
                     if (response != null)
                         responses.Add(response);
                 }
@@ -68,7 +68,7 @@ namespace iAF
             return responses;
         }
 
-        public UrlResponse Expand(string shortId)
+        public Url Expand(string shortId)
         {
             if (shortId.IsShortCode())
             {

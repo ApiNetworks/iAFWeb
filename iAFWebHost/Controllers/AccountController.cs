@@ -314,10 +314,16 @@ namespace iAFWebHost.Controllers
         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult UserProfile(string username)
         {
-            PageModel model = new PageModel();
-            model.Urls = GetUserUrlList(username);
+            if (String.IsNullOrEmpty(username))
+                throw new ArgumentException("User name is invalid");
+
+            var user = UserManager.FindByName(username);
+            if(user == null)
+                throw new ArgumentException("User name is invalid");
+
+            PageModel model = GetUrlListByUser(username);
             model.UserName = username;
-            model.UrlCount = GetUserUrlCount(username);
+            model.UrlCount = model.Pager.TotalRows;
             return View(model);
         }
 

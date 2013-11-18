@@ -1,4 +1,6 @@
 ﻿using Couchbase;
+using iAFWebHost.Entities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,25 +13,41 @@ namespace iAFWebHost.Services
     /// </summary>
     public class BaseService
     {
-        /// <summary>
-        /// Gets the database client.
-        /// </summary>
-        /// <value>
-        /// The database client.
-        /// </value>
-        protected static CouchbaseClient NoSqlClient { get; private set; }
-
-        /// <summary>
-        /// Initializes the <see cref="BaseService"/> class.
-        /// </summary>
-        static BaseService()
+        public ServiceError HandleException(object[] param, Exception ex)
         {
-            NoSqlClient = new CouchbaseClient();
+            ServiceError error = new ServiceError();
+            error.Message = "Service Error. Administrator has been notified";
+
+            try
+            {
+                ILogger logService = new LogService();
+                logService.Error(TrySerialize(param), ex);
+            }
+            catch
+            {
+
+            }
+
+            return error;
         }
 
-        public ulong Increment()
+        private string TrySerialize(object[] param)
         {
-            return NoSqlClient.Increment("url::count", 1, 1);
+            string returnValue = "Unable to serialize.";
+
+            if (param == null)
+                return "Null value";
+
+            try
+            {
+                return JsonConvert.SerializeObject(param);
+            }
+            catch
+            {
+
+            }
+
+            return returnValue;
         }
     }
 }
