@@ -24,6 +24,7 @@ namespace iAFWebHost
             //    clientId: "",
             //    clientSecret: "");
 
+            app.UseGoogleAuthentication();
         }
     }
 }

@@ -364,6 +364,48 @@ namespace iAFWebHost.Services
 
         #endregion
 
+        #region Statistics
+        public ulong IncrementHitCount(string shortId)
+        {
+            if (!shortId.IsShortCode())
+                throw new ArgumentException("Short Id is invalid");
+
+            try
+            {
+                DataPoint dataPoint = new DataPoint(shortId);
+                return _repository.Increment(dataPoint);
+            } 
+            catch (Exception ex)
+            {
+                throw HandleException(new object[] { shortId }, ex);
+            }
+        }
+
+        public List<DataPoint> GetLast24HourStats(string shortId)
+        {
+            if (!shortId.IsShortCode())
+                throw new ArgumentException("Short Id is invalid");
+
+            List<DataPoint> points = new List<DataPoint>();
+            DateTime startUtcDateTime = DateTime.UtcNow.AddHours(-23);
+            DateTime endUtcDateTime = DateTime.UtcNow;
+            DateTime hourlyInterval = startUtcDateTime;
+            
+            do
+            {
+                DataPoint request = new DataPoint();
+                request.ShortId = shortId;
+                request.UtcTimeStamp = new DateTime(hourlyInterval.Year, hourlyInterval.Month, hourlyInterval.Day, hourlyInterval.Hour, 0, 0);
+                var response = _repository.GetDataPointValue(request);
+                points.Add(response);
+                hourlyInterval = hourlyInterval.AddHours(1);
+            }
+            while(hourlyInterval <= endUtcDateTime);
+            return points;
+        }
+
+        #endregion
+
         public bool IsValid(Url url)
         {
             if (url != null && String.IsNullOrEmpty(url.Host) == false)

@@ -21,6 +21,18 @@ namespace iAFWebHost
             );
 
             routes.MapRoute(
+                name: "Ad",
+                url: "ad/{id}",
+                defaults: new { controller = "Home", action = "Ad" }
+            );
+
+            routes.MapRoute(
+                name: "Stats",
+                url: "stats/{id}",
+                defaults: new { controller = "Home", action = "Stats" }
+            );
+
+            routes.MapRoute(
                 name: "Tag",
                 url: "tag/{id}",
                 defaults: new { controller = "Home", action = "Tag" }

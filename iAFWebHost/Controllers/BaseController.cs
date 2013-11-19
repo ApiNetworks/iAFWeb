@@ -169,6 +169,7 @@ namespace iAFWebHost.Controllers
         protected PageModel GetUrlList()
         {
             PageHelper pageHelper = ParsePageHelper();
+            pageHelper.PageSize = 100;
             Dto<Url> dto = urlService.GetUrlList(pageHelper.Page, pageHelper.PageSize, pageHelper.Skip, pageHelper.NextKey, null, pageHelper.NextKeyId, null, pageHelper.Sort);
             PageModel model = Mapper.Map(dto);
             model.Pager.TempKey = pageHelper.PreviousKey;

@@ -1,6 +1,5 @@
 ﻿sing iAFWebHost.Entities;
-@model iAFWebHost.Models.UrlModel
-
+@model iAFWebHost.Models.PageModel
 @{
     Layout = null;
 }
@@ -62,7 +61,7 @@
         <tr><td class="header"><div><h1>Ad Description Goes Here</h1></div></td></tr>
         <tr>
             <td class="content">
-                <iframe src="@Model.Href" frameborder="0" />
+                <iframe src="@Model.UrlModel.Href" frameborder="0" />
             </td>
         </tr>
     </table>

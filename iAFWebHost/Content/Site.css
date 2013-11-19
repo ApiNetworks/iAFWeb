@@ -70,7 +70,7 @@ input[type="checkbox"].input-validation-error {
     -moz-border-radius: 8px;
     -webkit-border-radius: 8px;
     border: 2px solid #ecf1f3;
-    background-color: #fcfafa;
+    background-color: #fff;
     padding: 20px;
     -webkit-box-shadow: 1px 1px 1px 0px rgb(146,144,144);
     -moz-box-shadow: 1px 1px 1px 0px rgb(146,144,144);

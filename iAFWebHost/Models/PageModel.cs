@@ -17,6 +17,7 @@ namespace iAFWebHost.Models
         public int UrlCount { get; set; }
         public List<UrlModel> Urls { get; set; }
         public List<ErrorModel> Errors { get; set; }
+        public List<DataPointModel> DataPoints { get; set; }
         public UrlModel UrlModel { get; set; }
         public PageHelper Pager { get; set; }
         public string UserName { get; set; }

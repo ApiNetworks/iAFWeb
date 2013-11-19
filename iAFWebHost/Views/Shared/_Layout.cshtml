@@ -28,7 +28,8 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+        @RenderSection("scripts", required: false)
+    
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -60,7 +61,7 @@
         <hr />
         <footer>
             <p>
-                &copy; @DateTime.Now.Year - i.af  
+                &copy; @DateTime.Now.Year - i.af
                 <br />Version: @ViewContext.Controller.GetType().Assembly.GetName().Version
             </p>
         </footer>

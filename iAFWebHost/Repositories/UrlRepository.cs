@@ -304,5 +304,33 @@ namespace iAFWebHost.Repositories
             return GetDto("host_urllist", StaleMode.AllowStale, page, limit, skip, false, 0, false, key, key, startDocId, endDocId, sort);
         }
         #endregion
+
+        #region Statistics
+        public ulong Increment(DataPoint entity)
+        {
+            return base.Increment(entity.BuildKey());
+        }
+
+        public DataPoint GetDataPointValue(DataPoint entity)
+        {
+            string dbKey = entity.BuildKey();
+
+            DataPoint result = new DataPoint();
+            result.Id = dbKey;
+            result.Value = 0;
+            result.UtcTimeStamp = entity.UtcTimeStamp;
+            
+            string value = base.GetValue(dbKey);
+            ulong countValue = 0;
+            if (!String.IsNullOrEmpty(value) && ulong.TryParse(value, out countValue))
+            {
+                result.Id = dbKey;
+                result.ParseKey();
+                result.Value = countValue;
+            }
+
+            return result;
+        }
+        #endregion
     }
 }

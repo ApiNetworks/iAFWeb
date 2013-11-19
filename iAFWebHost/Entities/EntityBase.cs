@@ -10,13 +10,13 @@ namespace iAFWebHost.Entities
     public abstract class EntityBase
     {
         [JsonProperty(PropertyName = "Id")]
-        public string Id { get; set; }
+        public virtual string Id { get; set; }
 
         [JsonIgnore]
-        public string ViewKey { get; set; }
+        public virtual string ViewKey { get; set; }
 
         [JsonIgnore]
-        public ulong CasValue { get; set; }
+        public virtual ulong CasValue { get; set; }
 
         [JsonProperty("type")]
         public abstract string Type { get; } 

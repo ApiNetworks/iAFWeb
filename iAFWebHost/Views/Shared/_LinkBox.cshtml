@@ -2,8 +2,8 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h2 id="h2info" style="color:#fff">Shorten your links! Earn Karma!</h2>
-        <form class="form-inline" id="linkBox" role="form" method="post">
+        <h2 id="shrink_info" style="color:#fff">Shrink your links! Earn Karma!</h2>
+        <form class="form-inline" id="linkBox" role="form" method="post" onsubmit="return false;">
             <div class="link-unit">
                 <div class="input-group">
                     @if (Model != null && !String.IsNullOrEmpty(Model.ShortHref))
@@ -18,8 +18,8 @@
                     {
                         <input type="text" name="href" id="href" placeholder="http:// ... paste your long url here ... " class="input-lg">
                         <span class="input-group-btn">
-                            <button type="submit" id="btnUrl" class="btn btn-success btn-lg"> Make It Short </button>
-                            <button type="submit" style="display:none;" id="btnCopy" data-clipboard-target='href' class="btn btn-success btn-lg"> Copy To Clipboard </button>
+                            <button type="submit" id="btnUrl" class="btn btn-success btn-lg" style="width: 180px"> Shrink It </button>
+                            <button type="submit" style="display: none; width: 180px" id="btnCopy" onclick="return false;" class="btn btn-success btn-lg"> Copy To Clipboard </button>
                         </span>
                     }
                 </div>
@@ -27,52 +27,84 @@
         </form>
     </div>
 </div>
-
 <script src="~/Scripts/ZeroClipboard.min.js"></script>
-@*<script type="text/javascript">
-    var clip = new ZeroClipboard($("#btnCopy"), { moviePath: "/Scripts/ZeroClipboard.swf" });
-    $("button").click(function () {
-        var url = $("#href").val();
-        if (url.length > 12 && url.substr(0, 11) == "http://i.af") {
-            $("#btnUrl").hide();
-            $("#btnCopy").show();
-        } else {
-            var request = { Url: url };
-            $.post("/v1/url?format=json", request, function (data) {
-                $("#href").val(data.ShortHref);
-                $("#btnUrl").hide();
-                $("#btnCopy").show();
-                $("#h2info").html("Done! Copy to clipboard?");
+<script type="text/javascript">
+    $(document).ready(function () {
+        clip = null;
+        ZeroClipboard.setDefaults({
+            moviePath: "/Scripts/ZeroClipboard.swf"
+        });
+        if (ZeroClipboard.detectFlashSupport()) {
+            clip = new ZeroClipboard();
+            clip.setHandCursor(true);
+            clip.glue($('#btnCopy'));
+            clip.on('complete', function (client, args) {
+                onCopy(client, args);
             });
         }
-        return false;
-    });
-</script>*@
-<script type="text/javascript">
-    var clip = new ZeroClipboard($("#btnCopy"), { moviePath: "/Scripts/ZeroClipboard.swf" });
-    clip.glue($("#btnCopy"));
-    $('#btnCopy').mouseover(function(){
-        clip.setText($("#href").val());
-    });
-    $('#btnCopy').mousedown(function () {
-        $("#btnUrl").show();
-        $("#btnCopy").hide();
+        $shrinkLink = $('#href');
+        $shrinkButton = $('#btnUrl');
+        $shrinkInfo = $('#shrink_info');
+        $copyButton = $('#btnCopy');
+        $shrinkButton.click(doShrink);
+        $shrinkLink.placeholder();
     });
 
-    $("#btnUrl").click(function () {
-        var url = $("#href").val();
+    function onCopy(client, text) {
+        resetShrinker();
+    };
+
+    function resetShrinker() {
+        $shrinkLink.val('');
+        $copyButton.fadeOut(500, function () { $shrinkButton.fadeIn(500); });
+        $shrinkInfo.fadeOut(500, function () {
+            $(this).html("<h2 id='shrink_info' style='color:#fff'>Great! It's in your clipboard!</h2>");
+            $shrinkInfo.fadeIn(500);
+            $shrinkInfo.fadeOut(1000, function () {
+                $(this).html("<h2 id='shrink_info' style='color:#fff'>Shorten your links! Earn Karma!</h2>");
+                $shrinkInfo.fadeIn(500);
+            });
+        });
+    }
+
+    function doShrink() {
+        function errorOccured() {
+            alert('There was an error while processing your URL.');
+        }
+        var url = $shrinkLink.val();
+        if (url.length < 12)
+            return false;
         if (url.length > 12 && url.substr(0, 11) == "http://i.af") {
-            $("#btnUrl").hide();
-            $("#btnCopy").show();
+            $shrinkButton.hide();
+            $copyButton.show();
         } else {
             var request = { Url: url };
-            $.post("/v1/url?format=json", request, function (data) {
-                $("#href").val(data.ShortHref);
-                $("#btnUrl").hide();
-                $("#btnCopy").show();
-                $("#h2info").html("Done! Copy to clipboard?");
+            $.ajax({
+                type: 'post',
+                url: '/v1/url?format=json',
+                data: {
+                    Url: url
+                },
+                beforeSend: function (jqXHR, settings) {
+                    $shrinkButton.hide();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    errorOccured();
+                },
+                success: function (data, textStatus, jqXHR) {
+                    $shrinkLink.val(data.ShortHref);
+                    if (ZeroClipboard.detectFlashSupport()) {
+                        $copyButton.show();
+                        clip.setText(data.ShortHref);
+                        clip.setHandCursor(true);
+                    } else {
+                        $copyButton.hide();
+                        $shrinkButton.show();
+                    }
+                    $shrinkInfo.html('Done! Copy to clipboard?');
+                }
             });
         }
         return false;
-    });
+    };
 </script>

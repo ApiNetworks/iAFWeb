@@ -20,7 +20,10 @@ namespace iAFWebHost.Controllers
                 UrlService urlService = new UrlService();
                 var entity = urlService.ExpandUrl(id);
                 if (entity != null && !String.IsNullOrEmpty(entity.Href))
+                {
+                    urlService.IncrementHitCount(id);
                     return Redirect(entity.Href);
+                }
                 else
                     throw new HttpException();
             }
@@ -79,6 +82,52 @@ namespace iAFWebHost.Controllers
 
             AddUser(id, User.Identity.Name);
             return RedirectToAction("UserProfile", "Account", new { username = User.Identity.Name });
+        }
+
+        public ActionResult Ad(string id)
+        {
+            if (id.IsShortCode())
+            {
+                UrlService urlService = new UrlService();
+                Url entity = urlService.ExpandUrl(id);
+                if (entity != null && !String.IsNullOrEmpty(entity.Href))
+                {
+                    PageModel model = new PageModel();
+                    model.UrlModel = Mapper.Map(entity);
+                    return View(model);
+                }
+                else
+                    throw new HttpException();
+            }
+
+            return View();
+        }
+
+        public ActionResult Stats(string id)
+        {
+            if (id.IsShortCode())
+            {
+                UrlService urlService = new UrlService();
+                Url entity = urlService.ExpandUrl(id);
+                if (entity != null && !String.IsNullOrEmpty(entity.Href))
+                {
+                    var stats = urlService.GetLast24HourStats(id);
+                    List<DataPointModel> statsModels = new List<DataPointModel>();
+                    foreach (var stat in stats)
+                    {
+                        var m = Mapper.Map(stat);
+                        statsModels.Add(m);
+                    }
+                    PageModel model = new PageModel();
+                    model.UrlModel = Mapper.Map(entity);
+                    model.DataPoints = statsModels;
+                    return View(model);
+                }
+                else
+                    throw new HttpException();
+            }
+
+            return View();
         }
 
         [HttpGet]

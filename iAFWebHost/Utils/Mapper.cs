@@ -103,6 +103,15 @@ namespace iAFWebHost.Utils
             return model;
         }
 
+        public static DataPointModel Map(DataPoint entity)
+        {
+            DataPointModel model = new DataPointModel();
+            model.ShortId = entity.ShortId;
+            model.TimeStamp = entity.UtcTimeStamp;
+            model.Value = entity.Value;
+            return model;
+        }
+
         /// <summary>
         /// Maps the specified dto.
         /// </summary>

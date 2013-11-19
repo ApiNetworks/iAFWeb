@@ -104,32 +104,32 @@ namespace iAFWebHost.Repositories
             return CouchbaseManager.Instance.Remove(id);
         }
 
-        protected IView<IViewRow> View(string viewName)
+        protected virtual IView<IViewRow> View(string viewName)
         {
             return View(typeof(T).Name.ToLower(), viewName);
         }
 
-        protected IView<IViewRow> View(string designDoc, string viewName)
+        protected virtual IView<IViewRow> View(string designDoc, string viewName)
         {
             return CouchbaseManager.Instance.GetView(designDoc, viewName);
         }
 
-        protected ISpatialView<ISpatialViewRow> SpatialView(string viewName)
+        protected virtual ISpatialView<ISpatialViewRow> SpatialView(string viewName)
         {
             return SpatialView(typeof(T).Name.ToLower(), viewName);
         }
 
-        protected ISpatialView<ISpatialViewRow> SpatialView(string designDoc, string viewName)
+        protected virtual ISpatialView<ISpatialViewRow> SpatialView(string designDoc, string viewName)
         {
             return CouchbaseManager.Instance.GetSpatialView(designDoc, viewName);
         }
 
-        public ulong Increment(string key)
+        public virtual ulong Increment(string key)
         {
             return CouchbaseManager.Instance.Increment(key, 1, 1);
         }
 
-        public T Deserialize(string entity)
+        public virtual T Deserialize(string entity)
         {
             if (!String.IsNullOrEmpty(entity))
                 return JsonConvert.DeserializeObject<T>(entity);
@@ -137,7 +137,7 @@ namespace iAFWebHost.Repositories
                 return null;
         }
 
-        public string Serialize(object entity)
+        public virtual string Serialize(object entity)
         {
             if (entity != null)
                 return JsonConvert.SerializeObject(entity);
@@ -145,7 +145,7 @@ namespace iAFWebHost.Repositories
                 return null;
         }
 
-        public Dto<T> GetDto(string viewName,
+        public virtual Dto<T> GetDto(string viewName,
             StaleMode mode,
             int page = 0,
             int limit = 10,
