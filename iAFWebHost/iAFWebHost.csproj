@@ -204,6 +204,7 @@
     <Compile Include="Entities\EntityBase.cs" />
     <Compile Include="Entities\Error.cs" />
     <Compile Include="Entities\ServiceError.cs" />
+    <Compile Include="Entities\StatRecord.cs" />
     <Compile Include="Entities\Url.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

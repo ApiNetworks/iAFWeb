@@ -331,6 +331,105 @@ namespace iAFWebHost.Repositories
 
             return result;
         }
+
+        public List<DataPoint> GetHourlySystemStats(DateTime startDate, DateTime endDate)
+        {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+
+            object[] startKey = { startDate.Year.ToString(), startDate.Month.ToString(), startDate.Day.ToString(), startDate.Hour.ToString() };
+            object[] endKey = { endDate.Year.ToString(), endDate.Month.ToString(), endDate.Day.ToString(), endDate.Hour.ToString() };
+
+            return dataPoints;
+        }
+
+        public List<DataPoint> GetSystemStats(object[] startKey, object[] endKey, int limit,  bool group, int groupLevel, bool reduce)
+        {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+
+            if (limit > 1000)
+                limit = 1000;
+
+            var view = View("stats", "all");
+            if (startKey != null)
+                view.StartKey(startKey);
+            if (startKey != null)
+                view.EndKey(endKey);
+            if (group) view.Group(true);
+            if (groupLevel > 0) view.GroupAt(groupLevel);
+            view.Reduce(reduce);
+
+            // retrieve results
+            List<IViewRow> results = view.ToList();
+            if (!results.IsNullOrEmpty())
+            {
+                foreach (var row in results)
+                {
+                    if (row.Info != null && !row.Info.Values.IsNullOrEmpty())
+                    {
+                        List<object> valueCollection = row.Info.Values.ToList();
+                        string key = valueCollection[0] as String;
+                        object[] dateObject = (object[])valueCollection[1];
+                        string countObject = (string)valueCollection[2];
+                        ulong countValue = 0;
+                        ulong.TryParse(countObject, out countValue);
+                        DataPoint dataPoint = new DataPoint();
+                        dataPoint.Value = countValue;
+                    }
+                }
+            }
+
+            return dataPoints;
+        }
+
+        public StatRecord GetSystemStatsAggregate(object[] startKey, object[] endKey, int limit, bool group, int groupLevel)
+        {
+            StatRecord statRecord = new StatRecord();
+
+            if (limit > 1000)
+                limit = 1000;
+
+            var view = View("stats", "all");
+            if (startKey != null)
+                view.StartKey(startKey);
+            if (startKey != null)
+                view.EndKey(endKey);
+            if (group) view.Group(true);
+            if (groupLevel > 0) view.GroupAt(groupLevel);
+            view.Reduce(true);
+
+            // retrieve results
+            List<IViewRow> results = view.ToList();
+            if (!results.IsNullOrEmpty())
+            {
+                foreach (var row in results)
+                {
+                    if (row.Info != null)
+                    {
+                        List<object> list = row.Info.Values.ToList<object>();
+                        if (!list.IsNullOrEmpty() && list.Count == 2)
+                        {
+                            Dictionary<string, object> data = list[1] as Dictionary<string, object>;
+                            if (data != null)
+                            {
+                                if (data.ContainsKey("sum"))
+                                    statRecord.Sum = (long)data["sum"];
+                                if (data.ContainsKey("min"))
+                                    statRecord.Min = (long)data["min"];
+                                if (data.ContainsKey("max"))
+                                    statRecord.Max = (long)data["max"];
+                                if (data.ContainsKey("count"))
+                                    statRecord.Count = (long)data["count"];
+                                if (data.ContainsKey("sumsqr"))
+                                    statRecord.SumSqr = (long)data["sumsqr"];
+                            }
+                        }
+                    }
+                }
+            }
+
+            return statRecord;
+        }
+
         #endregion
     }
 }

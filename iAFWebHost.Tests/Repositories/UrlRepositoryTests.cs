@@ -20,12 +20,12 @@ namespace iAFWebHost.Tests.Repositories
         public void Test_UrlRepository_GetUrlList()
         {
             UrlRepository repo = new UrlRepository();
-            
+
             // select first page
             Dto<Url> results = repo.GetUrlList();
 
             // start paging (10 docs per page)
-            for(int page=1; page < 100; page++)
+            for (int page = 1; page < 100; page++)
             {
                 string lastDocId = results.EId;
                 string lastViewKey = results.EKey;
@@ -68,9 +68,9 @@ namespace iAFWebHost.Tests.Repositories
 
             for (int i = 0; i < 100; i++)
             {
-                
+
                 Url entity = new Url();
-                entity.Href = String.Format("http://testdomain{0}.com",i);
+                entity.Href = String.Format("http://testdomain{0}.com", i);
                 entity.Tags.Add("demo");
                 entity.Tags.Add("test");
                 Url response = repo.Upsert(entity);
@@ -186,6 +186,39 @@ namespace iAFWebHost.Tests.Repositories
         {
             UrlRepository repo = new UrlRepository();
             int count = repo.GetUrlCountByUser("YuriMenko34");
+        }
+
+        [TestMethod]
+        public void Test_GetSystemStats()
+        {
+            UrlRepository repo = new UrlRepository();
+
+            DateTime startDate = new DateTime(2013, 11, 18, 0, 0, 0);
+            DateTime endDate = new DateTime(2013, 11, 20, 0, 0, 0);
+
+            List<DataPoint> dataPoints = new List<DataPoint>();
+
+            object[] startKey = { startDate.Year.ToString(), startDate.Month.ToString(), startDate.Day.ToString(), startDate.Hour.ToString() };
+            object[] endKey = { endDate.Year.ToString(), endDate.Month.ToString(), endDate.Day.ToString(), endDate.Hour.ToString() };
+
+            var results = repo.GetSystemStats(startKey, endKey, 100, false, 0, true);
+        }
+
+        [TestMethod]
+        public void Test_GetSystemStatsAggregate()
+        {
+            UrlRepository repo = new UrlRepository();
+
+            DateTime startDate = new DateTime(2013, 11, 18, 0, 0, 0);
+            DateTime endDate = new DateTime(2013, 11, 20, 0, 0, 0);
+
+            List<DataPoint> dataPoints = new List<DataPoint>();
+
+            object[] startKey = { startDate.Year.ToString(), startDate.Month.ToString(), startDate.Day.ToString(), startDate.Hour.ToString() };
+            object[] endKey = { endDate.Year.ToString(), endDate.Month.ToString(), endDate.Day.ToString(), endDate.Hour.ToString() };
+
+            StatRecord stats = repo.GetSystemStatsAggregate(startKey, endKey, 100, false, 0);
+            Assert.IsNotNull(stats);
         }
     }
 }

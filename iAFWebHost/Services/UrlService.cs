@@ -404,6 +404,28 @@ namespace iAFWebHost.Services
             return points;
         }
 
+        public List<DataPoint> GetLast24HourSystemStats()
+        {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            List<DataPoint> points = new List<DataPoint>();
+            DateTime startUtcDateTime = DateTime.UtcNow.AddHours(-23);
+            DateTime endUtcDateTime = DateTime.UtcNow;
+            DateTime hourlyInterval = startUtcDateTime;
+
+            do
+            {
+                DataPoint request = new DataPoint();
+                request.UtcTimeStamp = new DateTime(hourlyInterval.Year, hourlyInterval.Month, hourlyInterval.Day, hourlyInterval.Hour, 0, 0);
+                var response = _repository.GetDataPointValue(request);
+                points.Add(response);
+                hourlyInterval = hourlyInterval.AddHours(1);
+            }
+            while (hourlyInterval <= endUtcDateTime);
+            return points;
+
+            return dataPoints;
+        }
+
         #endregion
 
         public bool IsValid(Url url)

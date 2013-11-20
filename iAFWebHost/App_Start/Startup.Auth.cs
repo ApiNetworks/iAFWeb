@@ -24,6 +24,14 @@ namespace iAFWebHost
             //    clientId: "",
             //    clientSecret: "");
 
+            app.UseTwitterAuthentication(
+               consumerKey: "Pbdf6cD0RgZO6WZmg7OLg",
+               consumerSecret: "ALZDj07Uc5lWETyxGqV1SEDUc6RgyPV110asSsR7PI");
+
+            app.UseFacebookAuthentication(
+               appId: "1412821768932410",
+               appSecret: "108ba83ee8303a68ea5ab04226786fb3");
+
             app.UseGoogleAuthentication();
         }
     }
