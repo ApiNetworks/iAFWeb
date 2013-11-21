@@ -217,7 +217,7 @@ namespace iAFWebHost.Tests.Repositories
             object[] startKey = { startDate.Year.ToString(), startDate.Month.ToString(), startDate.Day.ToString(), startDate.Hour.ToString() };
             object[] endKey = { endDate.Year.ToString(), endDate.Month.ToString(), endDate.Day.ToString(), endDate.Hour.ToString() };
 
-            StatRecord stats = repo.GetSystemStatsAggregate(startKey, endKey, 100, false, 0);
+            DataPoint stats = repo.GetSystemStatsAggregate(startKey, endKey, 100, false, 0);
             Assert.IsNotNull(stats);
         }
     }

@@ -24,6 +24,11 @@ namespace iAFWebHost.Entities
         private string _id;
         public override string Id { get { return BuildKey(); } set { _id = value; } }
         public ulong Value { get; set; }
+        public long Sum { get; set; }
+        public long Min { get; set; }
+        public long Max { get; set; }
+        public long Count { get; set; }
+        public long SumSqr { get; set; }
 
         [JsonIgnore]
         public override string Type { get { return "hit"; } }

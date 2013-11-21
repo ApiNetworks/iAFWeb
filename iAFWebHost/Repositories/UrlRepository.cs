@@ -381,9 +381,9 @@ namespace iAFWebHost.Repositories
             return dataPoints;
         }
 
-        public StatRecord GetSystemStatsAggregate(object[] startKey, object[] endKey, int limit, bool group, int groupLevel)
+        public DataPoint GetSystemStatsAggregate(object[] startKey, object[] endKey, int limit, bool group, int groupLevel)
         {
-            StatRecord statRecord = new StatRecord();
+            DataPoint dataPoint = new DataPoint();
 
             if (limit > 1000)
                 limit = 1000;
@@ -412,22 +412,22 @@ namespace iAFWebHost.Repositories
                             if (data != null)
                             {
                                 if (data.ContainsKey("sum"))
-                                    statRecord.Sum = (long)data["sum"];
+                                    dataPoint.Sum = (long)data["sum"];
                                 if (data.ContainsKey("min"))
-                                    statRecord.Min = (long)data["min"];
+                                    dataPoint.Min = (long)data["min"];
                                 if (data.ContainsKey("max"))
-                                    statRecord.Max = (long)data["max"];
+                                    dataPoint.Max = (long)data["max"];
                                 if (data.ContainsKey("count"))
-                                    statRecord.Count = (long)data["count"];
+                                    dataPoint.Count = (long)data["count"];
                                 if (data.ContainsKey("sumsqr"))
-                                    statRecord.SumSqr = (long)data["sumsqr"];
+                                    dataPoint.SumSqr = (long)data["sumsqr"];
                             }
                         }
                     }
                 }
             }
 
-            return statRecord;
+            return dataPoint;
         }
 
         #endregion

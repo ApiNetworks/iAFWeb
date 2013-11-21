@@ -85,13 +85,10 @@
                 data: {
                     Url: url
                 },
-                beforeSend: function (jqXHR, settings) {
-                    $shrinkButton.hide();
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    errorOccured();
-                },
+                beforeSend: function (jqXHR, settings) {},
+                error: function (jqXHR, textStatus, errorThrown) { errorOccured();},
                 success: function (data, textStatus, jqXHR) {
+                    $shrinkButton.hide();
                     $shrinkLink.val(data.ShortHref);
                     if (ZeroClipboard.detectFlashSupport()) {
                         $copyButton.show();
