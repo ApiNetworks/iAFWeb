@@ -1,0 +1,108 @@
+﻿@model iAFWebHost.Models.PageModel
+@{
+    ViewBag.Title = "Stats";
+}
+<script src="~/Scripts/highcharts.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#container').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Last 24 Hours Clicks. Current Time in London : @DateTime.UtcNow.ToShortDateString()  @DateTime.UtcNow.ToShortTimeString()'
+            },
+            xAxis: {
+                categories: [
+                   @foreach (var item in Model.DataPoints)
+                    {
+                    @: '@item.TimeStamp.ToShortTimeString()', 
+                    }
+                ]
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Click Count'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'System Stats',
+                data: [
+                    @foreach (var item in Model.DataPoints)
+                    {
+                        @: @item.Sum, 
+                    }
+                ]
+
+            }]
+        });
+    });
+</script>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2 style="color:#fff">System Stats </h2>
+        <div class="pop-unit">
+            Last 24 Hours 
+        </div>
+    </div>
+    <div class="col-md-8">
+        @if (Model.UrlModel == null)
+        {
+            @Html.Partial("_LinkBox", new iAFWebHost.Models.UrlModel())
+        }
+        else
+        {
+            @Html.Partial("_LinkBox", Model.UrlModel)
+        }
+    </div>
+</div>
+<br />
+<div class="pop-unit">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h3 style="margin-top:0px;">Quick Stats</h3>
+            <p>
+                <table class="table table-striped table-condensed">
+                    <caption>Last 24 Hour Clicks</caption>
+                    <thead>
+                        <tr>
+                            <th>Date Time</th>
+                            <th>Click Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.DataPoints)
+                        {
+                            <tr>
+                                <td style="font-size:smaller;">@item.TimeStamp.ToShortDateString() @item.TimeStamp.ToShortTimeString()</td>
+                                <td>@item.Sum</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </p>
+        </div>
+    </div>
+</div>
+

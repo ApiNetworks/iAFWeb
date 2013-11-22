@@ -163,6 +163,49 @@ namespace iAFWebHost.Controllers
         }
 
         /// <summary>
+        /// Expands the URL.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        protected UrlModel ExpandUrl(string id)
+        {
+            UrlModel model = new UrlModel();
+            Url entity = urlService.ExpandUrl(id);
+            if (entity != null && !String.IsNullOrEmpty(entity.Href))
+                model = Mapper.Map(entity);
+            return model;
+        }
+
+        protected List<DataPointModel> GetLast24HourStats(string id)
+        {
+            var stats = urlService.GetLast24HourStats(id);
+            List<DataPointModel> statsModels = new List<DataPointModel>();
+            foreach (var stat in stats)
+            {
+                var m = Mapper.Map(stat);
+                statsModels.Add(m);
+            }
+            return statsModels;
+        }
+
+        protected List<DataPointModel> GetLast24HourSystemStats()
+        {
+            var stats = urlService.GetLast24HourSystemStats();
+            List<DataPointModel> statsModels = new List<DataPointModel>();
+            foreach (var stat in stats)
+            {
+                var m = Mapper.Map(stat);
+                statsModels.Add(m);
+            }
+            return statsModels;
+        }
+
+        protected void IncrementHitCount(string id)
+        {
+            urlService.IncrementHitCount(id);
+        }
+
+        /// <summary>
         /// Gets the URL list.
         /// </summary>
         /// <returns></returns>
@@ -279,11 +322,11 @@ namespace iAFWebHost.Controllers
                 pageHelper.PreviousKeyId = Request["pid"];
                 if (!String.IsNullOrEmpty(Request["sort"]))
                 {
-                    if(Request["sort"].ToLower().Equals("desc"));
+                    if (Request["sort"].ToLower().Equals("desc")) ;
                     pageHelper.Sort = "desc";
                 }
             }
             return pageHelper;
         }
-	}
+    }
 }

@@ -109,6 +109,11 @@ namespace iAFWebHost.Utils
             model.ShortId = entity.ShortId;
             model.TimeStamp = entity.UtcTimeStamp;
             model.Value = entity.Value;
+            model.Sum = entity.Sum;
+            model.SumSqr = entity.SumSqr;
+            model.Min = entity.Min;
+            model.Max = entity.Max;
+            model.Count = entity.Count;
             return model;
         }
 

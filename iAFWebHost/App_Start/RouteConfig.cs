@@ -29,7 +29,7 @@ namespace iAFWebHost
             routes.MapRoute(
                 name: "Stats",
                 url: "stats/{id}",
-                defaults: new { controller = "Home", action = "Stats" }
+                defaults: new { controller = "Home", action = "Stats", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(

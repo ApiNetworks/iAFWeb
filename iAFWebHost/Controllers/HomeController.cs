@@ -17,17 +17,15 @@ namespace iAFWebHost.Controllers
         {
             if (id.IsShortCode())
             {
-                UrlService urlService = new UrlService();
-                var entity = urlService.ExpandUrl(id);
-                if (entity != null && !String.IsNullOrEmpty(entity.Href))
+                var model = ExpandUrl(id);
+                if (model != null && !String.IsNullOrEmpty(model.Href))
                 {
-                    urlService.IncrementHitCount(id);
-                    return Redirect(entity.Href);
+                    IncrementHitCount(id);
+                    return Redirect(model.Href);
                 }
                 else
                     throw new HttpException();
             }
-
             return View();
         }
 
@@ -107,27 +105,30 @@ namespace iAFWebHost.Controllers
         {
             if (id.IsShortCode())
             {
-                UrlService urlService = new UrlService();
-                Url entity = urlService.ExpandUrl(id);
-                if (entity != null && !String.IsNullOrEmpty(entity.Href))
+                // display individual url stats
+                UrlModel urlModel = ExpandUrl(id);
+                if (urlModel != null && !String.IsNullOrEmpty(urlModel.Href))
                 {
-                    var stats = urlService.GetLast24HourStats(id);
-                    List<DataPointModel> statsModels = new List<DataPointModel>();
-                    foreach (var stat in stats)
-                    {
-                        var m = Mapper.Map(stat);
-                        statsModels.Add(m);
-                    }
                     PageModel model = new PageModel();
-                    model.UrlModel = Mapper.Map(entity);
-                    model.DataPoints = statsModels;
+                    model.UrlModel = urlModel;
+                    model.DataPoints = GetLast24HourStats(id);
                     return View(model);
                 }
                 else
                     throw new HttpException();
             }
+            else
+            {
+                return RedirectToAction("SystemStats");
+            }
+        }
 
-            return View();
+        public ActionResult SystemStats()
+        {
+            //display global system stats
+            PageModel model = new PageModel();
+            model.DataPoints = GetLast24HourSystemStats();
+            return View(model);
         }
 
         [HttpGet]

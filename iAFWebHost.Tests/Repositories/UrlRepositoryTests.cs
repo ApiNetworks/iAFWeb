@@ -189,22 +189,6 @@ namespace iAFWebHost.Tests.Repositories
         }
 
         [TestMethod]
-        public void Test_GetSystemStats()
-        {
-            UrlRepository repo = new UrlRepository();
-
-            DateTime startDate = new DateTime(2013, 11, 18, 0, 0, 0);
-            DateTime endDate = new DateTime(2013, 11, 20, 0, 0, 0);
-
-            List<DataPoint> dataPoints = new List<DataPoint>();
-
-            object[] startKey = { startDate.Year.ToString(), startDate.Month.ToString(), startDate.Day.ToString(), startDate.Hour.ToString() };
-            object[] endKey = { endDate.Year.ToString(), endDate.Month.ToString(), endDate.Day.ToString(), endDate.Hour.ToString() };
-
-            var results = repo.GetSystemStats(startKey, endKey, 100, false, 0, true);
-        }
-
-        [TestMethod]
         public void Test_GetSystemStatsAggregate()
         {
             UrlRepository repo = new UrlRepository();
@@ -217,8 +201,8 @@ namespace iAFWebHost.Tests.Repositories
             object[] startKey = { startDate.Year.ToString(), startDate.Month.ToString(), startDate.Day.ToString(), startDate.Hour.ToString() };
             object[] endKey = { endDate.Year.ToString(), endDate.Month.ToString(), endDate.Day.ToString(), endDate.Hour.ToString() };
 
-            DataPoint stats = repo.GetSystemStatsAggregate(startKey, endKey, 100, false, 0);
-            Assert.IsNotNull(stats);
+            dataPoints = repo.GetSystemStatsAggregate(startKey, endKey, 100, false, 0, true);
+            Assert.IsNotNull(dataPoints);
         }
     }
 }

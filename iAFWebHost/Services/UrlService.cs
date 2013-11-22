@@ -373,8 +373,8 @@ namespace iAFWebHost.Services
             try
             {
                 DataPoint dataPoint = new DataPoint(shortId);
-                return _repository.Increment(dataPoint);
-            } 
+                return _repository.IncrementHitCount(dataPoint);
+            }
             catch (Exception ex)
             {
                 throw HandleException(new object[] { shortId }, ex);
@@ -387,43 +387,76 @@ namespace iAFWebHost.Services
                 throw new ArgumentException("Short Id is invalid");
 
             List<DataPoint> points = new List<DataPoint>();
-            DateTime startUtcDateTime = DateTime.UtcNow.AddHours(-23);
-            DateTime endUtcDateTime = DateTime.UtcNow;
-            DateTime hourlyInterval = startUtcDateTime;
-            
-            do
+            try
             {
-                DataPoint request = new DataPoint();
-                request.ShortId = shortId;
-                request.UtcTimeStamp = new DateTime(hourlyInterval.Year, hourlyInterval.Month, hourlyInterval.Day, hourlyInterval.Hour, 0, 0);
-                var response = _repository.GetDataPointValue(request);
-                points.Add(response);
-                hourlyInterval = hourlyInterval.AddHours(1);
+                DateTime startUtcDateTime = DateTime.UtcNow.AddHours(-23);
+                DateTime endUtcDateTime = DateTime.UtcNow;
+                DateTime hourlyInterval = startUtcDateTime;
+
+                do
+                {
+                    DataPoint request = new DataPoint();
+                    request.ShortId = shortId;
+                    request.UtcTimeStamp = new DateTime(hourlyInterval.Year, hourlyInterval.Month, hourlyInterval.Day, hourlyInterval.Hour, 0, 0);
+                    var response = _repository.GetDataPointValue(request);
+                    points.Add(response);
+                    hourlyInterval = hourlyInterval.AddHours(1);
+                }
+                while (hourlyInterval <= endUtcDateTime);
             }
-            while(hourlyInterval <= endUtcDateTime);
+            catch (Exception ex)
+            {
+                throw HandleException(new object[] { shortId }, ex);
+            }
+
             return points;
         }
 
         public List<DataPoint> GetLast24HourSystemStats()
         {
-            List<DataPoint> dataPoints = new List<DataPoint>();
             List<DataPoint> points = new List<DataPoint>();
-            DateTime startUtcDateTime = DateTime.UtcNow.AddHours(-23);
-            DateTime endUtcDateTime = DateTime.UtcNow;
-            DateTime hourlyInterval = startUtcDateTime;
-
-            do
+            try
             {
-                DataPoint request = new DataPoint();
-                request.UtcTimeStamp = new DateTime(hourlyInterval.Year, hourlyInterval.Month, hourlyInterval.Day, hourlyInterval.Hour, 0, 0);
-                var response = _repository.GetDataPointValue(request);
-                points.Add(response);
-                hourlyInterval = hourlyInterval.AddHours(1);
-            }
-            while (hourlyInterval <= endUtcDateTime);
-            return points;
+                DateTime startUtcDateTime = DateTime.UtcNow.AddHours(-23);
+                DateTime endUtcDateTime = DateTime.UtcNow;
+                DateTime hourlyInterval = startUtcDateTime;
 
-            return dataPoints;
+                // Retrieve list of available datapoints. Not every hour will contain data. 
+                List<DataPoint> availableDataPoints = GetHourlySystemStats(startUtcDateTime, endUtcDateTime);
+                do
+                {
+                    DataPoint point = new DataPoint();
+                    point.ShortId = String.Empty;
+                    point.UtcTimeStamp = new DateTime(hourlyInterval.Year, hourlyInterval.Month, hourlyInterval.Day, hourlyInterval.Hour, 0, 0);
+
+                    DataPoint selectedDataPoint = (from p in availableDataPoints where p.UtcTimeStamp.Equals(point.UtcTimeStamp) select p).FirstOrDefault();
+                    if (selectedDataPoint != null)
+                        points.Add(selectedDataPoint);
+                    else
+                        points.Add(point);
+
+                    hourlyInterval = hourlyInterval.AddHours(1);
+                }
+                while (hourlyInterval <= endUtcDateTime);
+            }
+            catch (Exception ex)
+            {
+                throw HandleException(null, ex);
+            }
+
+            return points;
+        }
+
+        public List<DataPoint> GetHourlySystemStats(DateTime startUtcDateTime, DateTime endUtcDateTime)
+        {
+            try
+            {
+                return _repository.GetHourlySystemStats(startUtcDateTime, endUtcDateTime);
+            }
+            catch (Exception ex)
+            {
+                throw HandleException(new object[] { startUtcDateTime, endUtcDateTime }, ex);
+            }
         }
 
         #endregion

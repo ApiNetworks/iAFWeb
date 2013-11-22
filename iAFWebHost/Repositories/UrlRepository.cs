@@ -306,7 +306,7 @@ namespace iAFWebHost.Repositories
         #endregion
 
         #region Statistics
-        public ulong Increment(DataPoint entity)
+        public ulong IncrementHitCount(DataPoint entity)
         {
             return base.Increment(entity.BuildKey());
         }
@@ -319,7 +319,7 @@ namespace iAFWebHost.Repositories
             result.Id = dbKey;
             result.Value = 0;
             result.UtcTimeStamp = entity.UtcTimeStamp;
-            
+
             string value = base.GetValue(dbKey);
             ulong countValue = 0;
             if (!String.IsNullOrEmpty(value) && ulong.TryParse(value, out countValue))
@@ -339,10 +339,12 @@ namespace iAFWebHost.Repositories
             object[] startKey = { startDate.Year.ToString(), startDate.Month.ToString(), startDate.Day.ToString(), startDate.Hour.ToString() };
             object[] endKey = { endDate.Year.ToString(), endDate.Month.ToString(), endDate.Day.ToString(), endDate.Hour.ToString() };
 
+            dataPoints = GetSystemStatsAggregate(startKey, endKey, 48, true, 4, true);
+
             return dataPoints;
         }
 
-        public List<DataPoint> GetSystemStats(object[] startKey, object[] endKey, int limit,  bool group, int groupLevel, bool reduce)
+        public List<DataPoint> GetSystemStatsAggregate(object[] startKey, object[] endKey, int limit, bool group, int groupLevel, bool reduce)
         {
             List<DataPoint> dataPoints = new List<DataPoint>();
 
@@ -364,50 +366,30 @@ namespace iAFWebHost.Repositories
             {
                 foreach (var row in results)
                 {
-                    if (row.Info != null && !row.Info.Values.IsNullOrEmpty())
-                    {
-                        List<object> valueCollection = row.Info.Values.ToList();
-                        string key = valueCollection[0] as String;
-                        object[] dateObject = (object[])valueCollection[1];
-                        string countObject = (string)valueCollection[2];
-                        ulong countValue = 0;
-                        ulong.TryParse(countObject, out countValue);
-                        DataPoint dataPoint = new DataPoint();
-                        dataPoint.Value = countValue;
-                    }
-                }
-            }
-
-            return dataPoints;
-        }
-
-        public DataPoint GetSystemStatsAggregate(object[] startKey, object[] endKey, int limit, bool group, int groupLevel)
-        {
-            DataPoint dataPoint = new DataPoint();
-
-            if (limit > 1000)
-                limit = 1000;
-
-            var view = View("stats", "all");
-            if (startKey != null)
-                view.StartKey(startKey);
-            if (startKey != null)
-                view.EndKey(endKey);
-            if (group) view.Group(true);
-            if (groupLevel > 0) view.GroupAt(groupLevel);
-            view.Reduce(true);
-
-            // retrieve results
-            List<IViewRow> results = view.ToList();
-            if (!results.IsNullOrEmpty())
-            {
-                foreach (var row in results)
-                {
                     if (row.Info != null)
                     {
+                        DataPoint dataPoint = new DataPoint();
+                        dataPoint.ShortId = String.Empty;
                         List<object> list = row.Info.Values.ToList<object>();
                         if (!list.IsNullOrEmpty() && list.Count == 2)
                         {
+                            dataPoint.UtcTimeStamp = DateTime.MinValue;
+                            object[] dateTimeArray = list[0] as object[];
+                            if (dateTimeArray != null && dateTimeArray.Length == 4)
+                            {
+                                int year = 1;
+                                int month = 1;
+                                int day = 1;
+                                int hour = 1;
+                                if (Int32.TryParse(dateTimeArray[0].ToString(), out year)
+                                    && Int32.TryParse(dateTimeArray[1].ToString(), out month)
+                                    && Int32.TryParse(dateTimeArray[2].ToString(), out day)
+                                    && Int32.TryParse(dateTimeArray[3].ToString(), out hour))
+                                {
+                                    dataPoint.UtcTimeStamp = new DateTime(year, month, day, hour, 0, 0);
+                                }
+                            }
+
                             Dictionary<string, object> data = list[1] as Dictionary<string, object>;
                             if (data != null)
                             {
@@ -421,13 +403,15 @@ namespace iAFWebHost.Repositories
                                     dataPoint.Count = (long)data["count"];
                                 if (data.ContainsKey("sumsqr"))
                                     dataPoint.SumSqr = (long)data["sumsqr"];
+
+                                dataPoints.Add(dataPoint);
                             }
                         }
                     }
                 }
             }
 
-            return dataPoint;
+            return dataPoints;
         }
 
         #endregion
