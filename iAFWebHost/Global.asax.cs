@@ -76,12 +76,15 @@ namespace iAFWebHost
                 // we don't want to log http errors due to URL spam
                 // also skip exceptions generated at the serivce level
                 // we already logged them earlier
-                if (ex.GetType() != typeof(ServiceError))
-                {
-                    ILogger logger = new LogService();
-                    logger.Error(ex);
-                }
+                //if (ex.GetType() != typeof(ServiceError))
+                //{
+                //    ILogger logger = new LogService();
+                //    logger.Error(ex);
+                //}
             }
+
+            ILogger logger = new LogService();
+            logger.Error(ex);
 
             httpContext.ClearError();
             httpContext.Response.Clear();
