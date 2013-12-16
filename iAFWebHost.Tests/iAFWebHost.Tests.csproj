@@ -98,14 +98,6 @@
       <Project>{FB2CA755-7078-4B18-B172-FAB266461012}</Project>
       <Name>iAFWebHost</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\couchbase-net-client\src\Couchbase\Couchbase.csproj">
-      <Project>{708a2350-a26c-444d-b975-8164263951a7}</Project>
-      <Name>Couchbase</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\couchbase-net-client\src\Enyim.Caching\Enyim.Caching.csproj">
-      <Project>{eb42e369-1adf-4e08-8db7-6fa792abdcc7}</Project>
-      <Name>Enyim.Caching</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

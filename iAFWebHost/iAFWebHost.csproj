@@ -39,6 +39,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Couchbase">
+      <HintPath>..\packages\CouchbaseNetClient.1.3.0\lib\net40\Couchbase.dll</HintPath>
+    </Reference>
+    <Reference Include="Enyim.Caching">
+      <HintPath>..\packages\CouchbaseNetClient.1.3.0\lib\net40\Enyim.Caching.dll</HintPath>
+    </Reference>
     <Reference Include="MessagingToolkit.QRCode">
       <HintPath>..\resources\QR\MessagingToolkit.QRCode.dll</HintPath>
     </Reference>
@@ -199,6 +205,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="Entities\DataPoint.cs" />
     <Compile Include="Entities\Dto.cs" />
     <Compile Include="Entities\EntityBase.cs" />
@@ -268,7 +275,6 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="handlers\IdenticonHandler.ashx" />
     <None Include="Properties\PublishProfiles\iAF.pubxml" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Highcharts-3.0.1\js\adapters\mootools-adapter.js" />
     <Content Include="Scripts\Highcharts-3.0.1\js\adapters\mootools-adapter.src.js" />
     <Content Include="Scripts\Highcharts-3.0.1\js\adapters\prototype-adapter.js" />
@@ -293,6 +299,10 @@
     <Content Include="Scripts\Identicon.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery-2.0.3.intellisense.js" />
+    <Content Include="Scripts\jquery-2.0.3.js" />
+    <Content Include="Scripts\jquery-2.0.3.min.js" />
+    <Content Include="Scripts\jquery-2.0.3.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -319,7 +329,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
@@ -340,11 +349,13 @@
     <Content Include="Views\Error\ErrorMonitor.cshtml" />
     <Content Include="Views\Home\Stats.cshtml" />
     <Content Include="Views\Home\SystemStats.cshtml" />
+    <Content Include="Views\Setup\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\CustomAccount\" />
+    <Folder Include="Views\Installer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -354,14 +365,6 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\couchbase-net-client\src\Couchbase\Couchbase.csproj">
-      <Project>{708a2350-a26c-444d-b975-8164263951a7}</Project>
-      <Name>Couchbase</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\couchbase-net-client\src\Enyim.Caching\Enyim.Caching.csproj">
-      <Project>{eb42e369-1adf-4e08-8db7-6fa792abdcc7}</Project>
-      <Name>Enyim.Caching</Name>
-    </ProjectReference>
     <ProjectReference Include="..\iAF\iAF.csproj">
       <Project>{c72d6e62-00b5-4043-8359-a6f46db96275}</Project>
       <Name>iAF</Name>

@@ -1,0 +1,8 @@
+{
+  "views": {
+    "error_list": {
+      "map": "function (doc, meta) { if(doc.t = 'error' && doc.timeStamp) { emit(dateToArray(doc.timeStamp)); } }",
+      "reduce": "_count"
+    }
+  }
+}

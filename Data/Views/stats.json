@@ -1,0 +1,12 @@
+{
+  "views": {
+    "all": {
+      "map": "function(doc, meta){ if(meta.id.substring(0,4) == 'hit_'){ var array = meta.id.split('_'); emit([array[2],array[3],array[4],array[5]], doc);}}",
+      "reduce": "_stats"
+    },
+    "url": {
+      "map": "function(doc, meta){if(meta.id.substring(0,4) == 'hit_'){ var array = meta.id.split('_'); emit([array[1], array[2],array[3],array[4],array[5]], doc); } }",
+      "reduce": "_stats"
+    }
+  }
+}

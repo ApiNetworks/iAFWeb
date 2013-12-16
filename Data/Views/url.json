@@ -1,0 +1,20 @@
+{
+  "views": {
+    "host_urllist": {
+      "map": "function(doc,meta){if(doc.t && doc.t == 'url' && doc.h){emit(doc.h);}}",
+      "reduce": "_count"
+    },
+    "tag_urllist": {
+      "map": "function(doc, meta) { if(doc.t && doc.t == 'url' && doc.tags.length > 0){for(var idx in doc.tags){emit(doc.tags[idx]);}}}",
+      "reduce": "_count"
+    },
+	"url_list": {
+      "map": "function(doc, meta) { if(doc.t && doc.t == 'url' && doc.f == 1) { emit((100000000000000 - meta.id).toString()); } }",
+      "reduce": "_count"
+    },
+	"user_urllist": {
+	  "map": "function(doc, meta){if(doc.t && doc.t == 'url' && doc.users.length > 0){for(var idx in doc.users) { emit(doc.users[idx]);}}}",
+      "reduce": "_count"
+    }
+  }
+}
