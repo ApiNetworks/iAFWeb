@@ -332,6 +332,18 @@ namespace iAFWebHost.Repositories
             return result;
         }
 
+        public List<DataPoint> GetDailySystemStats(DateTime startDate, DateTime endDate)
+        {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+
+            object[] startKey = { startDate.Year.ToString(), startDate.Month.ToString(), startDate.Day.ToString() };
+            object[] endKey = { endDate.Year.ToString(), endDate.Month.ToString(), endDate.Day.ToString() };
+
+            dataPoints = GetSystemStatsAggregate(startKey, endKey, 48, true, 3, true);
+
+            return dataPoints;
+        }
+
         public List<DataPoint> GetHourlySystemStats(DateTime startDate, DateTime endDate)
         {
             List<DataPoint> dataPoints = new List<DataPoint>();

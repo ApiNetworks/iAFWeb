@@ -447,6 +447,41 @@ namespace iAFWebHost.Services
             return points;
         }
 
+        public List<DataPoint> GetLast30DaysSystemStats()
+        {
+            List<DataPoint> points = new List<DataPoint>();
+            try
+            {
+                DateTime startUtcDateTime = DateTime.UtcNow.AddDays(-30);
+                DateTime endUtcDateTime = DateTime.UtcNow;
+                DateTime dailyInterval = startUtcDateTime;
+
+                // Retrieve list of available datapoints. Not every day will contain data. 
+                List<DataPoint> availableDataPoints = GetDailySystemStats(startUtcDateTime, endUtcDateTime);
+                do
+                {
+                    DataPoint point = new DataPoint();
+                    point.ShortId = String.Empty;
+                    point.UtcTimeStamp = new DateTime(dailyInterval.Year, dailyInterval.Month, dailyInterval.Day, 0, 0, 0);
+
+                    DataPoint selectedDataPoint = (from p in availableDataPoints where p.UtcTimeStamp.Equals(point.UtcTimeStamp) select p).FirstOrDefault();
+                    if (selectedDataPoint != null)
+                        points.Add(selectedDataPoint);
+                    else
+                        points.Add(point);
+
+                    dailyInterval = dailyInterval.AddDays(1);
+                }
+                while (dailyInterval <= endUtcDateTime);
+            }
+            catch (Exception ex)
+            {
+                throw HandleException(null, ex);
+            }
+
+            return points;
+        }
+
         public List<DataPoint> GetHourlySystemStats(DateTime startUtcDateTime, DateTime endUtcDateTime)
         {
             try
@@ -459,6 +494,17 @@ namespace iAFWebHost.Services
             }
         }
 
+        public List<DataPoint> GetDailySystemStats(DateTime startUtcDateTime, DateTime endUtcDateTime)
+        {
+            try
+            {
+                return _repository.GetDailySystemStats(startUtcDateTime, endUtcDateTime);
+            }
+            catch (Exception ex)
+            {
+                throw HandleException(new object[] { startUtcDateTime, endUtcDateTime }, ex);
+            }
+        }
         #endregion
 
         public bool IsValid(Url url)

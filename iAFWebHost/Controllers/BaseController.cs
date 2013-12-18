@@ -200,6 +200,18 @@ namespace iAFWebHost.Controllers
             return statsModels;
         }
 
+        protected List<DataPointModel> GetLast30DaysSystemStats()
+        {
+            var stats = urlService.GetLast30DaysSystemStats();
+            List<DataPointModel> statsModels = new List<DataPointModel>();
+            foreach (var stat in stats)
+            {
+                var m = Mapper.Map(stat);
+                statsModels.Add(m);
+            }
+            return statsModels;
+        }
+
         protected void IncrementHitCount(string id)
         {
             urlService.IncrementHitCount(id);

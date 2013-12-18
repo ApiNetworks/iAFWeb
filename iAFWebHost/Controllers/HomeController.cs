@@ -111,7 +111,7 @@ namespace iAFWebHost.Controllers
                 {
                     PageModel model = new PageModel();
                     model.UrlModel = urlModel;
-                    model.DataPoints = GetLast24HourStats(id);
+                    model.HourlyDataPoints = GetLast24HourStats(id);
                     return View(model);
                 }
                 else
@@ -127,7 +127,8 @@ namespace iAFWebHost.Controllers
         {
             //display global system stats
             PageModel model = new PageModel();
-            model.DataPoints = GetLast24HourSystemStats();
+            model.HourlyDataPoints = GetLast24HourSystemStats();
+            model.DailyDataPoints = GetLast30DaysSystemStats();
             return View(model);
         }
 

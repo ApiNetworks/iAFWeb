@@ -5,7 +5,7 @@
 <script src="~/Scripts/highcharts.js"></script>
 <script type="text/javascript">
     $(function () {
-        $('#container').highcharts({
+        $('#hourlycontainer').highcharts({
             chart: {
                 type: 'column'
             },
@@ -14,7 +14,7 @@
             },
             xAxis: {
                 categories: [
-                   @foreach (var item in Model.DataPoints)
+                   @foreach (var item in Model.HourlyDataPoints)
                     {
                     @: '@item.TimeStamp.ToShortTimeString()', 
                     }
@@ -43,7 +43,7 @@
             series: [{
                 name: 'System Stats',
                 data: [
-                    @foreach (var item in Model.DataPoints)
+                    @foreach (var item in Model.HourlyDataPoints)
                     {
                         @: @item.Sum, 
                     }
@@ -53,7 +53,56 @@
         });
     });
 </script>
+<script type="text/javascript">
+    $(function () {
+        $('#dailycontainer').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Last 30 Days Clicks. Current Time in London : @DateTime.UtcNow.ToShortDateString()  @DateTime.UtcNow.ToShortTimeString()'
+            },
+            xAxis: {
+                categories: [
+                   @foreach (var item in Model.DailyDataPoints)
+                    {
+                    @: '@item.TimeStamp.ToShortDateString()',
+                    }
+                ]
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Click Count'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'System Stats',
+                data: [
+                    @foreach (var item in Model.DailyDataPoints)
+                    {
+                        @: @item.Sum,
+                    }
+                ]
 
+            }]
+        });
+    });
+</script>
 <div class="row">
     <div class="col-md-4">
         <h2 style="color:#fff">System Stats </h2>
@@ -76,7 +125,8 @@
 <div class="pop-unit">
     <div class="row">
         <div class="col-md-12">
-            <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+            <div id="hourlycontainer" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+            <div id="dailycontainer" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
         </div>
     </div>
     <div class="row">
@@ -92,7 +142,30 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.DataPoints)
+                        @foreach (var item in Model.HourlyDataPoints)
+                        {
+                            <tr>
+                                <td style="font-size:smaller;">@item.TimeStamp.ToShortDateString() @item.TimeStamp.ToShortTimeString()</td>
+                                <td>@item.Sum</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h3 style="margin-top:0px;">Quick Stats</h3>
+            <p>
+                <table class="table table-striped table-condensed">
+                    <caption>Last 30 Days Clicks</caption>
+                    <thead>
+                        <tr>
+                            <th>Date Time</th>
+                            <th>Click Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.DailyDataPoints)
                         {
                             <tr>
                                 <td style="font-size:smaller;">@item.TimeStamp.ToShortDateString() @item.TimeStamp.ToShortTimeString()</td>
