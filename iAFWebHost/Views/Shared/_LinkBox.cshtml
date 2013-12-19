@@ -1,27 +1,37 @@
 ﻿@model iAFWebHost.Models.UrlModel
 
+
+@if (Model != null && !String.IsNullOrEmpty(Model.ShortHref))
+{
 <div class="row">
     <div class="col-md-12">
-        <h2 id="shrink_info" style="color:#fff">Shrink your links! Earn Karma!</h2>
+        <h2 id="shrink_info" style="color: #fff">Shrink your links! Earn Karma!</h2>
+        <form class="form-inline" id="linkBox" role="form" action="@Model.ShortHref" method="get">
+            <div class="link-unit">
+                <div class="input-group">
+                    <input type="text" name="href" value="@Model.ShortHref" id="href" class="input-lg">
+                    <span class="input-group-btn">
+                        <button type="submit" id="btnNav" class="btn btn-success btn-lg">Navigate </button>
+                    </span>
+                    @Html.ValidationMessageFor(model => model.Href)
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+}else
+{
+<div class="row">
+    <div class="col-md-12">
+        <h2 id="shrink_info" style="color: #fff">Shrink your links! Earn Karma!</h2>
         <form class="form-inline" id="linkBox" role="form" method="post" onsubmit="return false;">
             <div class="link-unit">
                 <div class="input-group">
-                    @if (Model != null && !String.IsNullOrEmpty(Model.ShortHref))
-                    {
-                        <input type="text" name="href" value="@Model.ShortHref" id="href" class="input-lg">
-                        <span class="input-group-btn">
-                            <button type="submit" id="btnUrl" class="btn btn-success btn-lg"> Navigate </button>
-                        </span>
-                        @Html.ValidationMessageFor(model => model.Href)
-                    }
-                    else
-                    {
-                        <input type="text" name="href" id="href" placeholder="http:// ... paste your long url here ... " class="input-lg">
-                        <span class="input-group-btn">
-                            <button type="submit" id="btnUrl" class="btn btn-success btn-lg" style="width: 180px"> Shrink It </button>
-                            <button type="submit" style="display: none; width: 180px" id="btnCopy" onclick="return false;" class="btn btn-success btn-lg"> Copy To Clipboard </button>
-                        </span>
-                    }
+                    <input type="text" name="href" id="href" placeholder="http:// ... paste your long url here ... " class="input-lg">
+                    <span class="input-group-btn">
+                        <button type="submit" id="btnUrl" class="btn btn-success btn-lg" style="width: 180px">Shrink It </button>
+                        <button type="submit" style="display: none; width: 180px" id="btnCopy" onclick="return false;" class="btn btn-success btn-lg">Copy To Clipboard </button>
+                    </span>
                 </div>
             </div>
         </form>
@@ -85,8 +95,8 @@
                 data: {
                     Url: url
                 },
-                beforeSend: function (jqXHR, settings) {},
-                error: function (jqXHR, textStatus, errorThrown) { errorOccured();},
+                beforeSend: function (jqXHR, settings) { },
+                error: function (jqXHR, textStatus, errorThrown) { errorOccured(); },
                 success: function (data, textStatus, jqXHR) {
                     $shrinkButton.hide();
                     $shrinkLink.val(data.ShortHref);
@@ -105,3 +115,5 @@
         return false;
     };
 </script>
+}
+

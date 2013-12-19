@@ -19,6 +19,7 @@ namespace iAFWebHost.Models
         public List<ErrorModel> Errors { get; set; }
         public List<DataPointModel> HourlyDataPoints { get; set; }
         public List<DataPointModel> DailyDataPoints { get; set; }
+        public List<DataPointModel> MonthlyDataPoints { get; set; }
         public UrlModel UrlModel { get; set; }
         public PageHelper Pager { get; set; }
         public string UserName { get; set; }

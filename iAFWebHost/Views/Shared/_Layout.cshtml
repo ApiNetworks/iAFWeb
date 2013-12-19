@@ -28,7 +28,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
+    @RenderSection("scripts", required: false)
     
 </head>
 <body>
@@ -48,6 +48,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="/">Home</a></li>
                     <li>@Html.ActionLink("News", "News", "Home")</li>
+                    <li><a href="/home/stats">Stats</a></li>
                     <li><a href="http://blog.i.af">Blog</a></li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>

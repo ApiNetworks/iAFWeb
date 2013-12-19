@@ -112,6 +112,8 @@ namespace iAFWebHost.Controllers
                     PageModel model = new PageModel();
                     model.UrlModel = urlModel;
                     model.HourlyDataPoints = GetLast24HourStats(id);
+                    model.DailyDataPoints = GetLast30DaysStats(id);
+                    model.MonthlyDataPoints = GetLast12MonthStats(id);
                     return View(model);
                 }
                 else
@@ -123,12 +125,14 @@ namespace iAFWebHost.Controllers
             }
         }
 
+        [OutputCache(Duration=60)]
         public ActionResult SystemStats()
         {
             //display global system stats
             PageModel model = new PageModel();
             model.HourlyDataPoints = GetLast24HourSystemStats();
             model.DailyDataPoints = GetLast30DaysSystemStats();
+            model.MonthlyDataPoints = GetLast12MonthSystemStats();
             return View(model);
         }
 

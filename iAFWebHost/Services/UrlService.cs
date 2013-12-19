@@ -412,6 +412,106 @@ namespace iAFWebHost.Services
             return points;
         }
 
+        public List<DataPoint> GetLast30DaysStats(string shortId)
+        {
+            if (!shortId.IsShortCode())
+                throw new ArgumentException("Short Id is invalid");
+
+            List<DataPoint> points = new List<DataPoint>();
+            try
+            {
+                DateTime startUtcDateTime = DateTime.UtcNow.AddDays(-30);
+                DateTime endUtcDateTime = DateTime.UtcNow;
+                DateTime dailyInterval = startUtcDateTime;
+
+                // Retrieve list of available datapoints. Not every day will contain data. 
+                List<DataPoint> availableDataPoints = GetDailyStats(shortId, startUtcDateTime, endUtcDateTime);
+                do
+                {
+                    DataPoint point = new DataPoint();
+                    point.ShortId = String.Empty;
+                    point.UtcTimeStamp = new DateTime(dailyInterval.Year, dailyInterval.Month, dailyInterval.Day, 0, 0, 0);
+
+                    DataPoint selectedDataPoint = (from p in availableDataPoints where p.UtcTimeStamp.Equals(point.UtcTimeStamp) select p).FirstOrDefault();
+                    if (selectedDataPoint != null)
+                        points.Add(selectedDataPoint);
+                    else
+                        points.Add(point);
+
+                    dailyInterval = dailyInterval.AddDays(1);
+                }
+                while (dailyInterval <= endUtcDateTime);
+            }
+            catch (Exception ex)
+            {
+                throw HandleException(null, ex);
+            }
+
+            return points;
+        }
+
+        public List<DataPoint> GetLast12MonthStats(string shortId)
+        {
+            if (!shortId.IsShortCode())
+                throw new ArgumentException("Short Id is invalid");
+
+            List<DataPoint> points = new List<DataPoint>();
+            try
+            {
+                DateTime startUtcDateTime = DateTime.UtcNow.AddMonths(-12);
+                DateTime endUtcDateTime = DateTime.UtcNow;
+                DateTime monthlyInterval = startUtcDateTime;
+
+                // Retrieve list of available datapoints. Not every day will contain data. 
+                List<DataPoint> availableDataPoints = GetMonthlyStats(shortId, startUtcDateTime, endUtcDateTime);
+                do
+                {
+                    DataPoint point = new DataPoint();
+                    point.ShortId = String.Empty;
+                    point.UtcTimeStamp = new DateTime(monthlyInterval.Year, monthlyInterval.Month, 1, 0, 0, 0);
+
+                    DataPoint selectedDataPoint = (from p in availableDataPoints where p.UtcTimeStamp.Equals(point.UtcTimeStamp) select p).FirstOrDefault();
+                    if (selectedDataPoint != null)
+                        points.Add(selectedDataPoint);
+                    else
+                        points.Add(point);
+
+                    monthlyInterval = monthlyInterval.AddMonths(1);
+                }
+                while (monthlyInterval <= endUtcDateTime);
+            }
+            catch (Exception ex)
+            {
+                throw HandleException(null, ex);
+            }
+
+            return points;
+        }
+
+        public List<DataPoint> GetDailyStats(string id, DateTime startUtcDateTime, DateTime endUtcDateTime)
+        {
+            try
+            {
+                return _repository.GetDailyStats(id, startUtcDateTime, endUtcDateTime);
+            }
+            catch (Exception ex)
+            {
+                throw HandleException(new object[] { startUtcDateTime, endUtcDateTime }, ex);
+            }
+        }
+
+        public List<DataPoint> GetMonthlyStats(string id, DateTime startUtcDateTime, DateTime endUtcDateTime)
+        {
+            try
+            {
+                return _repository.GetMonthlyStats(id, startUtcDateTime, endUtcDateTime);
+            }
+            catch (Exception ex)
+            {
+                throw HandleException(new object[] { startUtcDateTime, endUtcDateTime }, ex);
+            }
+        }
+
         public List<DataPoint> GetLast24HourSystemStats()
         {
             List<DataPoint> points = new List<DataPoint>();
@@ -482,6 +582,41 @@ namespace iAFWebHost.Services
             return points;
         }
 
+        public List<DataPoint> GetLast12MonthSystemStats()
+        {
+            List<DataPoint> points = new List<DataPoint>();
+            try
+            {
+                DateTime startUtcDateTime = DateTime.UtcNow.AddMonths(-12);
+                DateTime endUtcDateTime = DateTime.UtcNow;
+                DateTime monthlyInterval = startUtcDateTime;
+
+                // Retrieve list of available datapoints. Not every day will contain data. 
+                List<DataPoint> availableDataPoints = GetMonthlySystemStats(startUtcDateTime, endUtcDateTime);
+                do
+                {
+                    DataPoint point = new DataPoint();
+                    point.ShortId = String.Empty;
+                    point.UtcTimeStamp = new DateTime(monthlyInterval.Year, monthlyInterval.Month, 1, 0, 0, 0);
+
+                    DataPoint selectedDataPoint = (from p in availableDataPoints where p.UtcTimeStamp.Equals(point.UtcTimeStamp) select p).FirstOrDefault();
+                    if (selectedDataPoint != null)
+                        points.Add(selectedDataPoint);
+                    else
+                        points.Add(point);
+
+                    monthlyInterval = monthlyInterval.AddMonths(1);
+                }
+                while (monthlyInterval <= endUtcDateTime);
+            }
+            catch (Exception ex)
+            {
+                throw HandleException(null, ex);
+            }
+
+            return points;
+        }
+
         public List<DataPoint> GetHourlySystemStats(DateTime startUtcDateTime, DateTime endUtcDateTime)
         {
             try
@@ -499,6 +634,18 @@ namespace iAFWebHost.Services
             try
             {
                 return _repository.GetDailySystemStats(startUtcDateTime, endUtcDateTime);
+            }
+            catch (Exception ex)
+            {
+                throw HandleException(new object[] { startUtcDateTime, endUtcDateTime }, ex);
+            }
+        }
+
+        public List<DataPoint> GetMonthlySystemStats(DateTime startUtcDateTime, DateTime endUtcDateTime)
+        {
+            try
+            {
+                return _repository.GetMonthlySystemStats(startUtcDateTime, endUtcDateTime);
             }
             catch (Exception ex)
             {

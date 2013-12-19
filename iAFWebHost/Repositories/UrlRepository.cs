@@ -332,10 +332,126 @@ namespace iAFWebHost.Repositories
             return result;
         }
 
-        public List<DataPoint> GetDailySystemStats(DateTime startDate, DateTime endDate)
+        public List<DataPoint> GetDailyStats(string id, DateTime startDate, DateTime endDate)
+        {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            endDate = endDate.AddDays(1);
+            object[] startKey = { id, startDate.Year.ToString(), startDate.Month.ToString(), startDate.Day.ToString() };
+            object[] endKey = { id, endDate.Year.ToString(), endDate.Month.ToString(), endDate.Day.ToString() };
+
+            return GetStatsAggregate(startKey, endKey, 30, true, 4, true);
+        }
+
+        public List<DataPoint> GetMonthlyStats(string id, DateTime startDate, DateTime endDate)
+        {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            endDate = endDate.AddMonths(1);
+            object[] startKey = { id, startDate.Year.ToString(), startDate.Month.ToString() };
+            object[] endKey = { id, endDate.Year.ToString(), endDate.Month.ToString() };
+
+            return GetStatsAggregate(startKey, endKey, 12, true, 3, true);
+        }
+
+        public List<DataPoint> GetStatsAggregate(object[] startKey, object[] endKey, int limit, bool group, int groupLevel, bool reduce)
         {
             List<DataPoint> dataPoints = new List<DataPoint>();
 
+            if (limit > 1000)
+                limit = 1000;
+
+            var view = View("stats", "url");
+            if (startKey != null)
+                view.StartKey(startKey);
+            if (startKey != null)
+                view.EndKey(endKey);
+            if (group) view.Group(true);
+            if (groupLevel > 0) view.GroupAt(groupLevel);
+            view.Reduce(reduce);
+
+            // retrieve results
+            List<IViewRow> results = view.ToList();
+            if (!results.IsNullOrEmpty())
+            {
+                foreach (var row in results)
+                {
+                    if (row.Info != null)
+                    {
+                        DataPoint dataPoint = new DataPoint();
+                        dataPoint.ShortId = String.Empty;
+                        List<object> list = row.Info.Values.ToList<object>();
+                        if (!list.IsNullOrEmpty() && list.Count == 2)
+                        {
+                            dataPoint.UtcTimeStamp = DateTime.MinValue;
+                            object[] dateTimeArray = list[0] as object[];
+                            if (dateTimeArray != null && dateTimeArray.Length == 5)
+                            {
+                                int year = 1;
+                                int month = 1;
+                                int day = 1;
+                                int hour = 1;
+                                if (Int32.TryParse(dateTimeArray[1].ToString(), out year)
+                                    && Int32.TryParse(dateTimeArray[2].ToString(), out month)
+                                    && Int32.TryParse(dateTimeArray[3].ToString(), out day)
+                                    && Int32.TryParse(dateTimeArray[4].ToString(), out hour))
+                                {
+                                    dataPoint.UtcTimeStamp = new DateTime(year, month, day, hour, 0, 0);
+                                }
+                            }
+                            else if (dateTimeArray != null && dateTimeArray.Length == 4)
+                            {
+                                int year = 1;
+                                int month = 1;
+                                int day = 1;
+                                if (Int32.TryParse(dateTimeArray[1].ToString(), out year)
+                                    && Int32.TryParse(dateTimeArray[2].ToString(), out month)
+                                    && Int32.TryParse(dateTimeArray[3].ToString(), out day))
+                                {
+                                    dataPoint.UtcTimeStamp = new DateTime(year, month, day, 0, 0, 0);
+                                }
+                            }
+                            else if (dateTimeArray != null && dateTimeArray.Length == 3)
+                            {
+                                int year = 1;
+                                int month = 1;
+                                if (Int32.TryParse(dateTimeArray[1].ToString(), out year)
+                                    && Int32.TryParse(dateTimeArray[2].ToString(), out month))
+                                {
+                                    dataPoint.UtcTimeStamp = new DateTime(year, month, 1, 0, 0, 0);
+                                }
+                            }
+
+                            string data = list[1].ToString();
+                            ulong value = 0;
+                            if (!String.IsNullOrEmpty(data))
+                            {
+                                ulong.TryParse(data, out value);
+                            }
+                            dataPoint.Value = value;                            
+                            dataPoints.Add(dataPoint);
+                        }
+                    }
+                }
+            }
+
+            return dataPoints;
+        }
+
+        public List<DataPoint> GetMonthlySystemStats(DateTime startDate, DateTime endDate)
+        {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            endDate = endDate.AddMonths(1);
+            object[] startKey = { startDate.Year.ToString(), startDate.Month.ToString() };
+            object[] endKey = { endDate.Year.ToString(), endDate.Month.ToString() };
+
+            dataPoints = GetSystemStatsAggregate(startKey, endKey, 12, true, 2, true);
+
+            return dataPoints;
+        }
+
+        public List<DataPoint> GetDailySystemStats(DateTime startDate, DateTime endDate)
+        {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            endDate = endDate.AddDays(1);
             object[] startKey = { startDate.Year.ToString(), startDate.Month.ToString(), startDate.Day.ToString() };
             object[] endKey = { endDate.Year.ToString(), endDate.Month.ToString(), endDate.Day.ToString() };
 
@@ -401,6 +517,28 @@ namespace iAFWebHost.Repositories
                                     dataPoint.UtcTimeStamp = new DateTime(year, month, day, hour, 0, 0);
                                 }
                             }
+                            else if (dateTimeArray != null && dateTimeArray.Length == 3)
+                            {
+                                int year = 1;
+                                int month = 1;
+                                int day = 1;
+                                if (Int32.TryParse(dateTimeArray[0].ToString(), out year)
+                                    && Int32.TryParse(dateTimeArray[1].ToString(), out month)
+                                    && Int32.TryParse(dateTimeArray[2].ToString(), out day))
+                                {
+                                    dataPoint.UtcTimeStamp = new DateTime(year, month, day, 0, 0, 0);
+                                }
+                            }
+                            else if (dateTimeArray != null && dateTimeArray.Length == 2)
+                            {
+                                int year = 1;
+                                int month = 1;
+                                if (Int32.TryParse(dateTimeArray[0].ToString(), out year)
+                                    && Int32.TryParse(dateTimeArray[1].ToString(), out month))
+                                {
+                                    dataPoint.UtcTimeStamp = new DateTime(year, month, 1, 0, 0, 0);
+                                }
+                            }
 
                             Dictionary<string, object> data = list[1] as Dictionary<string, object>;
                             if (data != null)
@@ -425,7 +563,6 @@ namespace iAFWebHost.Repositories
 
             return dataPoints;
         }
-
         #endregion
     }
 }

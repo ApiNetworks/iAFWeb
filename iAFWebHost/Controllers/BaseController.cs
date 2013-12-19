@@ -188,6 +188,30 @@ namespace iAFWebHost.Controllers
             return statsModels;
         }
 
+        protected List<DataPointModel> GetLast30DaysStats(string id)
+        {
+            var stats = urlService.GetLast30DaysStats(id);
+            List<DataPointModel> statsModels = new List<DataPointModel>();
+            foreach (var stat in stats)
+            {
+                var m = Mapper.Map(stat);
+                statsModels.Add(m);
+            }
+            return statsModels;
+        }
+
+        protected List<DataPointModel> GetLast12MonthStats(string id)
+        {
+            var stats = urlService.GetLast12MonthStats(id);
+            List<DataPointModel> statsModels = new List<DataPointModel>();
+            foreach (var stat in stats)
+            {
+                var m = Mapper.Map(stat);
+                statsModels.Add(m);
+            }
+            return statsModels;
+        }
+
         protected List<DataPointModel> GetLast24HourSystemStats()
         {
             var stats = urlService.GetLast24HourSystemStats();
@@ -203,6 +227,18 @@ namespace iAFWebHost.Controllers
         protected List<DataPointModel> GetLast30DaysSystemStats()
         {
             var stats = urlService.GetLast30DaysSystemStats();
+            List<DataPointModel> statsModels = new List<DataPointModel>();
+            foreach (var stat in stats)
+            {
+                var m = Mapper.Map(stat);
+                statsModels.Add(m);
+            }
+            return statsModels;
+        }
+
+        protected List<DataPointModel> GetLast12MonthSystemStats()
+        {
+            var stats = urlService.GetLast12MonthSystemStats();
             List<DataPointModel> statsModels = new List<DataPointModel>();
             foreach (var stat in stats)
             {
