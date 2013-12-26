@@ -88,6 +88,10 @@ namespace iAFWebHost.Models
         [StringLength(2048)]
         public string Href { get; set; }
 
+        [DataMember(Name = "HrefA")]
+        [StringLength(2048)]
+        public string HrefActual { get; set; }
+
         [DataMember(Name = "Users")]
         public List<string> Users { get; set; }
 
@@ -134,6 +138,9 @@ namespace iAFWebHost.Models
         /// </value>
         [DataMember(Name = "Flag")]
         public int Flag { get; set; }
+
+        [DataMember(Name = "HttpFlag")]
+        public bool IsSuccessfulHttpRequest { get; set; }
 
         public DateTime UtcDate { get; set; }
     }

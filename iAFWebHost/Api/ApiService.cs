@@ -32,7 +32,7 @@ namespace iAFWebHost.Api
             Url entity = new Url();
             entity.Href = request.Url;
             iAFWebHost.Entities.Url dbEntity = Mapper.MapResponse(entity);
-            var dbResponse = service.ShortenUrl(dbEntity);
+            iAFWebHost.Entities.Url dbResponse = service.ShortenUrl(dbEntity);
             entity = Mapper.MapResponse(dbResponse);
 
             return entity;

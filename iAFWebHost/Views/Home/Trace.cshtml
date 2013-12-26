@@ -1,0 +1,54 @@
+﻿@using System.Globalization;
+@model iAFWebHost.Models.PageModel
+@{
+    ViewBag.Title = "Trace Page Information";
+}
+<div class="row">
+    <div class="col-md-4">
+        <h2 style="color:#fff">Url Code: @Model.UrlModel.ShortId </h2>
+        <div class="pop-unit">
+            <strong>Host:</strong> <span class="badge">@Model.UrlModel.Host</span>
+        </div>
+    </div>
+    <div class="col-md-8">
+        @if (Model.UrlModel == null)
+        {
+            @Html.Partial("_LinkBox", new iAFWebHost.Models.UrlModel())
+        }
+        else
+        {
+            @Html.Partial("_LinkBox", Model.UrlModel)
+        }
+    </div>
+</div>
+<br />
+<div class="pop-unit">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <tr><td>Original Url:</td><td>@Model.UrlModel.Href</td></tr>
+                <tr><td>Resolved Url:</td><td>@Model.UrlModel.HrefActual</td></tr>
+            </table>
+        </div>
+    </div>
+</div>
+<br />
+<div class="pop-unit">
+    <div class="row">
+        <div class="col-md-4">
+            <h3 style="margin-top:0px;">Related Urls</h3>
+            <p>
+                <h4>Host: <a href="http://@Model.UrlModel.Host">@Model.UrlModel.Host</a></h4>
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h3 style="margin-top:0px;">QR Code</h3>
+            <p>
+                <img src="/qr/@Model.UrlModel.ShortId/5" />
+            </p>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+</div>
+

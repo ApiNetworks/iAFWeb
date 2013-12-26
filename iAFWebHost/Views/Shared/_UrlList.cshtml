@@ -35,24 +35,27 @@
                         <br /><p>@item.Summary</p>
                     }
                     <small style="color:#808080">
-                        Hosted by <a href="/site/@item.Host/">@item.Host</a>
+                        Hosted by <a href="/site/@item.Host/">@item.Host</a><br />
                         @if (@item.Users != null && @item.Users.Count > 0)
                         {
-                            <br /><span>Followers:</span>
+                            <span>Followers:</span>
                             foreach (var user in item.Users.Take(10))
                             {
                                 <a href="/user/@user">@user</a>
                             }
+                            <br />
                         }
                         @if (@item.Tags != null && @item.Tags.Count > 0)
                         {
-                            <br /><span>Tags:</span>
+                            <span>Tags:</span>
                             foreach (var tag in item.Tags.Take(10))
                             {
                                 <a href="/tag/@tag">@tag</a>
                             }
+                            <br />
                         }
-                    </small>
+                        Tools: <a href="/stats/@item.ShortId">statistics</a> :: <a href="/trace/@item.ShortId">resolve url</a> :: <a href="/qr/@item.ShortId/10">qr code</a>
+</small>
                 </div>
                 <div class="col-xs-2">
                     @if (Model.UserName != null && Model.UserName.Equals(User.Identity.Name))

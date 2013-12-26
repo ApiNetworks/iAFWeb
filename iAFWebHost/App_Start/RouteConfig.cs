@@ -17,7 +17,7 @@ namespace iAFWebHost
             routes.MapRoute(
                 name: "QR",
                 url: "qr/{id}/{scale}",
-                defaults: new { controller = "Home", action = "Qr",id = UrlParameter.Optional, scale = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Qr", id = UrlParameter.Optional, scale = UrlParameter.Optional }
             );
 
             routes.MapRoute(
@@ -30,6 +30,30 @@ namespace iAFWebHost
                 name: "Stats",
                 url: "stats/{id}",
                 defaults: new { controller = "Home", action = "Stats", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "TraceUrl",
+                url: "trace/{id}",
+                defaults: new { controller = "Home", action = "Trace" }
+            );
+
+            routes.MapRoute(
+                name: "About",
+                url: "about",
+                defaults: new { controller = "Home", action = "About" }
+            );
+
+            routes.MapRoute(
+                name: "News",
+                url: "news",
+                defaults: new { controller = "Home", action = "News" }
+            );
+
+            routes.MapRoute(
+                name: "Contact",
+                url: "Contact",
+                defaults: new { controller = "Home", action = "Contact" }
             );
 
             routes.MapRoute(

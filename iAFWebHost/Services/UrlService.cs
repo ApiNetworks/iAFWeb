@@ -101,6 +101,19 @@ namespace iAFWebHost.Services
             }
         }
 
+        public void ResolveResponseUrl(Url url)
+        {
+            try
+            {
+                url.GetResponseUrl();
+                _repository.Update(url);
+            }
+            catch (Exception ex)
+            {
+                throw HandleException(new object[] { url }, ex);
+            }
+        }
+
         /// <summary>
         /// Gets the URL count.
         /// </summary>
