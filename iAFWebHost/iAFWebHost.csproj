@@ -265,7 +265,6 @@
     <Content Include="Content\img\bg.png" />
     <Content Include="Content\img\logo.png" />
     <Content Include="Content\Site.css" />
-    <Content Include="Content\visualize-light.css" />
     <Content Include="Docs\views.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
