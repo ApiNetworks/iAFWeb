@@ -1,11 +1,15 @@
-﻿using Newtonsoft.Json;
+﻿using iAFWebHost.Entities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace iAFWebHost.Utils
@@ -200,6 +204,67 @@ namespace iAFWebHost.Utils
             }
 
             return output.ToString();
+        }
+
+        public static bool IsValidUri(this string value)
+        {
+            Uri uri;
+            return Uri.TryCreate(value, UriKind.Absolute, out uri);
+        }
+
+        public static Uri TryCreateUri(this string value)
+        {
+            Uri uri;
+            if (Uri.TryCreate(value, UriKind.Absolute, out uri))
+                return uri;
+            else
+                throw new ArgumentException();
+        }
+
+        public static Uri GetResponseUrl(this Uri url, int timeoutInSeconds)
+        {
+            Uri uri = null;
+            try
+            {
+                HttpWebRequest request = HttpWebRequest.CreateHttp(url);
+                request.Method = "HEAD";
+                request.AllowAutoRedirect = true;
+                request.Timeout = timeoutInSeconds * 1000;
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    uri = response.ResponseUri;
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return uri;
+        }
+
+        public static string RedirectPath(string url)
+        {
+            StringBuilder sb = new StringBuilder();
+            string location = string.Copy(url);
+            while (!string.IsNullOrWhiteSpace(location))
+            {
+                sb.AppendLine(location); // you can also use 'Append'
+                HttpWebRequest request = HttpWebRequest.CreateHttp(location);
+                request.AllowAutoRedirect = false;
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    location = response.GetResponseHeader("Location");
+                }
+            }
+            return sb.ToString();
+        }
+
+        public static void GetResponseUrl(this Url value)
+        {
+            if (value.Href.IsValidUri())
+            {
+                value.HrefActual = value.Href.TryCreateUri().GetResponseUrl(10).ToString();
+            }
         }
     }
 }

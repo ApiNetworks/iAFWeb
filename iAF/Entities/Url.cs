@@ -55,6 +55,8 @@ namespace iAF.Entities
         /// </value>
         public string Href { get; set; }
 
+        public string HrefActual { get; set; }
+
         public string Title { get; set; }
 
         public string Summary { get; set; }

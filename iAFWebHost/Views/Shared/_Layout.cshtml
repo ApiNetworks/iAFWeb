@@ -29,6 +29,10 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5483a86a789cb925be3bd1487614e0ccaac62481
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -46,11 +50,11 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="/">Home</a></li>
-                    <li>@Html.ActionLink("News", "News", "Home")</li>
-                    <li><a href="/home/stats">Stats</a></li>
+                    <li><a href="/news">News</a></li>
+                    <li><a href="/stats">Stats</a></li>
                     <li><a href="http://blog.i.af">Blog</a></li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/contact">Contact</a></li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -66,5 +70,15 @@
             </p>
         </footer>
     </div>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-45399947-1', 'i.af');
+        ga('send', 'pageview');
+    </script>
 </body>
 </html>

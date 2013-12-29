@@ -116,24 +116,35 @@ namespace iAFWebHost.Controllers
                     model.MonthlyDataPoints = GetLast12MonthStats(id);
                     return View(model);
                 }
-                else
-                    throw new HttpException();
             }
             else
             {
-                return RedirectToAction("SystemStats");
+                //display global system stats
+                PageModel model = new PageModel();
+                model.HourlyDataPoints = GetLast24HourSystemStats();
+                model.DailyDataPoints = GetLast30DaysSystemStats();
+                model.MonthlyDataPoints = GetLast12MonthSystemStats();
+                return View("SystemStats", model);
             }
+
+            return RedirectPermanent("/");
         }
 
-        [OutputCache(Duration=60)]
-        public ActionResult SystemStats()
+        public ActionResult Trace(string id)
         {
-            //display global system stats
-            PageModel model = new PageModel();
-            model.HourlyDataPoints = GetLast24HourSystemStats();
-            model.DailyDataPoints = GetLast30DaysSystemStats();
-            model.MonthlyDataPoints = GetLast12MonthSystemStats();
-            return View(model);
+            if (id.IsShortCode())
+            {
+                // display individual url stats
+                UrlModel urlModel = ResolveUrl(id);
+                if (urlModel != null && urlModel.Href.IsValidUri())
+                {
+                    PageModel model = new PageModel();
+                    model.UrlModel = urlModel;
+                    return View(model);
+                }
+            }
+
+            return RedirectPermanent("/");
         }
 
         [HttpGet]

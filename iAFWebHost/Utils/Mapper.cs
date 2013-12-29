@@ -34,6 +34,7 @@ namespace iAFWebHost.Utils
             UrlModel model = new UrlModel();
             model.Id = entity.Id;
             model.Href = entity.Href;
+            model.HrefActual = entity.HrefActual;
             model.Flag = entity.Flag;
             model.Title = entity.Title;
             model.Summary = entity.Summary;
@@ -53,11 +54,13 @@ namespace iAFWebHost.Utils
             iAF.Entities.Url model = new iAF.Entities.Url();
             model.Id = entity.Id;
             model.Href = entity.Href;
+            model.HrefActual = entity.HrefActual;
             model.Flag = entity.Flag;
             model.Title = entity.Title;
             model.Summary = entity.Summary;
             model.UtcDate = entity.UtcDate;
             model.ShortId = entity.ShortId;
+            
             if (entity.Users != null)
                 model.Users = entity.Users;
 
@@ -72,6 +75,7 @@ namespace iAFWebHost.Utils
             iAFWebHost.Entities.Url model = new iAFWebHost.Entities.Url();
             model.Id = entity.Id;
             model.Href = entity.Href;
+            model.HrefActual = entity.HrefActual;
             model.Flag = entity.Flag;
             model.Title = entity.Title;
             model.Summary = entity.Summary;

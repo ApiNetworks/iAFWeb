@@ -73,6 +73,15 @@ namespace iAFWebHost.Entities
         [JsonProperty("U")]
         public string Href { get; set; }
 
+        /// <summary>
+        /// Gets or sets the actual href after service attempts to resolve destination Url
+        /// </summary>
+        /// <value>
+        /// The href actual.
+        /// </value>
+        [JsonProperty("UA")]
+        public string HrefActual { get; set; }
+
         [JsonProperty("Tl")]
         public string Title { get; set; }
 
