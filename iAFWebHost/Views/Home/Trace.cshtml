@@ -28,6 +28,10 @@
             <table class="table table-striped">
                 <tr><td>Original Url:</td><td>@Model.UrlModel.Href</td></tr>
                 <tr><td>Resolved Url:</td><td>@Model.UrlModel.HrefActual</td></tr>
+                <tr><td>Server IP:</td><td>@Model.UrlModel.HttpResponseIP</td></tr>
+                <tr><td>Content Length:</td><td>@Model.UrlModel.HttpContentLength</td></tr>
+                <tr><td>Content Type:</td><td>@Model.UrlModel.HttpContentType</td></tr>
+                <tr><td>Status Code:</td><td>@Model.UrlModel.HttpResponseCode</td></tr>
             </table>
         </div>
     </div>

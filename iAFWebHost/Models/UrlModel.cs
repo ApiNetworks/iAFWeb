@@ -92,6 +92,51 @@ namespace iAFWebHost.Models
         [StringLength(2048)]
         public string HrefActual { get; set; }
 
+        /// <summary>
+        /// Gets or sets the HTTP response code.Recorded during initial HEAD operation
+        /// </summary>
+        /// <value>
+        /// The HTTP response code.
+        /// </value>
+        [DataMember]
+        public int HttpResponseCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the length of the content as returned by HTTP Head operation.
+        /// </summary>
+        /// <value>
+        /// The length of the content.
+        /// </value>
+        [DataMember]
+        public long HttpContentLength { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the content as returned by HTTP Head operation.
+        /// </summary>
+        /// <value>
+        /// The type of the content.
+        /// </value>
+        [DataMember]
+        public string HttpContentType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the HTTP response ip.
+        /// </summary>
+        /// <value>
+        /// The HTTP response ip.
+        /// </value>
+        [DataMember]
+        public string HttpResponseIP { get; set; }
+
+        /// <summary>
+        /// Gets or sets the HTTP time stamp. Stores the date and time of the initial HTTP HEAD request.
+        /// </summary>
+        /// <value>
+        /// The HTTP time stamp.
+        /// </value>
+        [DataMember]
+        public DateTime HttpTimeStamp { get; set; }
+
         [DataMember(Name = "Users")]
         public List<string> Users { get; set; }
 

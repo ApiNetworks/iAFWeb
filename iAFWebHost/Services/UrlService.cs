@@ -93,7 +93,9 @@ namespace iAFWebHost.Services
 
             try
             {
-                return _repository.Upsert(url);
+                var entity = _repository.Upsert(url);
+                UrlServiceHelper.ResolveUrl(entity);
+                return entity;
             }
             catch (Exception ex)
             {
@@ -105,7 +107,18 @@ namespace iAFWebHost.Services
         {
             try
             {
-                url.GetResponseUrl();
+                if(url.Href.IsValidUri())
+                {
+                    Uri uri = url.Href.TryCreateUri();
+                    HttpResponseDTO dto = HttpRequestHelper.GetResponse(uri,10);
+                    url.HrefActual = dto.ResponseUri.ToString();
+                    url.HttpContentLength = dto.ContentLength;
+                    url.HttpContentType = dto.ContentType;
+                    url.HttpResponseCode = dto.StatusCode;
+                    url.HttpTimeStamp = dto.TimeStamp;
+                    url.HttpResponseIP = dto.ResponseIP;
+                }
+
                 _repository.Update(url);
             }
             catch (Exception ex)

@@ -82,6 +82,45 @@ namespace iAFWebHost.Entities
         [JsonProperty("UA")]
         public string HrefActual { get; set; }
 
+        /// <summary>
+        /// Gets or sets the HTTP response code.Recorded during initial HEAD operation
+        /// </summary>
+        /// <value>
+        /// The HTTP response code.
+        /// </value>
+        [JsonProperty("RC")]
+        public int HttpResponseCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the length of the content as returned by HTTP Head operation.
+        /// </summary>
+        /// <value>
+        /// The length of the content.
+        /// </value>
+        [JsonProperty("Cl")]
+        public long HttpContentLength { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the content as returned by HTTP Head operation.
+        /// </summary>
+        /// <value>
+        /// The type of the content.
+        /// </value>
+        [JsonProperty("Ct")]
+        public string HttpContentType { get; set; }
+
+        [JsonProperty("Ri")]
+        public string HttpResponseIP { get; set; }
+
+        /// <summary>
+        /// Gets or sets the HTTP time stamp. Stores the date and time of the initial HTTP HEAD request.
+        /// </summary>
+        /// <value>
+        /// The HTTP time stamp.
+        /// </value>
+        [JsonProperty("TS")]
+        public DateTime HttpTimeStamp { get; set; }
+
         [JsonProperty("Tl")]
         public string Title { get; set; }
 

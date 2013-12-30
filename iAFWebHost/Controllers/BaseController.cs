@@ -159,7 +159,6 @@ namespace iAFWebHost.Controllers
         {
             Url entity = Mapper.Map(model);
             entity = urlService.ShortenUrl(entity);
-            urlService.ResolveResponseUrl(entity);
             return Mapper.Map(entity);
         }
 
@@ -182,7 +181,7 @@ namespace iAFWebHost.Controllers
             UrlModel model = new UrlModel();
             Url entity = urlService.ExpandUrl(id);
             if (entity != null && entity.Href.IsValidUri())
-                urlService.ResolveResponseUrl(entity);
+                UrlServiceHelper.ResolveUrl(entity);
 
             model = Mapper.Map(entity);
             return model;

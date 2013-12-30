@@ -15,10 +15,16 @@ namespace iAFWebHost.Utils
             iAFWebHost.Entities.Url entity = new iAFWebHost.Entities.Url();
             entity.Id = model.Id;
             entity.Href = model.Href;
+            entity.HrefActual = model.HrefActual;
             entity.Flag = model.Flag;
             entity.Title = model.Title;
             entity.Summary = model.Summary;
             entity.UtcDate = model.UtcDate;
+            entity.HttpTimeStamp = model.HttpTimeStamp;
+            entity.HttpContentLength = model.HttpContentLength;
+            entity.HttpContentType = model.HttpContentType;
+            entity.HttpResponseCode = model.HttpResponseCode;
+            entity.HttpResponseIP = model.HttpResponseIP;
 
             if (model.Users != null)
                 entity.Users = model.Users;
@@ -39,6 +45,11 @@ namespace iAFWebHost.Utils
             model.Title = entity.Title;
             model.Summary = entity.Summary;
             model.UtcDate = entity.UtcDate;
+            model.HttpResponseCode = entity.HttpResponseCode;
+            model.HttpTimeStamp = entity.HttpTimeStamp;
+            model.HttpContentLength = entity.HttpContentLength;
+            model.HttpContentType = entity.HttpContentType;
+            model.HttpResponseIP = entity.HttpResponseIP;
 
             if (entity.Users != null)
                 model.Users = entity.Users;
@@ -60,7 +71,12 @@ namespace iAFWebHost.Utils
             model.Summary = entity.Summary;
             model.UtcDate = entity.UtcDate;
             model.ShortId = entity.ShortId;
-            
+            model.HttpResponseCode = entity.HttpResponseCode;
+            model.HttpTimeStamp = entity.HttpTimeStamp;
+            model.HttpContentLength = entity.HttpContentLength;
+            model.HttpContentType = entity.HttpContentType;
+            model.HttpResponseIP = entity.HttpResponseIP;
+
             if (entity.Users != null)
                 model.Users = entity.Users;
 
@@ -80,6 +96,11 @@ namespace iAFWebHost.Utils
             model.Title = entity.Title;
             model.Summary = entity.Summary;
             model.UtcDate = entity.UtcDate;
+            model.HttpResponseCode = entity.HttpResponseCode;
+            model.HttpTimeStamp = entity.HttpTimeStamp;
+            model.HttpContentLength = entity.HttpContentLength;
+            model.HttpContentType = entity.HttpContentType;
+            model.HttpResponseIP = entity.HttpResponseIP;
 
             if (entity.Users != null)
                 model.Users = entity.Users;

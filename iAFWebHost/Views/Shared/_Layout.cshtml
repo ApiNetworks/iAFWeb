@@ -10,7 +10,7 @@
         if (userAgent.Contains("ipad;"))
         {
             <script>
-                // BUG orientation portrait/lanscape IOS //
+                // fix orientation portrait/lanscape IOS //
                 if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i)) {
                     var viewportmeta = document.querySelector('meta[name="viewport"]');
                     if (viewportmeta) {
@@ -29,10 +29,6 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-<<<<<<< HEAD
-=======
-
->>>>>>> 5483a86a789cb925be3bd1487614e0ccaac62481
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">

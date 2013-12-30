@@ -135,7 +135,12 @@ namespace iAFWebHost.Controllers
             if (id.IsShortCode())
             {
                 // display individual url stats
-                UrlModel urlModel = ResolveUrl(id);
+                UrlModel urlModel = ExpandUrl(id);
+
+                // Attempt to resolve url on demand
+                if (String.IsNullOrEmpty(urlModel.HrefActual))
+                    urlModel = ResolveUrl(id);
+                
                 if (urlModel != null && urlModel.Href.IsValidUri())
                 {
                     PageModel model = new PageModel();

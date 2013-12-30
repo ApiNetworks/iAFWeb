@@ -16,13 +16,6 @@ namespace iAFWebHost.Repositories
 {
     public abstract class RepositoryBase<T> where T : Entities.EntityBase
     {
-        //protected static CouchbaseClient _couchbaseClient = null;
-
-        //static RepositoryBase()
-        //{
-        //    _couchbaseClient = new CouchbaseClient();
-        //}
-
         public virtual ulong Create(T entity)
         {
             entity.CasValue = store(StoreMode.Add, entity);
