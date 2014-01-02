@@ -22,12 +22,13 @@
                     }
                     else
                     {
-                        if(item.Href.Length > 70)
+                        if (item.Href.Length > 70)
                         {
-                            <h3 style="margin:0px;"><a href="@item.ShortHref">@item.Href.Substring(0,70)</a></h3>    
-                        } else
+                            <h3 style="margin:0px;"><a href="@item.ShortHref">@item.Href.Substring(0, 70)</a></h3>
+                        }
+                        else
                         {
-                            <h3 style="margin:0px;"><a href="@item.ShortHref">@item.Href</a></h3>    
+                            <h3 style="margin:0px;"><a href="@item.ShortHref">@item.Href</a></h3>
                         }
                     }
                     @if (!String.IsNullOrEmpty(@item.Summary))
@@ -55,7 +56,7 @@
                             <br />
                         }
                         Tools: <a href="/stats/@item.ShortId">statistics</a> :: <a href="/ad/@item.ShortId">ad link</a> :: <a href="/trace/@item.ShortId">resolve url</a> :: <a href="/qr/@item.ShortId/10">qr code</a>
-</small>
+                    </small>
                 </div>
                 <div class="col-xs-2">
                     @if (Model.UserName != null && Model.UserName.Equals(User.Identity.Name))
@@ -76,8 +77,6 @@
         <h3>No records found.</h3>
         <br />
     }
-
-
     <h4>
         <a class="pull-left" href="?@Model.Pager.PrevPath()"><< Previous</a>
         <a class="pull-right" href="?@Model.Pager.NextPath()">Next >></a>

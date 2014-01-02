@@ -274,6 +274,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Docs\views.txt" />
     <Content Include="favicon.ico" />
+    <Content Include="flippa_3012182.txt" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\site.min.css" />
