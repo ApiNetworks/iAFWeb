@@ -15,6 +15,7 @@ namespace iAFWebHost.Controllers
     {
         private static readonly Lazy<UrlService> _urlService = new Lazy<UrlService>(() => new UrlService());
         private static readonly Lazy<LogService> _logService = new Lazy<LogService>(() => new LogService());
+        private static readonly Lazy<RequestLogService> _requestLogService = new Lazy<RequestLogService>(() => new RequestLogService());
 
         public UrlService urlService
         {
@@ -24,6 +25,11 @@ namespace iAFWebHost.Controllers
         public LogService logService
         {
             get { return _logService.Value; }
+        }
+
+        public RequestLogService requestLogService
+        {
+            get { return _requestLogService.Value; }
         }
 
         /// <summary>
@@ -386,6 +392,46 @@ namespace iAFWebHost.Controllers
                 }
             }
             return pageHelper;
+        }
+
+        protected void LogHttpRequest()
+        {
+            try
+            {
+                RequestLog log = GetRequestLog();
+                requestLogService.Log(log);
+            }
+            catch
+            {
+
+            }
+        }
+
+        protected void LogHttpRequestAsync()
+        {
+            try
+            {
+                RequestLog log = GetRequestLog();
+                RequestLogServiceHelper.LogAsync(log);
+            }
+            catch
+            {
+
+            }
+        }
+
+        public RequestLog GetRequestLog()
+        {
+            RequestLog log = new RequestLog();
+            log.Id = Guid.NewGuid().ToString();
+            log.DT = DateTime.UtcNow;
+            var request = System.Web.HttpContext.Current.Request;
+            if (request.UrlReferrer != null)
+                log.Referrer = request.UrlReferrer.ToString();
+            log.RemoteIP = request.ClientIPFromRequest(false);
+            log.Raw = request.ToRaw();
+            log.RequestUrl = request.RawUrl;
+            return log;
         }
     }
 }

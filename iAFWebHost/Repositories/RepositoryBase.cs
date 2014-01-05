@@ -34,6 +34,12 @@ namespace iAFWebHost.Repositories
             return entity.CasValue;
         }
 
+        public virtual ulong Save(T entity, TimeSpan validFor)
+        {
+            entity.CasValue = store(StoreMode.Set, entity, validFor);
+            return entity.CasValue;
+        }
+
         public virtual ulong Save(string id, string entity)
         {
             return store(StoreMode.Set, id, entity);
@@ -42,6 +48,12 @@ namespace iAFWebHost.Repositories
         private ulong store(StoreMode mode, T entity)
         {
             var result = CouchbaseManager.Instance.ExecuteCasJson(mode, entity.Id, entity, entity.CasValue);
+            return result.Success ? result.Cas : 0;
+        }
+
+        private ulong store(StoreMode mode, T entity, TimeSpan validFor)
+        {
+            var result = CouchbaseManager.Instance.ExecuteCasJson(mode, entity.Id, entity, validFor, entity.CasValue);
             return result.Success ? result.Cas : 0;
         }
 

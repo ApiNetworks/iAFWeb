@@ -21,6 +21,8 @@ namespace iAFWebHost.Controllers
                 if (model != null && !String.IsNullOrEmpty(model.Href))
                 {
                     IncrementHitCount(id);
+                    LogHttpRequestAsync();
+
                     return Redirect(model.Href);
                 }
                 else
