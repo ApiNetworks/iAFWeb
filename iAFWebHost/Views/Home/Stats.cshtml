@@ -96,7 +96,7 @@
         data: [
             @foreach (var item in Model.DailyDataPoints)
         {
-        @: @item.Value,
+        @: @item.Sum,
         }
         ]
 
@@ -146,7 +146,7 @@
         data: [
             @foreach (var item in Model.MonthlyDataPoints)
         {
-        @: @item.Value,
+        @: @item.Sum,
         }
         ]
 
@@ -220,7 +220,7 @@
                         {
                             <tr>
                                 <td style="font-size: smaller;">@item.TimeStamp.ToShortDateString()</td>
-                                <td>@item.Value</td>
+                                <td>@item.Sum</td>
                             </tr>
                         }
                     </tbody>
@@ -242,7 +242,7 @@
                         {
                             <tr>
                                 <td style="font-size: smaller;">@item.TimeStamp.ToString("Y", CultureInfo.CreateSpecificCulture("en-US"))</td>
-                                <td>@item.Value</td>
+                                <td>@item.Sum</td>
                             </tr>
                         }
                     </tbody>

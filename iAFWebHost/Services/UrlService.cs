@@ -455,6 +455,7 @@ namespace iAFWebHost.Services
                 do
                 {
                     DataPoint point = new DataPoint();
+                    point.Id = String.Empty;
                     point.ShortId = String.Empty;
                     point.UtcTimeStamp = new DateTime(dailyInterval.Year, dailyInterval.Month, dailyInterval.Day, 0, 0, 0);
 
@@ -493,6 +494,7 @@ namespace iAFWebHost.Services
                 do
                 {
                     DataPoint point = new DataPoint();
+                    point.Id = String.Empty;
                     point.ShortId = String.Empty;
                     point.UtcTimeStamp = new DateTime(monthlyInterval.Year, monthlyInterval.Month, 1, 0, 0, 0);
 

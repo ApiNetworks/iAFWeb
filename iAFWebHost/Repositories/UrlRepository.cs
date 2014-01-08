@@ -347,21 +347,17 @@ namespace iAFWebHost.Repositories
 
         public List<DataPoint> GetDailyStats(string id, DateTime startDate, DateTime endDate)
         {
-            List<DataPoint> dataPoints = new List<DataPoint>();
             endDate = endDate.AddDays(1);
-            object[] startKey = { id, startDate.Year.ToString(), startDate.Month.ToString(), startDate.Day.ToString() };
-            object[] endKey = { id, endDate.Year.ToString(), endDate.Month.ToString(), endDate.Day.ToString() };
-
-            return GetStatsAggregate(startKey, endKey, 30, true, 4, true);
+            object[] startKey = { id, startDate.Year, startDate.Month, startDate.Day };
+            object[] endKey = { id, endDate.Year, endDate.Month, endDate.Day };
+            return GetStatsAggregate(startKey, endKey, 31, true, 4, true);
         }
 
         public List<DataPoint> GetMonthlyStats(string id, DateTime startDate, DateTime endDate)
         {
-            List<DataPoint> dataPoints = new List<DataPoint>();
             endDate = endDate.AddMonths(1);
-            object[] startKey = { id, startDate.Year.ToString(), startDate.Month.ToString() };
-            object[] endKey = { id, endDate.Year.ToString(), endDate.Month.ToString() };
-
+            object[] startKey = { id, startDate.Year, startDate.Month };
+            object[] endKey = { id, endDate.Year, endDate.Month };
             return GetStatsAggregate(startKey, endKey, 12, true, 3, true);
         }
 
@@ -390,7 +386,7 @@ namespace iAFWebHost.Repositories
                     if (row.Info != null)
                     {
                         DataPoint dataPoint = new DataPoint();
-                        dataPoint.ShortId = String.Empty;
+                        dataPoint.ShortId = startKey[0].ToString();
                         List<object> list = row.Info.Values.ToList<object>();
                         if (!list.IsNullOrEmpty() && list.Count == 2)
                         {
@@ -433,14 +429,22 @@ namespace iAFWebHost.Repositories
                                 }
                             }
 
-                            string data = list[1].ToString();
-                            ulong value = 0;
-                            if (!String.IsNullOrEmpty(data))
+                            Dictionary<string, object> data = list[1] as Dictionary<string, object>;
+                            if (data != null)
                             {
-                                ulong.TryParse(data, out value);
+                                if (data.ContainsKey("sum"))
+                                    dataPoint.Sum = (long)data["sum"];
+                                if (data.ContainsKey("min"))
+                                    dataPoint.Min = (long)data["min"];
+                                if (data.ContainsKey("max"))
+                                    dataPoint.Max = (long)data["max"];
+                                if (data.ContainsKey("count"))
+                                    dataPoint.Count = (long)data["count"];
+                                if (data.ContainsKey("sumsqr"))
+                                    dataPoint.SumSqr = (long)data["sumsqr"];
+
+                                dataPoints.Add(dataPoint);
                             }
-                            dataPoint.Value = value;                            
-                            dataPoints.Add(dataPoint);
                         }
                     }
                 }
@@ -451,38 +455,25 @@ namespace iAFWebHost.Repositories
 
         public List<DataPoint> GetMonthlySystemStats(DateTime startDate, DateTime endDate)
         {
-            List<DataPoint> dataPoints = new List<DataPoint>();
             endDate = endDate.AddMonths(1);
-            object[] startKey = { startDate.Year.ToString(), startDate.Month.ToString() };
-            object[] endKey = { endDate.Year.ToString(), endDate.Month.ToString() };
-
-            dataPoints = GetSystemStatsAggregate(startKey, endKey, 12, true, 2, true);
-
-            return dataPoints;
+            object[] startKey = { startDate.Year, startDate.Month };
+            object[] endKey = { endDate.Year, endDate.Month };
+            return GetSystemStatsAggregate(startKey, endKey, 12, true, 2, true);
         }
 
         public List<DataPoint> GetDailySystemStats(DateTime startDate, DateTime endDate)
         {
-            List<DataPoint> dataPoints = new List<DataPoint>();
             endDate = endDate.AddDays(1);
-            object[] startKey = { startDate.Year.ToString(), startDate.Month.ToString(), startDate.Day.ToString() };
-            object[] endKey = { endDate.Year.ToString(), endDate.Month.ToString(), endDate.Day.ToString() };
-
-            dataPoints = GetSystemStatsAggregate(startKey, endKey, 48, true, 3, true);
-
-            return dataPoints;
+            object[] startKey = { startDate.Year, startDate.Month, startDate.Day };
+            object[] endKey = { endDate.Year, endDate.Month, endDate.Day };
+            return GetSystemStatsAggregate(startKey, endKey, 48, true, 3, true);
         }
 
         public List<DataPoint> GetHourlySystemStats(DateTime startDate, DateTime endDate)
         {
-            List<DataPoint> dataPoints = new List<DataPoint>();
-
-            object[] startKey = { startDate.Year.ToString(), startDate.Month.ToString(), startDate.Day.ToString(), startDate.Hour.ToString() };
-            object[] endKey = { endDate.Year.ToString(), endDate.Month.ToString(), endDate.Day.ToString(), endDate.Hour.ToString() };
-
-            dataPoints = GetSystemStatsAggregate(startKey, endKey, 48, true, 4, true);
-
-            return dataPoints;
+            object[] startKey = { startDate.Year, startDate.Month, startDate.Day, startDate.Hour };
+            object[] endKey = { endDate.Year, endDate.Month, endDate.Day, endDate.Hour };
+            return GetSystemStatsAggregate(startKey, endKey, 48, true, 4, true);
         }
 
         public List<DataPoint> GetSystemStatsAggregate(object[] startKey, object[] endKey, int limit, bool group, int groupLevel, bool reduce)
@@ -510,6 +501,7 @@ namespace iAFWebHost.Repositories
                     if (row.Info != null)
                     {
                         DataPoint dataPoint = new DataPoint();
+                        dataPoint.Id = String.Empty;
                         dataPoint.ShortId = String.Empty;
                         List<object> list = row.Info.Values.ToList<object>();
                         if (!list.IsNullOrEmpty() && list.Count == 2)
