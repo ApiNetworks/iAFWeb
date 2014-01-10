@@ -238,6 +238,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\PageHelper.cs" />
     <Compile Include="Models\PageModel.cs" />
+    <Compile Include="Models\RequestLogModel.cs" />
     <Compile Include="Models\UrlModel.cs" />
     <Compile Include="NLog\CouchbaseTarget.cs">
       <SubType>Code</SubType>
@@ -361,11 +362,12 @@
     <Content Include="Views\Shared\_UrlList.cshtml" />
     <Content Include="Views\Home\Site.cshtml" />
     <Content Include="Views\Home\Tag.cshtml" />
-    <Content Include="Views\Error\ErrorMonitor.cshtml" />
+    <Content Include="Views\Error\Errors.cshtml" />
     <Content Include="Views\Home\Stats.cshtml" />
     <Content Include="Views\Home\SystemStats.cshtml" />
     <Content Include="Views\Setup\Index.cshtml" />
     <Content Include="Views\Home\Trace.cshtml" />
+    <Content Include="Views\Home\Requests.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

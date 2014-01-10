@@ -128,6 +128,18 @@ namespace iAFWebHost.Utils
             return model;
         }
 
+        public static iAFWebHost.Models.RequestLogModel Map(Entities.RequestLog entity)
+        {
+            iAFWebHost.Models.RequestLogModel model = new RequestLogModel();
+            model.Id = entity.Id;
+            model.DT = entity.DT;
+            model.Raw = entity.Raw;
+            model.Referrer = entity.Referrer;
+            model.RemoteIP = entity.RemoteIP;
+            model.RequestUrl = entity.RequestUrl;
+            return model;
+        }
+
         public static DataPointModel Map(DataPoint entity)
         {
             DataPointModel model = new DataPointModel();
@@ -165,6 +177,11 @@ namespace iAFWebHost.Utils
             return model;
         }
 
+        /// <summary>
+        /// Maps the specified dto.
+        /// </summary>
+        /// <param name="dto">The dto.</param>
+        /// <returns></returns>
         public static PageModel Map(Dto<Error> dto)
         {
             PageModel model = new PageModel();
@@ -179,6 +196,28 @@ namespace iAFWebHost.Utils
             model.Pager.NextKey = dto.EKey;
             model.Pager.NextKeyId = dto.EId;
             model.Errors = modelList;
+            return model;
+        }
+
+        /// <summary>
+        /// Maps the specified dto.
+        /// </summary>
+        /// <param name="dto">The dto.</param>
+        /// <returns></returns>
+        public static PageModel Map(Dto<RequestLog> dto)
+        {
+            PageModel model = new PageModel();
+            List<RequestLogModel> modelList = new List<RequestLogModel>();
+            foreach (var entity in dto.Entities)
+                modelList.Add(Mapper.Map(entity));
+            model.Pager.Page = dto.Page;
+            model.Pager.PageSize = dto.PageSize;
+            model.Pager.TotalRows = dto.TotalRows;
+            model.Pager.PreviousKey = dto.SKey;
+            model.Pager.PreviousKeyId = dto.SId;
+            model.Pager.NextKey = dto.EKey;
+            model.Pager.NextKeyId = dto.EId;
+            model.Requests = modelList;
             return model;
         }
     }

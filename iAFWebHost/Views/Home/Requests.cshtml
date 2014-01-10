@@ -1,0 +1,23 @@
+﻿@model iAFWebHost.Models.PageModel
+@using iAFWebHost.Utils;
+
+@{
+    ViewBag.Title = "Request Monitor";
+}
+
+<h2 style="color:#fff">Request Monitor</h2>
+<div class="pop-unit">
+    @if (!Model.Requests.IsNullOrEmpty())
+    {
+        foreach (var r in Model.Requests)
+        {
+            @r.Id <br />@r.DT
+            <textarea cols="150" style="width:100%" rows="12">@r.Raw</textarea><br />
+        }
+    }
+    else
+    {
+        <h3>No requests found</h3>
+        <br /><br />
+    }
+</div>

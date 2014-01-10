@@ -12,11 +12,13 @@ namespace iAFWebHost.Models
         {
             Urls = new List<UrlModel>();
             Pager = new PageHelper();
+            Requests = new List<RequestLogModel>();
         }
 
         public int UrlCount { get; set; }
         public List<UrlModel> Urls { get; set; }
         public List<ErrorModel> Errors { get; set; }
+        public List<RequestLogModel> Requests { get; set; }
         public List<DataPointModel> HourlyDataPoints { get; set; }
         public List<DataPointModel> DailyDataPoints { get; set; }
         public List<DataPointModel> MonthlyDataPoints { get; set; }

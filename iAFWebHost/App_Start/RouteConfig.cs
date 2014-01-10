@@ -33,6 +33,18 @@ namespace iAFWebHost
             );
 
             routes.MapRoute(
+                name: "Requests",
+                url: "requests/{id}",
+                defaults: new { controller = "Home", action = "Requests", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Errors",
+                url: "Errors",
+                defaults: new { controller = "Error", action = "Errors" }
+            );
+
+            routes.MapRoute(
                 name: "TraceUrl",
                 url: "trace/{id}",
                 defaults: new { controller = "Home", action = "Trace" }

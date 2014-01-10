@@ -132,6 +132,12 @@ namespace iAFWebHost.Controllers
             return RedirectPermanent("/");
         }
 
+        public ActionResult Requests()
+        {
+            PageModel model = GetReferrals();
+            return View(model);
+        }
+
         public ActionResult Trace(string id)
         {
             if (id.IsShortCode())

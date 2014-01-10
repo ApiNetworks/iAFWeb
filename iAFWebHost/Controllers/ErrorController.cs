@@ -10,15 +10,10 @@ namespace iAFWebHost.Controllers
 {
     public class ErrorController : BaseController
     {
-        public ActionResult Index()
-        {
-            return View("_Error");
-        }
-
-        public ActionResult ErrorMonitor()
+        public ActionResult Errors()
         {
             PageModel model = GetErrors();
-            return View(model);
+            return View("Errors", model);
         }
 
         public ActionResult Delete()

@@ -1,4 +1,5 @@
-﻿using iAFWebHost.Entities;
+﻿using Couchbase;
+using iAFWebHost.Entities;
 using iAFWebHost.Repositories;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace iAFWebHost.Services
 {
     public class RequestLogService : BaseService
     {
-        private RequestLogRepository _repository; 
+        private RequestLogRepository _repository;
 
         public RequestLogService()
         {
@@ -29,6 +30,18 @@ namespace iAFWebHost.Services
             catch (Exception ex)
             {
                 throw HandleException(new object[] { log.Id }, ex);
+            }
+        }
+
+        public Dto<RequestLog> GetReferrals()
+        {
+            try
+            {
+                return _repository.GetReferrals(1,10,0);
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

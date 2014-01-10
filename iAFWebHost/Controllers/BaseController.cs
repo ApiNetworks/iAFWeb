@@ -347,6 +347,16 @@ namespace iAFWebHost.Controllers
             return model;
         }
 
+        protected PageModel GetReferrals()
+        {
+            PageHelper pageHelper = ParsePageHelper();
+            Dto<RequestLog> dto = requestLogService.GetReferrals();
+            PageModel model = Mapper.Map(dto);
+            model.Pager.TempKey = pageHelper.PreviousKey;
+            model.Pager.TempKeyId = pageHelper.PreviousKeyId;
+            return model;
+        }
+
         protected bool DeleteError(string id)
         {
             return logService.DeleteError(id);
