@@ -368,6 +368,7 @@
     <Content Include="Views\Setup\Index.cshtml" />
     <Content Include="Views\Home\Trace.cshtml" />
     <Content Include="Views\Home\Requests.cshtml" />
+    <Content Include="Views\Home\Referrals.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

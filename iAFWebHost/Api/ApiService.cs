@@ -28,10 +28,20 @@ namespace iAFWebHost.Api
             if (String.IsNullOrEmpty(request.Url))
                 throw new ArgumentNullException(request.Url);
 
-            UrlService service = new UrlService();
+            Uri uri;
+            if (Uri.TryCreate(request.Url, UriKind.Absolute, out uri) == false)
+                throw new ArgumentNullException(request.Url);
+
+            if (uri.AbsoluteUri.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase) == false
+                && uri.AbsoluteUri.StartsWith("https://", StringComparison.InvariantCultureIgnoreCase) == false
+                && uri.AbsoluteUri.StartsWith("ftp", StringComparison.InvariantCultureIgnoreCase) == false)
+                throw new ArgumentException(request.Url);
+            
             Url entity = new Url();
-            entity.Href = request.Url;
+            entity.Href = uri.AbsoluteUri;
             iAFWebHost.Entities.Url dbEntity = Mapper.MapResponse(entity);
+
+            UrlService service = new UrlService();
             iAFWebHost.Entities.Url dbResponse = service.ShortenUrl(dbEntity);
             entity = Mapper.MapResponse(dbResponse);
 

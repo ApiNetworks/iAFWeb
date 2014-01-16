@@ -90,6 +90,17 @@ namespace iAFWebHost.Utils
             return validation;
         }
 
+        public static bool IsReservedValue(this ulong numberToShorten)
+        {
+            string[] reservedWords = { "ads", "requests", "stats", "log", "login", "admin", "news", "about", "contact", "home", "val", "value", "string", "user", "users", "profile", "qr", "trace", "error", "referrals" };
+            string shortValue = EncodeBase58(numberToShorten);
+
+            if (reservedWords.Contains(shortValue))
+                return true;
+            else
+                return false;
+        }
+
         /// <summary>
         /// Determines whether the collection is null or contains no elements.
         /// </summary>

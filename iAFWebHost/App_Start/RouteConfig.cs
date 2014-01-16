@@ -39,6 +39,12 @@ namespace iAFWebHost
             );
 
             routes.MapRoute(
+                name: "Referrals",
+                url: "referrals/{id}",
+                defaults: new { controller = "Home", action = "Referrals", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Errors",
                 url: "Errors",
                 defaults: new { controller = "Error", action = "Errors" }

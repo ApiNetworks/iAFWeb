@@ -18,17 +18,17 @@
                 <div class="col-xs-9">
                     @if (!String.IsNullOrEmpty(@item.Title))
                     {
-                        <h3 style="margin:0px;"><a href="@item.ShortHref">@item.Title</a></h3>
+                        <h3 style="margin:0px;"><a href="/@item.ShortId">@item.Title</a></h3>
                     }
                     else
                     {
                         if (item.Href.Length > 70)
                         {
-                            <h3 style="margin:0px;"><a href="@item.ShortHref">@item.Href.Substring(0, 70)</a></h3>
+                            <h3 style="margin:0px;"><a href="/@item.ShortId">@item.Href.Substring(0, 70)</a></h3>
                         }
                         else
                         {
-                            <h3 style="margin:0px;"><a href="@item.ShortHref">@item.Href</a></h3>
+                            <h3 style="margin:0px;"><a href="/@item.ShortId">@item.Href</a></h3>
                         }
                     }
                     @if (!String.IsNullOrEmpty(@item.Summary))

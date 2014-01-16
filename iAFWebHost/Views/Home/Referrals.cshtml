@@ -1,0 +1,24 @@
+﻿@model iAFWebHost.Models.PageModel
+@using iAFWebHost.Utils;
+
+@{
+    ViewBag.Title = "Referral Monitor";
+}
+
+<h2 style="color:#fff">Referrer Monitor</h2>
+<div class="pop-unit">
+    @if (!Model.Requests.IsNullOrEmpty())
+    {
+        foreach (var r in Model.Requests)
+        {
+            @r.Id <br />@r.DT<br />
+            <a href="@r.Referrer">@r.Referrer</a>
+            <hr />
+        }
+    }
+    else
+    {
+        <h3>No requests found</h3>
+        <br /><br />
+    }
+</div>

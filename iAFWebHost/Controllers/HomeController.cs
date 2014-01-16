@@ -134,7 +134,13 @@ namespace iAFWebHost.Controllers
 
         public ActionResult Requests()
         {
-            PageModel model = GetReferrals();
+            PageModel model = GetRequests();
+            return View(model);
+        }
+
+        public ActionResult Referrals()
+        {
+            PageModel model = GetRequestsWithReferrals();
             return View(model);
         }
 

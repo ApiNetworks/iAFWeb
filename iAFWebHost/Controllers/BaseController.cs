@@ -347,10 +347,20 @@ namespace iAFWebHost.Controllers
             return model;
         }
 
-        protected PageModel GetReferrals()
+        protected PageModel GetRequests()
         {
             PageHelper pageHelper = ParsePageHelper();
-            Dto<RequestLog> dto = requestLogService.GetReferrals();
+            Dto<RequestLog> dto = requestLogService.GetRequestsWithReferrals();
+            PageModel model = Mapper.Map(dto);
+            model.Pager.TempKey = pageHelper.PreviousKey;
+            model.Pager.TempKeyId = pageHelper.PreviousKeyId;
+            return model;
+        }
+
+        protected PageModel GetRequestsWithReferrals()
+        {
+            PageHelper pageHelper = ParsePageHelper();
+            Dto<RequestLog> dto = requestLogService.GetRequestsWithReferrals();
             PageModel model = Mapper.Map(dto);
             model.Pager.TempKey = pageHelper.PreviousKey;
             model.Pager.TempKeyId = pageHelper.PreviousKeyId;

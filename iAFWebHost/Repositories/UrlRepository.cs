@@ -20,7 +20,13 @@ namespace iAFWebHost.Repositories
             string longId = GetValue(hashKey);
             if (String.IsNullOrEmpty(longId))
             {
-                url.Id = base.Increment("url::count").ToString();
+                ulong id = 0;
+                // skip over reserved values
+                do 
+                    id = base.Increment("url::count"); 
+                while (id.IsReservedValue());
+
+                url.Id = id.ToString();
                 url.Flag = 1;
 
                 ulong CasResult = base.Save(url);
@@ -41,7 +47,7 @@ namespace iAFWebHost.Repositories
             return url;
         }
 
-        public Url Update(Url url)
+        public new Url Update(Url url)
         {
             string hashKey = url.Href.MD5();
             string longId = GetValue(hashKey);

@@ -33,11 +33,23 @@ namespace iAFWebHost.Services
             }
         }
 
-        public Dto<RequestLog> GetReferrals()
+        public Dto<RequestLog> GetRequestsWithReferrals()
         {
             try
             {
-                return _repository.GetReferrals(1,10,0);
+                return _repository.GetRequestsWithReferrals(1,10,0);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public Dto<RequestLog> GetRequests()
+        {
+            try
+            {
+                return _repository.GetRequests(1, 10, 0);
             }
             catch (Exception)
             {
