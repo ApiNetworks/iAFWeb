@@ -1,0 +1,179 @@
+﻿@model iAFWebHost.Models.EmailModel
+@{
+    ViewBag.Title = "Message";
+    Layout = "~/Views/Shared/_EmailLayout.cshtml";
+}
+
+<style>
+    .nav-tabs .glyphicon:not(.no-margin) {
+        margin-right: 10px;
+    }
+
+    .tab-pane .list-group-item:first-child {
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+    }
+
+    .tab-pane .list-group-item:last-child {
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .tab-pane .list-group .checkbox {
+        display: inline-block;
+        margin: 0;
+    }
+
+    .tab-pane .list-group input[type="checkbox"] {
+        margin-top: 2px;
+    }
+
+    .tab-pane .list-group .glyphicon {
+        margin-right: 5px;
+    }
+
+        .tab-pane .list-group .glyphicon:hover {
+            color: #FFBC00;
+        }
+
+    a.list-group-item.read {
+        color: #222;
+        background-color: #F3F3F3;
+    }
+
+    hr {
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
+
+    .nav-pills > li > a {
+        padding: 5px 10px;
+    }
+
+    .ad {
+        padding: 5px;
+        background: #F5F5F5;
+        color: #222;
+        font-size: 80%;
+        border: 1px solid #E5E5E5;
+    }
+
+        .ad a.title {
+            color: #15C;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 110%;
+        }
+
+        .ad a.url {
+            color: #093;
+            text-decoration: none;
+        }
+</style>
+
+<a href="/email/@Model.EmailMessage.MailboxId" style="text-decoration:none"><h2 id="shrink_info" style="color: #fff">Mailbox: @Model.EmailMessage.RecipientEmail</h2></a>
+
+<div class="round-unit">
+    <div class="row">
+        <div class="col-sm-3 col-md-2">
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    Mail <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Mail</a></li>
+                    <li><a href="#">Contacts</a></li>
+                    <li><a href="#">Tasks</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-9 col-md-10">
+            <!-- Split button -->
+            <div class="btn-group">
+                <button type="button" class="btn btn-default">
+                    <div class="checkbox" style="margin:0;">
+                        <label>
+                            <input type="checkbox">
+                        </label>
+                    </div>
+                </button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span><span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">All</a></li>
+                    <li><a href="#">None</a></li>
+                    <li><a href="#">Read</a></li>
+                    <li><a href="#">Unread</a></li>
+                    <li><a href="#">Starred</a></li>
+                    <li><a href="#">Unstarred</a></li>
+                </ul>
+            </div>
+            <button type="button" class="btn btn-default" data-toggle="tooltip" title="Refresh">
+                <span class="glyphicon glyphicon-refresh"></span>
+            </button>
+            <!-- Single button -->
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    More <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Mark all as read</a></li>
+                    <li class="divider"></li>
+                    <li class="text-center"><small class="text-muted">Select messages to see more actions</small></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-sm-3 col-md-2">
+            <a href="/email/@Model.EmailMessage.MailboxId" class="btn btn-danger btn-sm btn-block" role="button">COMPOSE</a>
+            <hr />
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active">
+                    <a href="/email/@Model.EmailMessage.MailboxId"><span class="badge pull-right"></span> Inbox </a>
+                </li>
+                <li><a href="/email/@Model.EmailMessage.MailboxId">Starred</a></li>
+                <li><a href="/email/@Model.EmailMessage.MailboxId">Important</a></li>
+                <li><a href="/email/@Model.EmailMessage.MailboxId">Sent Mail</a></li>
+                <li><a href="/email/@Model.EmailMessage.MailboxId">Drafts</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-md-10">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#home" data-toggle="tab">
+                        <span class="glyphicon glyphicon-inbox">
+                        </span> Email Message
+                    </a>
+                </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="home">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">
+
+                            <iframe style="width:100%;height:600px;border-width:0px;" src="data:text/html;charset=utf-8,@Html.Raw(HttpUtility.HtmlEncode(Model.EmailMessage.BodyHtml))"></iframe>
+                                @*<strong>From:</strong> @Model.EmailMessage.From <strong>From Email:</strong> @Model.EmailMessage.FromEmail
+                                <hr />
+                                <strong>Subject:</strong> @Model.EmailMessage.Subject
+                                <hr />
+                                @if (!String.IsNullOrEmpty(Model.EmailMessage.BodyHtml))
+                                {
+                                    @Model.EmailMessage.BodyHtml
+                                }
+                                else
+                                {
+                                    @Model.EmailMessage.BodyPlain
+                                }*@
+</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

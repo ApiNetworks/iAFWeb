@@ -21,6 +21,30 @@ namespace iAFWebHost
             );
 
             routes.MapRoute(
+                name: "Email",
+                url: "email",
+                defaults: new { controller = "Email", action = "Index", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Catchall",
+                url: "email/catchall",
+                defaults: new { controller = "Email", action = "catchall", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Inbox",
+                url: "email/{id}",
+                defaults: new { controller = "Email", action = "Inbox", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Mailgun",
+                url: "mailgun/gateway",
+                defaults: new { controller = "Mailgun", action = "Gateway" }
+            );
+
+            routes.MapRoute(
                 name: "Ad",
                 url: "ad/{id}",
                 defaults: new { controller = "Home", action = "Ad" }

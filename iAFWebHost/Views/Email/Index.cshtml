@@ -1,0 +1,133 @@
+﻿@model iAFWebHost.Models.InboxConfigModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_EmailLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 id="email_info" style="color: #fff">Free Disposable Email.</h2>
+        <form class="form-inline" id="emailBox" role="form" method="post">
+            <div class="link-unit">
+                <div class="input-group">
+                    @Html.ValidationMessageFor(m => m.InboxEmail)
+                    <input type="text" name="InboxEmail" id="inboxEmail" value="@Model.InboxEmail" placeholder="... enter your email ... example:123@i.af " class="input-lg">
+                    <span class="input-group-btn">
+                        <button type="submit" style="width: 180px" id="btnCopy" onmouseover="doCopySetup();" class="btn btn-success btn-lg">Copy To Clipboard </button>
+                        <button type="submit" style="margin-left:2px; width:180px" id="btnPost" onclick="document.getElementById('emailBox').submit();" class="btn btn-success btn-lg">Check Email</button>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="~/Scripts/ZeroClipboard.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        clip = null;
+        ZeroClipboard.setDefaults({
+            moviePath: "/Scripts/ZeroClipboard.swf"
+        });
+        if (ZeroClipboard.detectFlashSupport()) {
+            clip = new ZeroClipboard();
+            clip.setHandCursor(true);
+            clip.on('complete', function (client, args) {
+                onCopy(client, args);
+            });
+            clip.glue($('#btnCopy'));
+        }
+        $emailValue = $('#inboxEmail');
+        $emailInfo = $('#email_info');
+        $copyButton = $('#btnCopy');
+        $postButton = $('#btnPost');
+    });
+
+    function onCopy(client, text) {
+        resetShrinker();
+    };
+
+    function resetShrinker() {
+        if (validateEmail($emailValue.val())) {
+            $copyButton.fadeOut(100, function () { $postButton.fadeIn(100); });
+            $emailInfo.fadeOut(100, function () {
+                $(this).html("<h2 id='email_info' style='color:#fff'>Great! It's in your clipboard! Press [Check Email] button.</h2>");
+                $emailInfo.fadeIn(300);
+            });
+            $copyButton.detach();
+        } else {
+            $emailInfo.html('Error! Enter valid email address.');
+        }
+    }
+
+    function doCopySetup() {
+        function errorOccured() {
+            alert('There was an error while processing your URL.');
+        }
+        if (validateEmail($emailValue.val())) {
+            if (ZeroClipboard.detectFlashSupport()) {
+                clip.setText($emailValue.val());
+                clip.setHandCursor(true);
+            }
+        } else {
+            $emailInfo.html('Error! Enter valid email address.');
+        }
+        return false;
+    };
+
+    function validateEmail(email) {
+        var re = /^(([^<>()[\]\\.,;:\s@@\"]+(\.[^<>()[\]\\.,;:\s@@\"]+)*)|(\".+\"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+</script>
+
+@*<div class="row">
+        <div class="col-md-12">
+            <h2 id="email_info" style="color: #fff">Your Free Disposable Email. Example: @Model.InboxEmail</h2>
+            <form class="form-inline" id="EmailForm" role="form" method="post" onsubmit="return false;">
+                <div class="link-unit">
+                    <div class="input-group">
+                        <input type="text" name="InboxEmail" id="href" value="@Model.InboxEmail" placeholder=" ... enter your email ... " class="input-lg">
+                        @Html.ValidationMessageFor(m => m.InboxEmail)
+                        <span class="input-group-btn">
+                            <button type="submit" id="btnUrl" class="btn btn-success btn-lg" style=" width:180px">Copy To Clipboard </button>
+                            <button type="submit" style="display: none; width:180px" id="btnMailbox" onclick="document.getElementById('EmailForm').submit();" class="btn btn-success btn-lg">Check Your Mail</button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>*@
+
+<br />
+<div class="pop-unit">
+    <div class="row">
+        <div class="col-md-4">
+            <h3 style="margin-top:0;">Get Free Disposable Email!</h3>
+            <p>
+                <strong>i.af</strong> is a better way to signup for online content.
+                Protect your main email address. All inboxes are public and usable by you!
+                No sign-up required. No passwords. Just use an inbox!
+                Inboxes are created when email arrives for them.
+                No registration required! It's Free!
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h3 style="margin-top:0;">Use Any Address You Want!</h3>
+            <p>
+                Any email name you can think of already exists @@i.af and you can use any of them.<br />
+                Want <strong>my_free_email@i.af</strong>? No problem. <br />Want <strong>123@i.af</strong>? You got it.<br />
+                Those and any other mailboxes you think of @@i.af are created when email arrives! Really.
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h3 style="margin-top:0;">Develop with Us!</h3>
+            <p>
+                We are on GitHub! <a href="https://github.com/iAF">https://github.com/iAF</a>
+                You can download the source code that runs this website.
+                Git is a distributed version control system that allows you to easily clone your
+                own i.af service. This is a completely transparent service.
+            </p>
+        </div>
+    </div>
+</div>

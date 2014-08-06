@@ -37,7 +37,7 @@ namespace iAFWebHost.Services
         {
             try
             {
-                return _repository.GetRequestsWithReferrals(1,10,0);
+                return _repository.GetRequestsWithReferrals(1,100,0);
             }
             catch (Exception)
             {
@@ -49,7 +49,7 @@ namespace iAFWebHost.Services
         {
             try
             {
-                return _repository.GetRequests(1, 10, 0);
+                return _repository.GetRequests(1, 100, 0);
             }
             catch (Exception)
             {

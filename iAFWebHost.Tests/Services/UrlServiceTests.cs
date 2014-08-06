@@ -37,7 +37,7 @@ namespace iAFWebHost.Tests.Services
             //// Begin timing
             stopwatch.Start();
 
-            Parallel.For(0, 10000, i =>
+            Parallel.For(0, 1000, i =>
             {
                 Url u = service.ShortenUrl(GenereateEntity());
             });
@@ -61,7 +61,7 @@ namespace iAFWebHost.Tests.Services
             stopwatch.Start();
 
             List<Url> list = new List<Url>();
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 list.Add(GenereateUniqueEntity());
             }
@@ -85,7 +85,7 @@ namespace iAFWebHost.Tests.Services
             // Begin timing
             stopwatch.Start();
 
-            Parallel.For(0, 10000, i =>
+            Parallel.For(0, 1000, i =>
             {
                 Url url = service.ExpandUrl(i.ToString());
             });
@@ -138,7 +138,7 @@ namespace iAFWebHost.Tests.Services
             // Begin timing
             stopwatch.Start();
 
-            Parallel.For(1, 10000, i =>
+            Parallel.For(1, 1000, i =>
             {
                 Url url = service.ExpandUrl(((ulong)i).EncodeBase58());
             });

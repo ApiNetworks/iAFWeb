@@ -20,9 +20,9 @@ namespace iAFWebHost.NLog
             try
             {
                 Error error = new Error(logEvent);
-                CouchbaseManager.Instance.ExecuteStoreJson(Enyim.Caching.Memcached.StoreMode.Add, error.Id, error);
+                CouchbaseManager.UrlInstance.ExecuteStoreJson(Enyim.Caching.Memcached.StoreMode.Add, error.Id, error);
             }
-            catch
+            catch(Exception ex)
             {
 
             }

@@ -211,11 +211,15 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\EmailController.cs" />
+    <Compile Include="Controllers\MailgunController.cs" />
     <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="Entities\DataPoint.cs" />
     <Compile Include="Entities\Dto.cs" />
+    <Compile Include="Entities\Email.cs" />
     <Compile Include="Entities\EntityBase.cs" />
     <Compile Include="Entities\Error.cs" />
+    <Compile Include="Entities\Mailbox.cs" />
     <Compile Include="Entities\RequestLog.cs" />
     <Compile Include="Entities\ServiceError.cs" />
     <Compile Include="Entities\Url.cs" />
@@ -234,8 +238,11 @@
     <Compile Include="Identity\UserStore.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DataPointModel.cs" />
+    <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\ErrorModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\InboxConfigModel.cs" />
+    <Compile Include="Models\InboxModel.cs" />
     <Compile Include="Models\PageHelper.cs" />
     <Compile Include="Models\PageModel.cs" />
     <Compile Include="Models\RequestLogModel.cs" />
@@ -250,12 +257,17 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\LogRepository.cs" />
+    <Compile Include="Repositories\UrlClientRepositoryBase.cs" />
+    <Compile Include="Repositories\EmailRepository.cs" />
+    <Compile Include="Repositories\EmailClientRepositoryBase.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
+    <Compile Include="Repositories\LogRepository.cs" />
+    <Compile Include="Repositories\MailboxRepository.cs" />
     <Compile Include="Repositories\RequestLogRepository.cs" />
     <Compile Include="Repositories\UrlRepository.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Repositories\CouchbaseManager.cs" />
+    <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\ILogger.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -369,12 +381,19 @@
     <Content Include="Views\Home\Trace.cshtml" />
     <Content Include="Views\Home\Requests.cshtml" />
     <Content Include="Views\Home\Referrals.cshtml" />
+    <Content Include="Views\Email\Index.cshtml" />
+    <Content Include="Views\Email\Inbox.cshtml" />
+    <Content Include="Views\Email\MailboxNotFound.cshtml" />
+    <Content Include="Views\Email\Message.cshtml" />
+    <Content Include="Views\Email\MessageNotFound.cshtml" />
+    <Content Include="Views\Shared\_EmailLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\CustomAccount\" />
     <Folder Include="Views\Installer\" />
+    <Folder Include="Views\Mailgun\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

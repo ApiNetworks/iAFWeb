@@ -1,0 +1,35 @@
+﻿@model iAFWebHost.Models.InboxModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_EmailLayout.cshtml";
+}
+
+@if (Model.RecepientEmail != null)
+{
+    <h2 id="shrink_info" style="color: #fff">Mailbox: @Model.RecepientEmail</h2>
+}
+else
+{
+    <h2 id="shrink_info" style="color: #fff">Mailbox: Empty</h2>
+}
+
+<div class="round-unit">
+    <div class="row">
+        <center><h1>This mailbox is empty.</h1></center>
+        <center><h2>Checking mailbox in: <span id="countdown"></span></h2></</center>
+        <br /><br />
+        <center><h4>Please bookmark this page for your future reference</h4></center>
+        <center><h4><a href="/email">Click here to continue</a></h4></center>
+</div>
+</div>
+
+<script type="text/javascript">
+    (function countdown(remaining) {
+        if (remaining === 0) {
+            location.reload(true);
+        }
+        document.getElementById('countdown').innerHTML = remaining;
+        setTimeout(function () { countdown(remaining - 1); }, 1000);
+    })(10);
+</script>

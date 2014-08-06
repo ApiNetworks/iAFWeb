@@ -14,7 +14,7 @@ using System.Web;
 
 namespace iAFWebHost.Repositories
 {
-    public abstract class RepositoryBase<T> where T : Entities.EntityBase
+    public abstract class UrlClientRepositoryBase<T> where T : Entities.EntityBase
     {
         public virtual ulong Create(T entity)
         {
@@ -47,25 +47,25 @@ namespace iAFWebHost.Repositories
 
         private ulong store(StoreMode mode, T entity)
         {
-            var result = CouchbaseManager.EmailInstance.ExecuteCasJson(mode, entity.Id, entity, entity.CasValue);
+            var result = CouchbaseManager.UrlInstance.ExecuteCasJson(mode, entity.Id, entity, entity.CasValue);
             return result.Success ? result.Cas : 0;
         }
 
         private ulong store(StoreMode mode, T entity, TimeSpan validFor)
         {
-            var result = CouchbaseManager.EmailInstance.ExecuteCasJson(mode, entity.Id, entity, validFor, entity.CasValue);
+            var result = CouchbaseManager.UrlInstance.ExecuteCasJson(mode, entity.Id, entity, validFor, entity.CasValue);
             return result.Success ? result.Cas : 0;
         }
 
         private ulong store(StoreMode mode, string id, string entity)
         {
-            var result = CouchbaseManager.EmailInstance.ExecuteCas(mode, id, entity);
+            var result = CouchbaseManager.UrlInstance.ExecuteCas(mode, id, entity);
             return result.Success ? result.Cas : 0;
         }
 
         public virtual T Get(string id)
         {
-            var result = CouchbaseManager.EmailInstance.ExecuteGetJson<T>(id);
+            var result = CouchbaseManager.UrlInstance.ExecuteGetJson<T>(id);
             if (result.Success && result.HasValue)
             {
                 T doc = result.Value as T;
@@ -81,7 +81,7 @@ namespace iAFWebHost.Repositories
 
         public virtual string GetValue(string id)
         {
-            var result = CouchbaseManager.EmailInstance.ExecuteGet(id);
+            var result = CouchbaseManager.UrlInstance.ExecuteGet(id);
             if (result.Success && result.HasValue)
                 return result.Value.ToString();
             else
@@ -90,7 +90,7 @@ namespace iAFWebHost.Repositories
 
         public virtual T GetWithLock(string id)
         {
-            var result = CouchbaseManager.EmailInstance.ExecuteGetWithLock(id);
+            var result = CouchbaseManager.UrlInstance.ExecuteGetWithLock(id);
             if (result.Success && result.HasValue)
             {
                 T doc = Deserialize(result.Value.ToString());
@@ -106,7 +106,7 @@ namespace iAFWebHost.Repositories
 
         public virtual bool Remove(string id)
         {
-            return CouchbaseManager.EmailInstance.Remove(id);
+            return CouchbaseManager.UrlInstance.Remove(id);
         }
 
         protected virtual IView<IViewRow> View(string viewName)
@@ -116,7 +116,7 @@ namespace iAFWebHost.Repositories
 
         protected virtual IView<IViewRow> View(string designDoc, string viewName)
         {
-            return CouchbaseManager.EmailInstance.GetView(designDoc, viewName);
+            return CouchbaseManager.UrlInstance.GetView(designDoc, viewName);
         }
 
         protected virtual ISpatialView<ISpatialViewRow> SpatialView(string viewName)
@@ -131,7 +131,7 @@ namespace iAFWebHost.Repositories
 
         public virtual ulong Increment(string key)
         {
-            return CouchbaseManager.EmailInstance.Increment(key, 1, 1);
+            return CouchbaseManager.UrlInstance.Increment(key, 1, 1);
         }
 
         public virtual T Deserialize(string entity)

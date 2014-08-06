@@ -77,6 +77,18 @@ input[type="checkbox"].input-validation-error {
     box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.35);
 }
 
+.round-unit {
+    padding:15px;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border: 2px solid #ecf1f3;
+    background-color: #fff;
+    -webkit-box-shadow: 1px 1px 1px 0px rgb(146,144,144);
+    -moz-box-shadow: 1px 1px 1px 0px rgb(146,144,144);
+    box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.35);
+}
+
     .pop-unit input {
         font-size: 1.7em;
         height: 45px;

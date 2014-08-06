@@ -14,7 +14,7 @@ using System.Web;
 
 namespace iAFWebHost.Repositories
 {
-    public abstract class RepositoryBase<T> where T : Entities.EntityBase
+    public abstract class EmailClientRepositoryBase<T> where T : Entities.EntityBase
     {
         public virtual ulong Create(T entity)
         {
