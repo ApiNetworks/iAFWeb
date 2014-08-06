@@ -11,9 +11,8 @@
     {
         foreach (var r in Model.Requests)
         {
-            @r.Id <br />@r.DT<br />
-            <a href="@r.Referrer">@r.Referrer</a>
-            <hr />
+            @r.DT<br />
+            <a href="@r.Referrer">@r.Referrer</a><br />
         }
     }
     else

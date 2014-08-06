@@ -11,7 +11,7 @@ using System.Web;
 
 namespace iAFWebHost.Repositories
 {
-    public partial class UrlRepository : RepositoryBase<Url>
+    public partial class UrlRepository : UrlClientRepositoryBase<Url>
     {
         #region Url
         public Url Upsert(Url url)

@@ -277,5 +277,31 @@ namespace iAFWebHost.Utils
                 value.HrefActual = value.Href.TryCreateUri().GetResponseUrl(10).ToString();
             }
         }
+
+        public static long TryParseLong(this string value)
+        {
+            long result = 0;
+            Int64.TryParse(value, out result);
+            return result;
+        }
+
+        public static int TryParseInt(this string value)
+        {
+            int result = 0;
+            Int32.TryParse(value, out result);
+            return result;
+        }
+
+        public static string CharacterLimit(this string value, int count)
+        {
+            if (!String.IsNullOrEmpty(value) && value.Length > count)
+            {
+                return value.Substring(0, count);
+            }
+            else
+            {
+                return value;
+            }
+        }
     }
 }
