@@ -103,6 +103,12 @@ namespace iAFWebHost.Controllers
             return View();
         }
 
+        public ActionResult Banner(string id)
+        {
+            var t = Request.QueryString;
+            return Redirect("http://www.yahoo.com");
+        }
+
         public ActionResult Stats(string id)
         {
             if (id.IsShortCode())

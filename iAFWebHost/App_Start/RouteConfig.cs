@@ -27,6 +27,12 @@ namespace iAFWebHost
             );
 
             routes.MapRoute(
+                name: "Banner",
+                url: "banner/{id}",
+                defaults: new { controller = "Home", action = "Banner", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Stats",
                 url: "stats/{id}",
                 defaults: new { controller = "Home", action = "Stats", id = UrlParameter.Optional }
