@@ -124,14 +124,14 @@
                 </ul>
             </div>
             <div class="pull-right">
-                <span class="text-muted"><b>1</b>–<b>10</b> of <b>@Model.TotalEmails</b></span>
+                <span class="text-muted"><b>@Model.Pager.FromRecord</b>–<b>@Model.Pager.ToRecord</b> of <b>@Model.TotalEmails</b></span>
                 <div class="btn-group btn-group-sm">
-                    <button type="button" class="btn btn-default">
+                    <a href="?@Model.Pager.PrevPath()" type="button" class="btn btn-default">
                         <span class="glyphicon glyphicon-chevron-left"></span>
-                    </button>
-                    <button type="button" class="btn btn-default">
+                    </a>
+                    <a href="?@Model.Pager.NextPath()" type="button" class="btn btn-default">
                         <span class="glyphicon glyphicon-chevron-right"></span>
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -185,23 +185,23 @@
                     <div class="list-group">
                         @foreach (var email in Model.Emails)
                         {
-                        <a href="/email/message/@email.Id" class="list-group-item">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox">
-                                </label>
-                            </div>
-                            <span class="glyphicon glyphicon-star-empty"></span>
-                            <span class="name" style="min-width: 120px; display: inline-block;">@email.FromEmail</span> <span class="">@email.Subject</span>
-                            <span class="text-muted" style="font-size: 11px;">@email.BodyPreview</span> <span class="badge">@email.TimeStamp</span>
-                            @if (email.AttachmentCount > 0)
+                            <a href="/email/message/@email.Id" class="list-group-item">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox">
+                                    </label>
+                                </div>
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                                <span class="name" style="min-width: 120px; display: inline-block;">@email.FromEmail</span> <span class="">@email.SubjectPreview</span>
+                                <span class="text-muted" style="font-size: 11px;">@email.BodyPreview</span> <span class="badge">@email.TimeStamp</span>
+                                @if (email.AttachmentCount > 0)
                                 {
-                                <span class="pull-right">
-                                    <span class="glyphicon glyphicon-paperclip">
+                                    <span class="pull-right">
+                                        <span class="glyphicon glyphicon-paperclip">
+                                        </span>
                                     </span>
-                                </span>
                                 }
-                        </a>
+                            </a>
                         }
                     </div>
                 </div>

@@ -15,18 +15,48 @@ namespace iAFWebHost.Controllers
     {
         private static readonly Lazy<UrlService> _urlService = new Lazy<UrlService>(() => new UrlService());
         private static readonly Lazy<LogService> _logService = new Lazy<LogService>(() => new LogService());
+        private static readonly Lazy<EmailService> _emailService = new Lazy<EmailService>(() => new EmailService());
         private static readonly Lazy<RequestLogService> _requestLogService = new Lazy<RequestLogService>(() => new RequestLogService());
 
+        /// <summary>
+        /// Gets the URL service.
+        /// </summary>
+        /// <value>
+        /// The URL service.
+        /// </value>
         public UrlService urlService
         {
             get { return _urlService.Value; }
         }
 
+        /// <summary>
+        /// Gets the log service.
+        /// </summary>
+        /// <value>
+        /// The log service.
+        /// </value>
         public LogService logService
         {
             get { return _logService.Value; }
         }
 
+        /// <summary>
+        /// Gets the email service.
+        /// </summary>
+        /// <value>
+        /// The email service.
+        /// </value>
+        public EmailService emailService
+        {
+            get { return _emailService.Value; }
+        }
+
+        /// <summary>
+        /// Gets the request log service.
+        /// </summary>
+        /// <value>
+        /// The request log service.
+        /// </value>
         public RequestLogService requestLogService
         {
             get { return _requestLogService.Value; }
@@ -182,6 +212,11 @@ namespace iAFWebHost.Controllers
             return model;
         }
 
+        /// <summary>
+        /// Resolves the URL.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         protected UrlModel ResolveUrl(string id)
         {
             UrlModel model = new UrlModel();
@@ -193,6 +228,11 @@ namespace iAFWebHost.Controllers
             return model;
         }
 
+        /// <summary>
+        /// Gets the last24 hour stats.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         protected List<DataPointModel> GetLast24HourStats(string id)
         {
             var stats = urlService.GetLast24HourStats(id);
@@ -205,6 +245,11 @@ namespace iAFWebHost.Controllers
             return statsModels;
         }
 
+        /// <summary>
+        /// Gets the last30 days stats.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         protected List<DataPointModel> GetLast30DaysStats(string id)
         {
             var stats = urlService.GetLast30DaysStats(id);
@@ -217,6 +262,11 @@ namespace iAFWebHost.Controllers
             return statsModels;
         }
 
+        /// <summary>
+        /// Gets the last12 month stats.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         protected List<DataPointModel> GetLast12MonthStats(string id)
         {
             var stats = urlService.GetLast12MonthStats(id);
@@ -229,6 +279,10 @@ namespace iAFWebHost.Controllers
             return statsModels;
         }
 
+        /// <summary>
+        /// Gets the last24 hour system stats.
+        /// </summary>
+        /// <returns></returns>
         protected List<DataPointModel> GetLast24HourSystemStats()
         {
             var stats = urlService.GetLast24HourSystemStats();
@@ -241,6 +295,10 @@ namespace iAFWebHost.Controllers
             return statsModels;
         }
 
+        /// <summary>
+        /// Gets the last30 days system stats.
+        /// </summary>
+        /// <returns></returns>
         protected List<DataPointModel> GetLast30DaysSystemStats()
         {
             var stats = urlService.GetLast30DaysSystemStats();
@@ -253,6 +311,10 @@ namespace iAFWebHost.Controllers
             return statsModels;
         }
 
+        /// <summary>
+        /// Gets the last12 month system stats.
+        /// </summary>
+        /// <returns></returns>
         protected List<DataPointModel> GetLast12MonthSystemStats()
         {
             var stats = urlService.GetLast12MonthSystemStats();
@@ -265,6 +327,10 @@ namespace iAFWebHost.Controllers
             return statsModels;
         }
 
+        /// <summary>
+        /// Increments the hit count.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
         protected void IncrementHitCount(string id)
         {
             urlService.IncrementHitCount(id);
@@ -274,12 +340,12 @@ namespace iAFWebHost.Controllers
         /// Gets the URL list.
         /// </summary>
         /// <returns></returns>
-        protected PageModel GetUrlList()
+        protected UrlPageModel GetUrlList()
         {
             PageHelper pageHelper = ParsePageHelper();
             pageHelper.PageSize = 100;
             Dto<Url> dto = urlService.GetUrlList(pageHelper.Page, pageHelper.PageSize, pageHelper.Skip, pageHelper.NextKey, null, pageHelper.NextKeyId, null, pageHelper.Sort);
-            PageModel model = Mapper.Map(dto);
+            UrlPageModel model = Mapper.Map(dto);
             model.Pager.TempKey = pageHelper.PreviousKey;
             model.Pager.TempKeyId = pageHelper.PreviousKeyId;
             return model;
@@ -290,11 +356,11 @@ namespace iAFWebHost.Controllers
         /// </summary>
         /// <param name="userName">Name of the user.</param>
         /// <returns></returns>
-        protected PageModel GetUrlListByUser(string userName)
+        protected UrlPageModel GetUrlListByUser(string userName)
         {
             PageHelper pageHelper = ParsePageHelper();
             Dto<Url> dto = urlService.GetUrlListByUser(pageHelper.Page, pageHelper.PageSize, pageHelper.Skip, userName, userName, pageHelper.NextKeyId, null, pageHelper.Sort);
-            PageModel model = Mapper.Map(dto);
+            UrlPageModel model = Mapper.Map(dto);
             model.Pager.TempKey = pageHelper.PreviousKey;
             model.Pager.TempKeyId = pageHelper.PreviousKeyId;
             model.Pager.TotalRows = urlService.GetUrlCountByUser(userName);
@@ -306,11 +372,11 @@ namespace iAFWebHost.Controllers
         /// </summary>
         /// <param name="host">The host.</param>
         /// <returns></returns>
-        protected PageModel GetUrlListByHost(string host)
+        protected UrlPageModel GetUrlListByHost(string host)
         {
             PageHelper pageHelper = ParsePageHelper();
             Dto<Url> dto = urlService.GetUrlListByHost(pageHelper.Page, pageHelper.PageSize, pageHelper.Skip, host, host, pageHelper.NextKeyId, null, pageHelper.Sort);
-            PageModel model = Mapper.Map(dto);
+            UrlPageModel model = Mapper.Map(dto);
             model.Pager.TempKey = pageHelper.PreviousKey;
             model.Pager.TempKeyId = pageHelper.PreviousKeyId;
             model.Pager.TotalRows = urlService.GetUrlCountByHost(host);
@@ -322,11 +388,11 @@ namespace iAFWebHost.Controllers
         /// </summary>
         /// <param name="tagName">Name of the tag.</param>
         /// <returns></returns>
-        protected PageModel GetUrlListByTag(string tagName)
+        protected UrlPageModel GetUrlListByTag(string tagName)
         {
             PageHelper pageHelper = ParsePageHelper();
             Dto<Url> dto = urlService.GetUrlListByTag(pageHelper.Page, pageHelper.PageSize, pageHelper.Skip, tagName, tagName, pageHelper.NextKeyId, null, pageHelper.Sort);
-            PageModel model = Mapper.Map(dto);
+            UrlPageModel model = Mapper.Map(dto);
             model.Pager.TempKey = pageHelper.PreviousKey;
             model.Pager.TempKeyId = pageHelper.PreviousKeyId;
             model.Pager.TotalRows = urlService.GetUrlCountByTag(tagName);
@@ -337,36 +403,49 @@ namespace iAFWebHost.Controllers
         /// Gets the errors.
         /// </summary>
         /// <returns></returns>
-        protected PageModel GetErrors()
+        protected UrlPageModel GetErrors()
         {
             PageHelper pageHelper = ParsePageHelper();
             Dto<Error> dto = logService.GetErrors();
-            PageModel model = Mapper.Map(dto);
+            UrlPageModel model = Mapper.Map(dto);
             model.Pager.TempKey = pageHelper.PreviousKey;
             model.Pager.TempKeyId = pageHelper.PreviousKeyId;
             return model;
         }
 
-        protected PageModel GetRequests()
+        /// <summary>
+        /// Gets the requests.
+        /// </summary>
+        /// <returns></returns>
+        protected UrlPageModel GetRequests()
         {
             PageHelper pageHelper = ParsePageHelper();
             Dto<RequestLog> dto = requestLogService.GetRequestsWithReferrals();
-            PageModel model = Mapper.Map(dto);
+            UrlPageModel model = Mapper.Map(dto);
             model.Pager.TempKey = pageHelper.PreviousKey;
             model.Pager.TempKeyId = pageHelper.PreviousKeyId;
             return model;
         }
 
-        protected PageModel GetRequestsWithReferrals()
+        /// <summary>
+        /// Gets the requests with referrals.
+        /// </summary>
+        /// <returns></returns>
+        protected UrlPageModel GetRequestsWithReferrals()
         {
             PageHelper pageHelper = ParsePageHelper();
             Dto<RequestLog> dto = requestLogService.GetRequestsWithReferrals();
-            PageModel model = Mapper.Map(dto);
+            UrlPageModel model = Mapper.Map(dto);
             model.Pager.TempKey = pageHelper.PreviousKey;
             model.Pager.TempKeyId = pageHelper.PreviousKeyId;
             return model;
         }
 
+        /// <summary>
+        /// Deletes the error.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         protected bool DeleteError(string id)
         {
             return logService.DeleteError(id);
@@ -414,6 +493,9 @@ namespace iAFWebHost.Controllers
             return pageHelper;
         }
 
+        /// <summary>
+        /// Logs the HTTP request.
+        /// </summary>
         protected void LogHttpRequest()
         {
             try
@@ -427,6 +509,9 @@ namespace iAFWebHost.Controllers
             }
         }
 
+        /// <summary>
+        /// Logs the HTTP request asynchronous.
+        /// </summary>
         protected void LogHttpRequestAsync()
         {
             try
@@ -440,6 +525,10 @@ namespace iAFWebHost.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets the request log.
+        /// </summary>
+        /// <returns></returns>
         public RequestLog GetRequestLog()
         {
             RequestLog log = new RequestLog();
@@ -453,5 +542,27 @@ namespace iAFWebHost.Controllers
             log.RequestUrl = request.RawUrl;
             return log;
         }
+
+        #region Email
+        public InboxModel GetInboxModel(string id)
+        {
+            PageHelper pageHelper = ParsePageHelper();
+            Dto<Email> dto = emailService.GetInboxEmails(id, pageHelper.Page, pageHelper.PageSize, pageHelper.Skip, pageHelper.NextKey, null, pageHelper.NextKeyId, null, pageHelper.Sort);
+
+            InboxModel model = Mapper.Map(dto);
+            var mailbox = emailService.GetInfo(id);
+            if (mailbox != null)
+            {
+                model.RecepientEmail = mailbox.RecepientEmail;
+                model.MailboxId = mailbox.Id;
+            }
+            else
+            {
+                if (!String.IsNullOrEmpty(Request["email"]))
+                    model.RecepientEmail = Request["email"];
+            }
+            return model;
+        }
+        #endregion
     }
 }

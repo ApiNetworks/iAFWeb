@@ -6,9 +6,9 @@ using System.Web;
 
 namespace iAFWebHost.Models
 {
-    public class PageModel
+    public class UrlPageModel
     {
-        public PageModel()
+        public UrlPageModel()
         {
             Urls = new List<UrlModel>();
             Pager = new PageHelper();

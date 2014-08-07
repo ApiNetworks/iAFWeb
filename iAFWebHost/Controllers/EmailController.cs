@@ -12,7 +12,7 @@ using iAFWebHost.Models;
 
 namespace iAFWebHost.Controllers
 {
-    public class EmailController : Controller
+    public class EmailController : BaseController
     {
         private EmailService emailService = null;
 
@@ -44,21 +44,15 @@ namespace iAFWebHost.Controllers
         {
             if (!String.IsNullOrEmpty(id))
             {
-                InboxModel model = new InboxModel();
-                var mailbox = emailService.GetEmails(id);
-                if (mailbox != null)
+                InboxModel model = GetInboxModel(id);
+                if (!String.IsNullOrEmpty(model.MailboxId))
                 {
-                    model.RecepientEmail = mailbox.RecepientEmail;
-                    model.MailboxId = mailbox.Id;
-                    model.Emails = mailbox.Emails;
-                    model.TotalEmails = mailbox.TotalEmails;
                     return View(model);
                 }
                 else
                 {
                     if (!String.IsNullOrEmpty(Request["email"]))
                         model.RecepientEmail = Request["email"];
-
                     return View("MailboxNotFound", model);
                 }
             }

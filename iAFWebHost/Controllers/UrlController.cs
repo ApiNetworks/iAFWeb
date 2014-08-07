@@ -10,7 +10,7 @@ using iAFWebHost.Utils;
 
 namespace iAFWebHost.Controllers
 {
-    public class HomeController : BaseController
+    public class UrlController : BaseController
     {
         [HttpGet]
         public ActionResult Index(string id)
@@ -92,7 +92,7 @@ namespace iAFWebHost.Controllers
                 Url entity = urlService.ExpandUrl(id);
                 if (entity != null && !String.IsNullOrEmpty(entity.Href))
                 {
-                    PageModel model = new PageModel();
+                    UrlPageModel model = new UrlPageModel();
                     model.UrlModel = Mapper.Map(entity);
                     return View(model);
                 }
@@ -117,7 +117,7 @@ namespace iAFWebHost.Controllers
                 UrlModel urlModel = ExpandUrl(id);
                 if (urlModel != null && !String.IsNullOrEmpty(urlModel.Href))
                 {
-                    PageModel model = new PageModel();
+                    UrlPageModel model = new UrlPageModel();
                     model.UrlModel = urlModel;
                     model.HourlyDataPoints = GetLast24HourStats(id);
                     model.DailyDataPoints = GetLast30DaysStats(id);
@@ -128,7 +128,7 @@ namespace iAFWebHost.Controllers
             else
             {
                 //display global system stats
-                PageModel model = new PageModel();
+                UrlPageModel model = new UrlPageModel();
                 model.HourlyDataPoints = GetLast24HourSystemStats();
                 model.DailyDataPoints = GetLast30DaysSystemStats();
                 model.MonthlyDataPoints = GetLast12MonthSystemStats();
@@ -140,13 +140,13 @@ namespace iAFWebHost.Controllers
 
         public ActionResult Requests()
         {
-            PageModel model = GetRequests();
+            UrlPageModel model = GetRequests();
             return View(model);
         }
 
         public ActionResult Referrals()
         {
-            PageModel model = GetRequestsWithReferrals();
+            UrlPageModel model = GetRequestsWithReferrals();
             return View(model);
         }
 
@@ -163,7 +163,7 @@ namespace iAFWebHost.Controllers
                 
                 if (urlModel != null && urlModel.Href.IsValidUri())
                 {
-                    PageModel model = new PageModel();
+                    UrlPageModel model = new UrlPageModel();
                     model.UrlModel = urlModel;
                     return View(model);
                 }
@@ -215,7 +215,7 @@ namespace iAFWebHost.Controllers
             if (String.IsNullOrEmpty(id))
                 throw new ArgumentNullException();
 
-            PageModel model = GetUrlListByHost(id);
+            UrlPageModel model = GetUrlListByHost(id);
             model.UrlCount = GetUrlCountByHost(id);
             model.Host = id;
 
@@ -227,7 +227,7 @@ namespace iAFWebHost.Controllers
             if (String.IsNullOrEmpty(id))
                 throw new ArgumentNullException();
 
-            PageModel model = GetUrlListByTag(id);
+            UrlPageModel model = GetUrlListByTag(id);
             model.UrlCount = GetUrlCountByTag(id);
             model.Tag = id;
             return View(model);
@@ -235,14 +235,14 @@ namespace iAFWebHost.Controllers
 
         public ActionResult News()
         {
-            PageModel model = GetUrlList();
+            UrlPageModel model = GetUrlList();
             return View(model);
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-            PageModel model = new PageModel();
+            UrlPageModel model = new UrlPageModel();
             return View(model);
         }
 

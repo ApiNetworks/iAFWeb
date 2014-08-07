@@ -12,7 +12,7 @@ namespace iAFWebHost.Controllers
     {
         public ActionResult Errors()
         {
-            PageModel model = GetErrors();
+            UrlPageModel model = GetErrors();
             return View("Errors", model);
         }
 

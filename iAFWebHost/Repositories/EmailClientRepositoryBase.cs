@@ -370,6 +370,54 @@ namespace iAFWebHost.Repositories
             return countResult;
         }
 
+        public virtual int Count(string viewName,
+           StaleMode mode,
+           bool group = false,
+           int groupLevel = 0,
+           bool reduce = false,
+           string startKey = null,
+           string endKey = null,
+           string startDocId = null,
+           string endDocId = null
+           )
+        {
+            var view = View(viewName);
+            if (!String.IsNullOrEmpty(startKey))
+            {
+                object[] key = JsonConvert.DeserializeObject<object[]>(startKey.Base64Decode());
+                if (key.Length == 1)
+                    view.StartKey(key[0]);
+                else
+                    view.StartKey(key);
+            }
+            if (!String.IsNullOrEmpty(endKey))
+            {
+                object[] key = JsonConvert.DeserializeObject<object[]>(endKey.Base64Decode());
+                if (key.Length == 1)
+                    view.EndKey(key[0]);
+                else
+                    view.EndKey(key);
+            }
+            if (!string.IsNullOrEmpty(startDocId)) view.StartDocumentId(startDocId);
+            if (!string.IsNullOrEmpty(endDocId)) view.EndDocumentId(endDocId);
+            if (group) view.Group(true);
+            if (groupLevel > 0) view.GroupAt(groupLevel);
+            view.Reduce(reduce);
+            view.Stale(StaleMode.False);
+
+
+            int countResult = -1;
+            // retrieve results
+            List<IViewRow> results = view.ToList();
+            if (!results.IsNullOrEmpty() && results.Count == 1)
+            {
+                string output = results[0].Info.Values.Last().ToString();
+                Int32.TryParse(output, out countResult);
+            }
+
+            return countResult;
+        }
+
         public static string BuildKey(object[] keys)
         {
             if (keys != null)

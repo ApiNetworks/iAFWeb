@@ -21,36 +21,62 @@ namespace iAFWebHost.Repositories
             return email;
         }
 
-        public Dto<Email> GetInboxEmails(string inbox, int page = 0, int limit = 10, int skip = 0)
+        public Dto<Email> GetInboxEmails(string inbox, int page = 0, int limit = 10, int skip = 0, string startKey = null, string endKey = null, string startDocId = null, string endDocId = null, string sort = null)
         {
-            DateTime startDate = DateTime.MinValue;
-            DateTime endDate = DateTime.MaxValue;
+            if(String.IsNullOrEmpty(startKey))
+            {
+                // init new start key
+                DateTime startDate = DateTime.MinValue;
+                object[] _startKey = { inbox, startDate.Year, startDate.Month, startDate.Day, startDate.Hour, startDate.Minute, startDate.Second };
+                
+                // define parameter
+                startKey = BuildKey(_startKey); 
+            }
 
-            object[] startKey = { inbox, startDate.Year, startDate.Month, startDate.Day, startDate.Hour, startDate.Minute, startDate.Second };
-            object[] endKey = { inbox + "\u0fff", endDate.Year, endDate.Month, endDate.Day, endDate.Hour, endDate.Minute, endDate.Second };
+            if (endKey == null)
+            {
+                DateTime endDate = DateTime.MaxValue;
+                //object[] _endKey = { inbox + "\u0fff", endDate.Year, endDate.Month, endDate.Day, endDate.Hour, endDate.Minute, endDate.Second };
+                object[] _endKey = { inbox, endDate.Year, endDate.Month, endDate.Day, endDate.Hour, endDate.Minute, endDate.Second };
 
-            return GetInboxEmails(page, limit, skip, startKey, endKey, null, null, null);
+                // define parameter
+                endKey = BuildKey(_endKey); 
+            }
+
+            return GetInboxEmails(page, limit, skip, startKey, endKey, startDocId, endDocId, sort);
+        }
+        public int CountInboxEmails(string inbox, int page = 0, int limit = 10, int skip = 0, string startKey = null, string endKey = null, string startDocId = null, string endDocId = null, string sort = null)
+        {
+            if (String.IsNullOrEmpty(startKey))
+            {
+                // init new start key
+                DateTime startDate = DateTime.MinValue;
+                object[] _startKey = { inbox, startDate.Year, startDate.Month, startDate.Day, startDate.Hour, startDate.Minute, startDate.Second };
+
+                // define parameter
+                startKey = BuildKey(_startKey);
+            }
+
+            if (endKey == null)
+            {
+                DateTime endDate = DateTime.MaxValue;
+                //object[] _endKey = { inbox + "\u0fff", endDate.Year, endDate.Month, endDate.Day, endDate.Hour, endDate.Minute, endDate.Second };
+                object[] _endKey = { inbox, endDate.Year, endDate.Month, endDate.Day, endDate.Hour, endDate.Minute, endDate.Second };
+
+                // define parameter
+                endKey = BuildKey(_endKey);
+            }
+
+            return CountInboxEmails(page, limit, skip, startKey, endKey, startDocId, endDocId, sort);
         }
 
-        public int CountInboxEmails(string inbox)
-        {
-            DateTime startDate = DateTime.MinValue;
-            DateTime endDate = DateTime.MaxValue;
-
-            object[] startKey = { inbox, startDate.Year, startDate.Month, startDate.Day, startDate.Hour, startDate.Minute, startDate.Second };
-            object[] endKey = { inbox + "\u0fff", endDate.Year, endDate.Month, endDate.Day, endDate.Hour, endDate.Minute, endDate.Second };
-
-            return CountInboxEmails(0, 10, 0, startKey, endKey, null, null, null);
-        }
-
-        public int CountInboxEmails(int page = 0, int limit = 10, int skip = 0, object[] startKey = null, object[] endKey = null, string startDocId = null, string endDocId = null, string sort = null)
-        {
-            return Count("email_list", StaleMode.False, false, 0, true, startKey, endKey, startDocId, endDocId);
-        }
-
-        public Dto<Email> GetInboxEmails(int page = 0, int limit = 10, int skip = 0, object[] startKey = null, object[] endKey = null, string startDocId = null, string endDocId = null, string sort = null)
+        public Dto<Email> GetInboxEmails(int page = 0, int limit = 10, int skip = 0, string startKey = null, string endKey = null, string startDocId = null, string endDocId = null, string sort = null)
         {
             return GetDto("email_list", StaleMode.False, page, limit, skip, false, 0, false, startKey, endKey, startDocId, endDocId, sort);
+        }
+        public int CountInboxEmails(int page = 0, int limit = 10, int skip = 0, string startKey = null, string endKey = null, string startDocId = null, string endDocId = null, string sort = null)
+        {
+            return Count("email_list", StaleMode.False, false, 0, true, startKey, endKey, startDocId, endDocId);
         }
 
         public Dto<Email> GetEmailList(int page = 0, int limit = 10, int skip = 0, string startKey = null, string endKey = null, string startDocId = null, string endDocId = null, string sort = null)

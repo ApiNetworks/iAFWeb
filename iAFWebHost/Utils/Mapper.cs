@@ -159,9 +159,9 @@ namespace iAFWebHost.Utils
         /// </summary>
         /// <param name="dto">The dto.</param>
         /// <returns></returns>
-        public static PageModel Map(Dto<iAFWebHost.Entities.Url> dto)
+        public static UrlPageModel Map(Dto<iAFWebHost.Entities.Url> dto)
         {
-            PageModel model = new PageModel();
+            UrlPageModel model = new UrlPageModel();
             List<UrlModel> modelList = new List<UrlModel>();
             foreach (var entity in dto.Entities)
                 modelList.Add(Mapper.Map(entity));
@@ -182,9 +182,9 @@ namespace iAFWebHost.Utils
         /// </summary>
         /// <param name="dto">The dto.</param>
         /// <returns></returns>
-        public static PageModel Map(Dto<Error> dto)
+        public static UrlPageModel Map(Dto<Error> dto)
         {
-            PageModel model = new PageModel();
+            UrlPageModel model = new UrlPageModel();
             List<ErrorModel> modelList = new List<ErrorModel>();
             foreach (var entity in dto.Entities)
                 modelList.Add(Mapper.Map(entity));
@@ -204,9 +204,9 @@ namespace iAFWebHost.Utils
         /// </summary>
         /// <param name="dto">The dto.</param>
         /// <returns></returns>
-        public static PageModel Map(Dto<RequestLog> dto)
+        public static UrlPageModel Map(Dto<RequestLog> dto)
         {
-            PageModel model = new PageModel();
+            UrlPageModel model = new UrlPageModel();
             List<RequestLogModel> modelList = new List<RequestLogModel>();
             foreach (var entity in dto.Entities)
                 modelList.Add(Mapper.Map(entity));
@@ -218,6 +218,21 @@ namespace iAFWebHost.Utils
             model.Pager.NextKey = dto.EKey;
             model.Pager.NextKeyId = dto.EId;
             model.Requests = modelList;
+            return model;
+        }
+
+        public static InboxModel Map(Dto<iAFWebHost.Entities.Email> dto)
+        {
+            InboxModel model = new InboxModel();
+            model.Emails = dto.Entities;
+            model.Pager.Page = dto.Page;
+            model.Pager.PageSize = dto.PageSize;
+            model.Pager.TotalRows = dto.TotalRows;
+            model.Pager.PreviousKey = dto.SKey;
+            model.Pager.PreviousKeyId = dto.SId;
+            model.Pager.NextKey = dto.EKey;
+            model.Pager.NextKeyId = dto.EId;
+            model.TotalEmails = dto.TotalRows;
             return model;
         }
     }

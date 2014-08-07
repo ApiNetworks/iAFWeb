@@ -321,7 +321,7 @@ namespace iAFWebHost.Controllers
             if(user == null)
                 throw new ArgumentException("User name is invalid");
 
-            PageModel model = GetUrlListByUser(username);
+            UrlPageModel model = GetUrlListByUser(username);
             model.UserName = username;
             model.UrlCount = model.Pager.TotalRows;
             return View(model);

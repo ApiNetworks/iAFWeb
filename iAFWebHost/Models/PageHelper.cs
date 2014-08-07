@@ -12,6 +12,27 @@ namespace iAFWebHost.Models
         public int PageSize { get; set; }
         public int Skip { get; set; }
         public int TotalRows { get; set; }
+        public int FromRecord
+        {
+            get
+            {
+                if (Page == 1)
+                    return 1;
+                else
+                    return (Page - 1) * PageSize;
+            }
+        }
+        public int ToRecord
+        {
+            get
+            {
+                int r = Page * PageSize;
+                if (r > TotalRows)
+                    return TotalRows;
+                else
+                    return r;
+            }
+        }
         public string PreviousKey { get; set; }
         public string PreviousKeyId { get; set; }
         public string NextKey { get; set; }

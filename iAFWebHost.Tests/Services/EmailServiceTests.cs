@@ -16,12 +16,19 @@ namespace iAFWebHost.Tests.Services
     public class EmailServiceTests
     {
         [TestMethod]
-        public void Email_Test_Single_Upsert()
+        public void Email_Test_UpsertData()
         {
             EmailService service = new EmailService();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 5; i++)
             {
                 Email input = GenerateEmailEntity();
+                Email output = service.Upsert(input);
+                Assert.IsNotNull(output);
+            }
+
+            for (int i = 0; i < 15; i++)
+            {
+                Email input = GenerateEmailEntity("yuri@i.af");
                 Email output = service.Upsert(input);
                 Assert.IsNotNull(output);
             }
@@ -37,8 +44,11 @@ namespace iAFWebHost.Tests.Services
         [TestMethod]
         public void Email_Test_GetInboxEmails()
         {
+            string email = GetTestRecepientEmail().MD5();
             EmailService service = new EmailService();
-            var output = service.GetInboxEmails("yuri@i.af".MD5(), 0, 10, 0);
+            Dto<Email> emails = service.GetInboxEmails(email, 0, 10, 0);
+            int count = emails.TotalRows;
+            int serviceCount = service.CountInboxEmails(email, 0, 10, 0);
         }
 
         [TestMethod()]
@@ -68,11 +78,15 @@ namespace iAFWebHost.Tests.Services
             Assert.IsNotNull(response);
         }
 
-        private Email GenerateEmailEntity()
+        private Email GenerateEmailEntity(string recepientEmail = null)
         {
             Email email = new Email();
             email.Token = Path.GetRandomFileName();
-            email.RecipientEmail = "demo@i.af";
+            if (String.IsNullOrEmpty(recepientEmail))
+                email.RecipientEmail = GetTestRecepientEmail();
+            else
+                email.RecipientEmail = recepientEmail;
+
             email.MailboxId = email.RecipientEmail.MD5();
             email.From = Path.GetRandomFileName() + "@i.af";
             email.FromEmail = Path.GetRandomFileName() + "@i.af";
@@ -86,10 +100,15 @@ namespace iAFWebHost.Tests.Services
         private Mailbox GenerateMailboxEntity()
         {
             Mailbox mailbox = new Mailbox();
-            mailbox.RecepientEmail = "demo@i.af";
+            mailbox.RecepientEmail = GetTestRecepientEmail();
             mailbox.TimeStamp = DateTime.UtcNow;
             mailbox.Id = mailbox.RecepientEmail.MD5();
             return mailbox;
+        }
+
+        private string GetTestRecepientEmail()
+        {
+            return "demo@i.af";
         }
     }
 }
