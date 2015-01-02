@@ -10,6 +10,12 @@ namespace iAFWebHost.Controllers
 {
     public class ErrorController : BaseController
     {
+        public ActionResult Index()
+        {
+            UrlPageModel model = GetErrors();
+            return View("Errors", model);
+        }
+
         public ActionResult Errors()
         {
             UrlPageModel model = GetErrors();

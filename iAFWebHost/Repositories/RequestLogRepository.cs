@@ -8,7 +8,7 @@ using System.Web;
 
 namespace iAFWebHost.Repositories
 {
-    public class RequestLogRepository : RepositoryBase<RequestLog>
+    public class RequestLogRepository : UrlClientRepositoryBase<RequestLog>
     {
         public Dto<RequestLog> GetRequestsWithReferrals(int page = 0, int limit = 10, int skip = 0, string startKey = null, string endKey = null, string startDocId = null, string endDocId = null, string sort = null)
         {

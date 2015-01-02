@@ -7,7 +7,7 @@ using System.Web;
 
 namespace iAFWebHost.Repositories
 {
-    public partial class LogRepository : RepositoryBase<Error>
+    public partial class LogRepository : UrlClientRepositoryBase<Error>
     {
         public Dto<Error> GetErrors(int page = 0, int limit = 10, int skip = 0, string startKey = null, string endKey = null, string startDocId = null, string endDocId = null, string sort = null)
         {

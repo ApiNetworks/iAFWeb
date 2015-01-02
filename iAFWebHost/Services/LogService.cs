@@ -68,7 +68,7 @@ namespace iAFWebHost.Services
             {
                 return _repository.GetErrors(1, 10, 0);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }

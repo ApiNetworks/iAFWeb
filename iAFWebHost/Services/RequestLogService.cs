@@ -39,7 +39,7 @@ namespace iAFWebHost.Services
             {
                 return _repository.GetRequestsWithReferrals(1,100,0);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
