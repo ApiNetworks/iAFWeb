@@ -50,8 +50,12 @@ namespace iAFWebHost.Controllers
                 var user = await UserManager.FindAsync(model.UserName, model.Password);
                 if (user != null)
                 {
-                    await SignInAsync(user, model.RememberMe);
-                    return RedirectToLocal(returnUrl);
+                    await SignInAsync(user, false);
+
+                    if (!String.IsNullOrEmpty(returnUrl))
+                        return RedirectToLocal(returnUrl);
+                    else
+                        return RedirectToLocal("/");
                 }
                 else
                 {
@@ -85,7 +89,7 @@ namespace iAFWebHost.Controllers
                 if (result.Succeeded)
                 {
                     await SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToLocal("/news");
                 }
                 else
                 {
@@ -292,7 +296,7 @@ namespace iAFWebHost.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToLocal("/news");
         }
 
         //
@@ -390,7 +394,7 @@ namespace iAFWebHost.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return Redirect("/");
             }
         }
 

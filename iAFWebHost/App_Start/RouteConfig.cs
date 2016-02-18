@@ -99,6 +99,18 @@ namespace iAFWebHost
             );
 
             routes.MapRoute(
+                name: "Follow",
+                url: "follow/{id}",
+                defaults: new { controller = "Url", action = "AddUser" }
+            );
+
+            routes.MapRoute(
+                 name: "UnFollow",
+                 url: "unfollow/{id}",
+                 defaults: new { controller = "Url", action = "DeleteUser" }
+            );
+
+            routes.MapRoute(
                 name: "Contact",
                 url: "Contact",
                 defaults: new { controller = "Url", action = "Contact" }
