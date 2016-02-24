@@ -390,6 +390,7 @@
     <Content Include="Views\Email\Message.cshtml" />
     <Content Include="Views\Email\MessageNotFound.cshtml" />
     <Content Include="Views\Shared\_EmailLayout.cshtml" />
+    <Content Include="Views\Shared\_Error404.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

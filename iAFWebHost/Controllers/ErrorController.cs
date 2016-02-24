@@ -37,7 +37,7 @@ namespace iAFWebHost.Controllers
 
         public ActionResult NotFound()
         {
-            return View("_Error");
+            return View("_Error404");
         }
 
         public ActionResult Test()

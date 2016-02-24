@@ -26,7 +26,7 @@ namespace iAFWebHost.Controllers
                     return Redirect(model.Href);
                 }
                 else
-                    throw new HttpException();
+                    this.InvokeHttp404(this.HttpContext);
             }
             return View();
         }

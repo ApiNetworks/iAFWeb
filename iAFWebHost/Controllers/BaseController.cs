@@ -564,5 +564,15 @@ namespace iAFWebHost.Controllers
             return model;
         }
         #endregion
+
+        protected override void HandleUnknownAction(string actionName)
+        {
+            this.InvokeHttp404(HttpContext);
+        }
+
+        public ActionResult InvokeHttp404(HttpContextBase httpContext)
+        {
+            throw new HttpException(404, "Page Not Found");
+        }
     }
 }
